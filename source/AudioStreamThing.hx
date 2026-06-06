@@ -34,11 +34,19 @@ class AudioStreamThing extends FlxBasic
 	public override function new(filePath:String, grouped:Bool = false)
 	{
 		super();
+		var loadedPath = filePath;
+
 		if (resourceManager == null)
 			resourceManager = MiniAudio.init_resource();
 
 		if (engine == null)
 			engine = MiniAudio.init(resourceManager);
+
+		if (engine == null)
+		{
+			trace("CAN'T INITIALIZE AUDIO ENGINE");
+			return;
+		}
 
 		if (grouped && group == null)
 			createGroup();
@@ -46,22 +54,40 @@ class AudioStreamThing extends FlxBasic
 		sound = MiniAudio.loadSound(engine, filePath, (grouped ? group : null));
 		if (sound == null)
 		{
-			trace("CAN'T LOAD SOUND " + filePath);
-			return;
+			var lowerPath = filePath.toLowerCase();
+
+			if (StringTools.endsWith(lowerPath, ".opus"))
+			{
+				var oggPath = filePath.substr(0, filePath.length - 5) + ".ogg";
+				trace("CAN'T LOAD SOUND " + filePath + ", retrying as " + oggPath);
+				sound = MiniAudio.loadSound(engine, oggPath, (grouped ? group : null));
+				loadedPath = oggPath;
+			}
+			else if (StringTools.endsWith(lowerPath, ".ogg"))
+			{
+				var opusPath = filePath.substr(0, filePath.length - 4) + ".opus";
+				trace("CAN'T LOAD SOUND " + filePath + ", retrying as " + opusPath);
+				sound = MiniAudio.loadSound(engine, opusPath, (grouped ? group : null));
+				loadedPath = opusPath;
+			}
+
+			if (sound == null)
+			{
+				trace("CAN'T LOAD SOUND " + filePath);
+				return;
+			}
 		}
 
-		if (StringTools.endsWith(filePath, ".ogg"))
+		if (StringTools.endsWith(loadedPath.toLowerCase(), ".ogg"))
 		{
-			var vorb = VorbisFile.fromFile(filePath);
+			var vorb = VorbisFile.fromFile(loadedPath);
 			_length = vorb.timeTotal() * 1000;
 			vorb.clear();
 			vorb = null;
-			trace("THIS IS OGG");
 		}
 		else
 		{
 			_length = cast(MiniAudio.getLength(sound) * 1000, Float);
-			trace("THIS IS OTHER");
 		}
 		MiniAudio.setTime(sound, 0);
 
@@ -82,15 +108,14 @@ class AudioStreamThing extends FlxBasic
 
 	static public function destroyEngine()
 	{
-		if (resourceManager != null)
-			MiniAudio.uninit_resource(resourceManager);
-		resourceManager = null;
+		if (group != null)
+			destroyGroup();
 		if (engine != null)
 			MiniAudio.uninit(engine);
 		engine = null;
-		if (group != null)
-			destroyGroup();
-		group = null;
+		if (resourceManager != null)
+			MiniAudio.uninit_resource(resourceManager);
+		resourceManager = null;
 	}
 
 	static public function destroyEverything()
@@ -103,13 +128,13 @@ class AudioStreamThing extends FlxBasic
 				addedSounds[0].destroy();
 			}
 		}
-		addedSounds = null;
+		addedSounds = [];
 		destroyEngine();
 	}
 
 	public override function update(elapsed:Float):Void
 	{
-		if (prevGlobalVol != FlxG.sound.volume)
+		if (sound != null && prevGlobalVol != FlxG.sound.volume)
 			MiniAudio.setVolume(sound, _volume * FlxG.sound.volume);
 		prevGlobalVol = FlxG.sound.volume;
 		super.update(elapsed);
@@ -117,18 +142,20 @@ class AudioStreamThing extends FlxBasic
 
 	public function play()
 	{
-		if (MiniAudio.startSound(sound) != 0)
+		if (sound != null && MiniAudio.startSound(sound) != 0)
 			trace("CAN'T PLAY SOUND");
 	}
 
 	public function pause()
 	{
-		MiniAudio.pauseSound(sound);
+		if (sound != null)
+			MiniAudio.pauseSound(sound);
 	}
 
 	public function stop()
 	{
-		MiniAudio.stopSound(sound);
+		if (sound != null)
+			MiniAudio.stopSound(sound);
 	}
 
 	public static function createGroup()
@@ -165,12 +192,12 @@ class AudioStreamThing extends FlxBasic
 
 	function get_playing():Bool
 	{
-		return cast(MiniAudio.isPlaying(sound), Bool);
+		return sound != null && cast(MiniAudio.isPlaying(sound), Bool);
 	}
 
 	function get_isDone():Bool
 	{
-		return cast(MiniAudio.isDone(sound), Bool);
+		return sound == null || cast(MiniAudio.isDone(sound), Bool);
 	}
 
 	function get_length():Float
@@ -186,40 +213,44 @@ class AudioStreamThing extends FlxBasic
 	function set_volume(newVol:Float):Float
 	{
 		_volume = newVol;
-		MiniAudio.setVolume(sound, _volume * FlxG.sound.volume);
+		if (sound != null)
+			MiniAudio.setVolume(sound, _volume * FlxG.sound.volume);
 		return newVol;
 	}
 
 	function get_time():Float
 	{
-		return cast(MiniAudio.getTime(sound) * 1000, Float);
+		return sound == null ? 0 : cast(MiniAudio.getTime(sound) * 1000, Float);
 	}
 
 	function set_time(newTime:Float):Float
 	{
-		MiniAudio.setTime(sound, newTime / 1000);
+		if (sound != null)
+			MiniAudio.setTime(sound, newTime / 1000);
 		return newTime;
 	}
 
 	function get_speed():Float
 	{
-		return cast(MiniAudio.getPitch(sound), Float);
+		return sound == null ? 1 : cast(MiniAudio.getPitch(sound), Float);
 	}
 
 	function set_speed(newSpeed:Float):Float
 	{
-		MiniAudio.setPitch(sound, newSpeed);
+		if (sound != null)
+			MiniAudio.setPitch(sound, newSpeed);
 		return newSpeed;
 	}
 
 	function get_looping():Bool
 	{
-		return cast(MiniAudio.getLooping(sound), Bool);
+		return sound != null && cast(MiniAudio.getLooping(sound), Bool);
 	}
 
 	function set_looping(shouldLoop:Bool):Bool
 	{
-		MiniAudio.setLooping(sound, shouldLoop);
+		if (sound != null)
+			MiniAudio.setLooping(sound, shouldLoop);
 		return shouldLoop;
 	}
 }

@@ -7,26 +7,12 @@
 	</files>
 
 	<target id='haxe' tool='linker' toolid='exe'>
-		<!--
-		CRT-mismatch LNK4098/LNK4217/LNK4286 indicates prebuilt libs were compiled
-		different from hxcpp's selected runtime.
-		Temporary: don't link the prebuilt opus/ogg/opusfile libs so the
-		application can link.
-
-		If you need audio codecs, rebuild libogg/opus/opusfile with the same MSVC CRT
-		as the hxcpp/OpenFL build (typically /MD for release, /MDd for debug).
-		-->
-		<!-- Link prebuilt opus/ogg/opusfile libs on Windows.
-		     These provide the missing `op_*` symbols used by the libopus backend. -->
+		<!-- The custom miniaudio backend uses libopusfile, which also depends on libopus and libogg. -->
 		<lib name='${PROJECT_DIR}/lib/libogg.lib' if='windows HXCPP_M64' />
 		<lib name='${PROJECT_DIR}/lib/opus.lib' if='windows HXCPP_M64' />
 		<lib name='${PROJECT_DIR}/lib/opusfile.lib' if='windows HXCPP_M64' />
 		<lib name='${PROJECT_DIR}/lib32/libogg.lib' if='windows HXCPP_M32' />
 		<lib name='${PROJECT_DIR}/lib32/opus.lib' if='windows HXCPP_M32' />
 		<lib name='${PROJECT_DIR}/lib32/opusfile.lib' if='windows HXCPP_M32' />
-
-
-
-
 	</target>
 </xml>

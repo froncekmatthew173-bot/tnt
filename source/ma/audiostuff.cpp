@@ -1,9 +1,6 @@
 #define STB_VORBIS_HEADER_ONLY
 #include "extras/stb_vorbis.c"
 
-// Disable opus/libopus backend for this build to avoid link-time missing symbols.
-// (Link errors currently show unresolved `op_*` functions from libopus/opusfile.)
-// Enable opus/libopus backend.
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 #include "extras/miniaudio_libopus.h"
@@ -129,7 +126,8 @@ ma_engine *init(ma_resource_manager *resourceManager)
 
     result = ma_resource_manager_init(&resourceManagerConfig, resourceManager);
     if (result != MA_SUCCESS) {
-        printf("Failed to initialize resource manager.");
+        printf("Failed to initialize resource manager with ma_result=%d.\n", (int)result);
+        free(engine);
         return NULL;
     }
 
@@ -138,7 +136,9 @@ ma_engine *init(ma_resource_manager *resourceManager)
 
     result = ma_engine_init(&engineConfig, engine);
     if (result != MA_SUCCESS) {
-        printf("Failed to initialize engine.");
+        printf("Failed to initialize engine with ma_result=%d.\n", (int)result);
+        ma_resource_manager_uninit(resourceManager);
+        free(engine);
         return NULL;
     }
 

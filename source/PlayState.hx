@@ -451,6 +451,7 @@ class PlayState extends MusicBeatState
 		// instance = this;
 		FlxG.mouse.visible = false;
 		PlayerSettings.gameControls();
+		autoPlay = Config.botplay;
 
 		// resetChatData();
 
@@ -1525,6 +1526,8 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
+			case '3d':
+				posChar(boyfriend, 1250, 550);
 			case 'limo':
 				posChar(boyfriend, 1250, 630);
 			case 'tankStage':
@@ -1537,6 +1540,8 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
+			case '3d':
+				posChar(gf, 400, 130);
 			case 'tankStage':
 				posChar(gf, 568, 778);
 			case 'prismaStage':
@@ -1746,11 +1751,11 @@ class PlayState extends MusicBeatState
 		scoreTxt.setFormat(Paths.font("vcr"), 21, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 
-        var botplayTxt = new FlxTextThing(400, healthBarBG.y - 90, FlxG.width - 800, "BOTPLAY", 32);
+		var botplayTxt = new FlxTextThing(400, healthBarBG.y - 90, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = Config.botplay;
+		botplayTxt.visible = autoPlay;
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBarBG.y + healthBarBG.height / 2 - (iconP1.height / 2);
