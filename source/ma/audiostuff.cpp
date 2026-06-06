@@ -1,10 +1,16 @@
 #define STB_VORBIS_HEADER_ONLY
 #include "extras/stb_vorbis.c"
 
+// Disable opus/libopus backend for this build to avoid link-time missing symbols.
+// (Link errors currently show unresolved `op_*` functions from libopus/opusfile.)
+#define MA_NO_LIBOPUS
 #define MA_NO_OPUS
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
-#include "extras/miniaudio_libopus.h"
+// Don’t include the libopus backend header when opus is disabled.
+// #include "extras/miniaudio_libopus.h"
+
+
 
 #undef STB_VORBIS_HEADER_ONLY
 #include "extras/stb_vorbis.c"

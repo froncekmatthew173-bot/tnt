@@ -16,13 +16,9 @@
 		If you need audio codecs, rebuild libogg/opus/opusfile with the same MSVC CRT
 		as the hxcpp/OpenFL build (typically /MD for release, /MDd for debug).
 		-->
-		<!--		<lib name='${PROJECT_DIR}/lib/libogg.lib' if='windows HXCPP_M64' />
-		<lib name='${PROJECT_DIR}/lib/opus.lib' if='windows HXCPP_M64' />
-		<lib name='${PROJECT_DIR}/lib/opusfile.lib' if='windows HXCPP_M64' />
-		<lib name='${PROJECT_DIR}/lib32/libogg.lib' if='windows HXCPP_M32' />
-		<lib name='${PROJECT_DIR}/lib32/opus.lib' if='windows HXCPP_M32' />
-		<lib name='${PROJECT_DIR}/lib32/opusfile.lib' if='windows HXCPP_M32' />
-		-->
+		<!-- Opus disabled for now (prebuilt libopus/libopusfile not linked).
+		     Fixes current Windows link errors (unresolved op_* symbols). -->
+
 
 	</target>
 </xml>
