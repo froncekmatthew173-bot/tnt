@@ -682,6 +682,7 @@ class PlayState extends MusicBeatState
 		{
 			case "spooky":
 				curStage = "spooky";
+
 				// NOTE: other stage definitions follow as separate cases; missing break/brace here breaks parsing.
 			}
 
@@ -1758,6 +1759,12 @@ class PlayState extends MusicBeatState
 		scoreTxt.setFormat(Paths.font("vcr"), 21, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 
+        var botplayTxt = new FlxTextThing(400, healthBar.y - 90, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.25;
+		botplayTxt.visible = Config.botplay;
+
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBarBG.y + healthBarBG.height / 2 - (iconP1.height / 2);
 
@@ -1770,6 +1777,7 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		add(iconP1);
 		add(scoreTxt);
+		add(botplayTxt);
 		add(bfVert);
 		add(dadVert);
 		if (Config.comboParticles)

@@ -41,6 +41,7 @@ class ConfigMenu extends MusicBeatState
 	var fpsDisplayValue:Int;
 	var comboParticlesValue:Bool;
 	var scrollSpeedValue:Int;
+	var botplayValue:Bool;
 
 	var tabKeys:Array<String> = [];
 
@@ -68,6 +69,7 @@ class ConfigMenu extends MusicBeatState
 		"CONTROLLER SCHEME",
 		"EDIT KEY BINDS",
 		"EDIT NOTE COLORS",
+		"BOTPLAY"
 	];
 
 	// Any descriptions that say TEMP are replaced with a changing description based on the current config setting.
@@ -90,6 +92,7 @@ class ConfigMenu extends MusicBeatState
 		"TEMP",
 		"Change key binds.",
 		"Change the colors of your notes"
+"Enable autoplay. Not recommended; it may cause crashes or softlocks in certain songs or charts."
 	];
 
 	final ghostTapDesc:Array<String> = [

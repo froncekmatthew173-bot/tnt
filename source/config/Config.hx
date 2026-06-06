@@ -23,6 +23,7 @@ class Config
 	public static var arrowColors:ColorzJSON;
 	public static var comboParticles:Bool = false;
 	public static var scrollSpeed:Float;
+	public static var botplay:Bool = false;
 
 	public static function resetSettings():Void
 	{
@@ -42,6 +43,7 @@ class Config
 		FlxG.save.data.comboParticles = true;
 		FlxG.save.data.scrollSpeed = 0;
 		reload();
+		FlxG.save.data.botplay = false;
 	}
 
 	public static function resetArrowColors()
@@ -89,6 +91,7 @@ class Config
 		arrowColors = FlxG.save.data.arrowColors;
 		comboParticles = FlxG.save.data.comboParticles;
 		scrollSpeed = FlxG.save.data.scrollSpeed;
+		botplay = FlxG.save.data.botplay;
 	}
 
 	public static function write(offsetW:Float, accuracyW:String, healthMultiplierW:Float, healthDrainMultiplierW:Float, comboTypeW:Int, downscrollW:Bool,
@@ -111,6 +114,7 @@ class Config
 		FlxG.save.data.arrowColors = arrowColors;
 		FlxG.save.data.comboParticles = comboParticles;
 		FlxG.save.data.scrollSpeed = scrollSpeed;
+		FlxG.save.data.botplay = botplay;
 
 		FlxG.save.flush();
 
@@ -154,7 +158,7 @@ class Config
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 0;
 
-		if (FlxG.save.data.ee1 == null)
-			FlxG.save.data.ee1 = false;
+	    if (FlxG.save.data.botplay == null)
+			FlxG.save.data.botplay = false;
 	}
 }
