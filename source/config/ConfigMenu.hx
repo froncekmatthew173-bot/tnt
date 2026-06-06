@@ -69,7 +69,7 @@ class ConfigMenu extends MusicBeatState
 		"CONTROLLER SCHEME",
 		"EDIT KEY BINDS",
 		"EDIT NOTE COLORS",
-		"BOTPLAY"
+		"BOTPLAY",
 	];
 
 	// Any descriptions that say TEMP are replaced with a changing description based on the current config setting.
@@ -167,6 +167,7 @@ class ConfigMenu extends MusicBeatState
 		splashValue = Config.noteSplash;
 		fpsDisplayValue = Config.fpsDisplayValue;
 		scrollSpeedValue = Std.int(Config.scrollSpeed * 10);
+		botplayValue = Config.botplay;
 
 		var tex = Paths.getSparrowAtlasFunk('FNF_main_menu_assets');
 		var optionTitle:FlxSprite = new FlxSprite(0, 5);
