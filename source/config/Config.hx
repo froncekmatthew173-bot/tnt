@@ -42,8 +42,8 @@ class Config
 		resetArrowColors();
 		FlxG.save.data.comboParticles = true;
 		FlxG.save.data.scrollSpeed = 0;
-		reload();
 		FlxG.save.data.botplay = false;
+		reload();
 	}
 
 	public static function resetArrowColors()
@@ -96,7 +96,7 @@ class Config
 
 	public static function write(offsetW:Float, accuracyW:String, healthMultiplierW:Float, healthDrainMultiplierW:Float, comboTypeW:Int, downscrollW:Bool,
 			noteGlowW:Bool, ghostTapTypeW:Int, noFpsCapW:Bool, controllerSchemeW:Int, bgDimW:Int, noteSplash:Bool, fpsDisplayValue:Int,
-			arrowColors:ColorzJSON, comboParticles:Bool, scrollSpeed:Float):Void
+			arrowColors:ColorzJSON, comboParticles:Bool, scrollSpeed:Float, botplay:Bool):Void
 	{
 		FlxG.save.data.offset = offsetW;
 		FlxG.save.data.accuracy = accuracyW;

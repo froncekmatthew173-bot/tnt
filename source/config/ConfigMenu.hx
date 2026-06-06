@@ -605,6 +605,13 @@ class ConfigMenu extends MusicBeatState
 						writeToConfig();
 						switchState(new ArrowColorState());
 					}
+
+				case 16: // Botplay
+					if (controls.RIGHT_P || controls.LEFT_P || controls.ACCEPT)
+					{
+						FlxG.sound.play(Paths.sound('scrollMenu'));
+						botplayValue = !botplayValue;
+					}
 			}
 		}
 		else if (FlxG.keys.pressed.TAB)
@@ -694,6 +701,9 @@ class ConfigMenu extends MusicBeatState
 			case 13:
 				descText.text = controlSchemesDesc[scheme];
 
+			case 16:
+				descText.text = botplayDesc[0];
+
 			default:
 				descText.text = settingDesc[configSelected];
 		}
@@ -732,6 +742,8 @@ class ConfigMenu extends MusicBeatState
 				return ": " + fpsDisplays[fpsDisplayValue];
 			case 13:
 				return ": " + controlSchemes[scheme];
+			case 16:
+				return ": " + genericOnOff[botplayValue ? 0 : 1];
 		}
 
 		return "";
@@ -776,15 +788,15 @@ class ConfigMenu extends MusicBeatState
 		{
 			case "KADE":
 				Config.write(offsetValue, "complex", 5, 5, 1, downValue, false, 2, noCapValue, scheme, dimValue, splashValue, fpsDisplayValue,
-					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0);
+					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0, botplayValue);
 				exit();
 			case "ROZE":
 				Config.write(offsetValue, "simple", 1, 1, 0, true, true, 0, noCapValue, scheme, dimValue, splashValue, fpsDisplayValue, Config.arrowColors,
-					Config.comboParticles, scrollSpeedValue / 10.0);
+					Config.comboParticles, scrollSpeedValue / 10.0, botplayValue);
 				exit();
 			case "CVAL":
 				Config.write(offsetValue, "simple", 1, 1, comboValue, false, false, 1, noCapValue, scheme, dimValue, splashValue, fpsDisplayValue,
-					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0);
+					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0, botplayValue);
 				exit();
 			case "GOTOHELLORSOMETHING":
 				System.exit(0); // I am very funny.
@@ -794,6 +806,6 @@ class ConfigMenu extends MusicBeatState
 	function writeToConfig()
 	{
 		Config.write(offsetValue, accuracyType, healthValue / 10.0, healthDrainValue / 10.0, comboValue, downValue, false, randomTapValue, noCapValue, scheme,
-			dimValue, splashValue, fpsDisplayValue, Config.arrowColors, comboParticlesValue, scrollSpeedValue / 10.0);
+			dimValue, splashValue, fpsDisplayValue, Config.arrowColors, comboParticlesValue, scrollSpeedValue / 10.0, botplayValue);
 	}
 }

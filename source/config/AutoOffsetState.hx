@@ -293,7 +293,7 @@ class AutoOffsetState extends MusicBeatState
 		ending = true;
 		Config.write(offsetCalc, Config.accuracy, Config.healthMultiplier, Config.healthDrainMultiplier, Config.comboType, Config.downscroll, Config.noteGlow,
 			Config.ghostTapType, Config.noFpsCap, Config.controllerScheme, Config.bgDim, Config.noteSplash, Config.fpsDisplayValue, Config.arrowColors,
-			Config.comboParticles, Config.scrollSpeed);
+			Config.comboParticles, Config.scrollSpeed, Config.botplay);
 		switchState(new ConfigMenu());
 	}
 
