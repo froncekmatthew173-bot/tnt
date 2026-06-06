@@ -15,6 +15,8 @@
 #undef STB_VORBIS_HEADER_ONLY
 #include "extras/stb_vorbis.c"
 
+#if !defined(MA_NO_OPUS) && !defined(MA_NO_LIBOPUS)
+// Custom libopus decoding backend (only compiled when opus is enabled)
 static ma_result ma_decoding_backend_init__libopus(void* pUserData, ma_read_proc onRead, ma_seek_proc onSeek, ma_tell_proc onTell, void* pReadSeekTellUserData, const ma_decoding_backend_config* pConfig, const ma_allocation_callbacks* pAllocationCallbacks, ma_data_source** ppBackend)
 {
     ma_result result;
@@ -88,6 +90,8 @@ static ma_decoding_backend_vtable g_ma_decoding_backend_vtable_libopus =
     NULL, /* onInitMemory() */
     ma_decoding_backend_uninit__libopus
 };
+#endif
+
 
 ma_resource_manager *init_resource()
 {
@@ -106,15 +110,22 @@ ma_engine *init(ma_resource_manager *resourceManager)
     ma_engine_config engineConfig;
     ma_engine *engine = (ma_engine *)malloc(sizeof(ma_engine));
 
+    // Only register custom backends if opus is enabled.
+#if !defined(MA_NO_OPUS) && !defined(MA_NO_LIBOPUS)
     ma_decoding_backend_vtable* pCustomBackendVTables[] =
     {
         &g_ma_decoding_backend_vtable_libopus
     };
 
-
     resourceManagerConfig = ma_resource_manager_config_init();
     resourceManagerConfig.ppCustomDecodingBackendVTables = pCustomBackendVTables;
     resourceManagerConfig.customDecodingBackendCount = sizeof(pCustomBackendVTables) / sizeof(pCustomBackendVTables[0]);
+#else
+    resourceManagerConfig = ma_resource_manager_config_init();
+    resourceManagerConfig.ppCustomDecodingBackendVTables = NULL;
+    resourceManagerConfig.customDecodingBackendCount = 0;
+#endif
+
     resourceManagerConfig.pCustomDecodingBackendUserData = NULL;
 
     result = ma_resource_manager_init(&resourceManagerConfig, resourceManager);
