@@ -682,6 +682,15 @@ class PlayState extends MusicBeatState
 		{
 			case "spooky":
 				curStage = "spooky";
+				// NOTE: other stage definitions follow as separate cases; missing break/brace here breaks parsing.
+			}
+
+		// Re-enter original switch as separate stage cases
+		switch (stageCheck)
+		{
+			case "spooky":
+				curStage = "spooky";
+
 
 				// halloweenBG = new FlxSprite(-200, -100);
 				// halloweenBG.frames = Paths.getSparrowAtlasATF("spookyStage/halloween_bg");
