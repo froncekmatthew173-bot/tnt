@@ -1752,7 +1752,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.setFormat(Paths.font("vcr"), 21, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 
-        var botplayTxt = new FlxTextThing(400, healthBar.y - 90, FlxG.width - 800, "BOTPLAY", 32);
+        var botplayTxt = new FlxTextThing(400, healthBarBG.y - 90, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;

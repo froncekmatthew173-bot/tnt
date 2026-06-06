@@ -91,8 +91,10 @@ class ConfigMenu extends MusicBeatState
 		"Shows a FPS counter in the top-left corner",
 		"TEMP",
 		"Change key binds.",
-		"Change the colors of your notes"
-"Enable autoplay. Not recommended; it may cause crashes or softlocks in certain songs or charts."
+		"Change the colors of your notes",
+	];
+	final botplayDesc:Array<String> = [
+        "Enable autoplay. Not recommended; it may cause crashes or softlocks in certain songs or charts."
 	];
 
 	final ghostTapDesc:Array<String> = [
