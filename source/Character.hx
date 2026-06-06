@@ -26,6 +26,8 @@ class Character extends FlxNestedSkewSprite
 	public var curCharacter:String = 'bf';
 
 	public var holdTimer:Float = 0;
+	public var lastSingStrumTime:Float = -999999;
+	public var spamChainCount:Int = 0;
 
 	public var canAutoAnim:Bool = true;
 	public var canAutoIdle:Bool = true;
@@ -359,6 +361,51 @@ class Character extends FlxNestedSkewSprite
 
 				playAnim('idle');
 				initFacing = FlxObject.LEFT;
+
+			case 'shaggy':
+				frames = Paths.getSparrowAtlasFunk("characters/shaggy");
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('sleft', 'sleft', 24, false);
+				animation.addByPrefix('sdown', 'sdown', 24, false);
+				animation.addByPrefix('sup', 'sup', 24, false);
+				animation.addByPrefix('sright', 'sright', 24, false);
+				animation.addByPrefix('sleft-alt', 'sleft', 24, false);
+				animation.addByPrefix('sright-alt', 'sright', 24, false);
+				animation.addByPrefix('sspace', 'sup', 24, false);
+				animation.addByPrefix('intro', 'intro', 24, false);
+				animation.addByPrefix('snap', 'aidle', 24, false);
+				animation.addByPrefix('singSPACE', 'adown', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'aleft', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'aright', 24, false);
+
+				addOffset('idle', -5, -1);
+				addOffset("singLEFT", 5, -1);
+				addOffset("singDOWN", 5, -1);
+				addOffset("singUP", 5, -1);
+				addOffset("singRIGHT", 5, -1);
+				addOffset("sleft", 5, -1);
+				addOffset("sdown", 5, -1);
+				addOffset("sup", 5, -1);
+				addOffset("sright", 5, -1);
+				addOffset("sleft-alt", 5, -1);
+				addOffset("sright-alt", 5, -1);
+				addOffset("sspace", 5, -1);
+				addOffset("intro", 51, -2);
+				addOffset("snap", 5, -1);
+				addOffset("singSPACE", 5, -1);
+				addOffset("singLEFT-alt", 5, -1);
+				addOffset("singRIGHT-alt", 5, -1);
+
+				antialiasing = false;
+				setGraphicSize(Std.int(width * 1.4));
+				updateHitbox();
+				playAnim('idle');
+				posOffsets = [-140, 0];
+				camOffsets = [500, 300];
 
 			case 'bf':
 				createAtlas();
@@ -897,6 +944,22 @@ class Character extends FlxNestedSkewSprite
 			return atlasContainer.curAnimFinished;
 		else
 			return animation.curAnim.finished;
+	}
+
+	public function resolveHeavySpamAnim(baseAnim:String):String
+	{
+		var spamAnim = baseAnim + "Spam";
+		if (animExists(spamAnim))
+			return spamAnim;
+
+		if (baseAnim.startsWith("sing"))
+		{
+			var direction = baseAnim.substr(4).toLowerCase();
+			var shaggyAnim = "s" + direction;
+			if (animExists(shaggyAnim))
+				return shaggyAnim;
+		}
+		return baseAnim;
 	}
 
 	public function animExists(anim:String)

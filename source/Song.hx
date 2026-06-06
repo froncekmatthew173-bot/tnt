@@ -22,6 +22,8 @@ typedef SwagSong =
 	var validScore:Bool;
 	var vocalVolume:Null<Float>;
 	var songVolume:Null<Float>;
+	@:optional var arrowSkin:Null<String>;
+	@:optional var events:Array<Dynamic>;
 }
 
 class Song

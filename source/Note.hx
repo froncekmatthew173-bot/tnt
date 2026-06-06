@@ -24,6 +24,7 @@ class Note extends FlxSprite
 
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
+	public var keyCount:Int = 4;
 	public var trueNoteData:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
@@ -115,7 +116,7 @@ class Note extends FlxSprite
 	}
 
 	public function setupNote(_strumTime:Float, _noteData:Int, ?_editor = false, ?_prevNote:Note, ?_sustainNote:Bool = false, ?_rootNote:Note,
-			noteType:Int = 0, _song = null, _mustHit:Bool = false, _isLeafNote:Bool = false, _sustainLength:Float = 0)
+			noteType:Int = 0, _song = null, _mustHit:Bool = false, _isLeafNote:Bool = false, _sustainLength:Float = 0, _keyCount:Int = 4)
 	{
 		resetStuff();
 
@@ -177,6 +178,7 @@ class Note extends FlxSprite
 
 		noteData = _noteData;
 		trueNoteData = _noteData;
+		keyCount = _keyCount;
 
 		mustPress = _mustHit;
 
@@ -247,11 +249,21 @@ class Note extends FlxSprite
 				{
 					case 0:
 						// frames = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
-						useColorz = true;
-						frames = Paths.getSparrowAtlasFunk('notes/note');
-						animation.addByPrefix('end', 'end', 0, false);
-						animation.addByPrefix('hold', 'hold', 0, false);
-						animation.addByPrefix('Scroll', 'scroll', 0, false);
+						useColorz = !PlayState.usesLetterNotes(keyCount);
+						frames = Paths.getSparrowAtlasFunk('notes/' + PlayState.noteSkin);
+						if (!PlayState.usesLetterNotes(keyCount))
+						{
+							animation.addByPrefix('end', 'end', 0, false);
+							animation.addByPrefix('hold', 'hold', 0, false);
+							animation.addByPrefix('Scroll', 'scroll', 0, false);
+						}
+						else
+						{
+							var letter = PlayState.getLaneLetters(keyCount)[noteData];
+							animation.addByPrefix('Scroll', letter + '0', 0, false);
+							animation.addByPrefix('end', letter + ' tail', 0, false);
+							animation.addByPrefix('hold', letter + ' hold', 0, false);
+						}
 						if (Config.noteGlow)
 						{
 							animation.addByPrefix('active', 'active', 0, false);
@@ -271,9 +283,9 @@ class Note extends FlxSprite
 						loadGraphic(Paths.getImagePNG("notes/scribblenote"));
 				}
 
-				setGraphicSize(Std.int(width * 0.7));
+				setGraphicSize(Std.int(width * PlayState.getKeyScale(keyCount)));
 				updateHitbox();
-				antialiasing = true;
+				antialiasing = !PlayState.noteSkin.toLowerCase().contains("3d");
 		}
 
 		updateAngle();
@@ -283,6 +295,11 @@ class Note extends FlxSprite
 
 		if (!isSustainNote)
 		{
+			if (PlayState.usesLetterNotes(keyCount))
+			{
+				animation.play('Scroll');
+				return;
+			}
 			switch (noteData)
 			{
 				case 0:
@@ -338,7 +355,9 @@ class Note extends FlxSprite
 
 			updateFlip();
 
-			switch (noteData)
+			if (PlayState.usesLetterNotes(keyCount))
+				animation.play('end');
+			else switch (noteData)
 			{
 				case 2:
 					if (useColorz)
@@ -390,7 +409,9 @@ class Note extends FlxSprite
 
 			updateFlip();
 
-			switch (noteData)
+			if (PlayState.usesLetterNotes(keyCount))
+				animation.play('hold');
+			else switch (noteData)
 			{
 				case 2:
 					if (useColorz)
@@ -658,7 +679,7 @@ class Note extends FlxSprite
 
 		if (!specialNote && noteData != 8)
 		{
-			if (canBeHit && Config.noteGlow && !isSustainNote && animation.curAnim.name.contains("Scroll"))
+			if (!PlayState.usesLetterNotes(keyCount) && canBeHit && Config.noteGlow && !isSustainNote && animation.curAnim.name.contains("Scroll"))
 			{
 				if (useColorz)
 				{
@@ -680,7 +701,7 @@ class Note extends FlxSprite
 				}
 			}
 
-			if (tooLate && !isSustainNote && !animation.curAnim.name.contains("Scroll"))
+			if (!PlayState.usesLetterNotes(keyCount) && tooLate && !isSustainNote && !animation.curAnim.name.contains("Scroll"))
 			{
 				if (useColorz)
 				{

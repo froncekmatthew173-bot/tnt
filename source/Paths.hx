@@ -65,9 +65,16 @@ class Paths
 	// 	return file(key, location, "dds");
 	// }
 
-	inline static public function funk(key:String, ?location:String = "images")
+	static public function funk(key:String, ?location:String = "images")
 	{
-		return file(key, location, "funk");
+		var data = file(key, location, "funk");
+		if (location == "images")
+		{
+			var data32 = file(key, "images32", "funk");
+			if (!FileSystem.exists(data) && FileSystem.exists(data32))
+				return data32;
+		}
+		return data;
 	}
 
 	inline static public function xml(key:String, ?location:String = "images")

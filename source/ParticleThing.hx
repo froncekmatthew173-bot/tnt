@@ -122,7 +122,7 @@ class ParticleThing extends GPUParticleSprite
 				}
 			}
 		}
-		_shader.u_stageSizeAlpha.value = [stage.stageWidth, stage.stageHeight, @:privateAccess __worldAlpha];
+		_shader.u_stageSize.value = [stage.stageWidth, stage.stageHeight];
 		_shader.u_loop.value = [duration == -1 ? 1 : 0];
 		if (updateAttr != null)
 			updateAttr.push(_shader.u_time.index);

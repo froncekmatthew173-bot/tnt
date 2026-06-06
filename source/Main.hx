@@ -96,7 +96,7 @@ class Main extends Sprite
 	{
 		super();
 
-		addChild(new FlxGame(0, 0, Startup, 1, 144, 144, true));
+		addChild(new FlxGame(0, 0, Startup, 144, 144, true));
 
 		openfl.Lib.current.stage.application.onExit.add(function(code)
 		{
