@@ -108,14 +108,7 @@ class PlayState extends MusicBeatState
 
 	public static var autoPlay:Bool = false;
 
-	enum BotplayType
-	{
-		Off;
-		Perfect; // current behavior
-		Humanized; // small random timing window
-	}
-
-	public static var botplayType:BotplayType = Perfect;
+	public static var botplayType:Int = 0; // 0 = perfect, 1 = good, 2 = bad, 3 = miss
 
 
 	private var canHit:Bool = false;
