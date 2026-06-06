@@ -1323,6 +1323,7 @@ class ChartingState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.ENTER)
 		{
+			_song.validScore = false;
 			PlayState.SONG = _song;
 			musicStream.stop();
 			vocals.stop();

@@ -297,6 +297,7 @@ class StoryMenuState extends MusicBeatState
 			PlayState.storyWeek = selectedChar;
 			PlayState.returnLocation = "main";
 			PlayState.campaignScore = 0;
+			PlayState.campaignValidScore = true;
 			PlayState.introOnly = true;
 			PlayState.transIcon = Main.characters[selectedChar];
 			PlayState.transColor = Main.characterColors[PlayState.transIcon];

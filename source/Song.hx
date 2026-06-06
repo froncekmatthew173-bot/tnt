@@ -78,8 +78,33 @@ class Song
 
 	public static function parseJSONshit(rawJson:String):SwagSong
 	{
-		var swagShit:SwagSong = cast Json.parse(rawJson).song;
-		swagShit.validScore = true;
-		return swagShit;
+		var root:Dynamic = Json.parse(rawJson);
+		var songData:Dynamic = root != null && Reflect.hasField(root, "song") ? root.song : root;
+
+		// Some community charts omit `validScore` entirely.
+		if (!Reflect.hasField(songData, "validScore"))
+			songData.validScore = true;
+
+		// Haxe typedef casting can throw hard errors when required fields are missing.
+		// Ensure defaults for known required fields.
+		if (!Reflect.hasField(songData, "notes"))
+			songData.notes = [];
+		if (!Reflect.hasField(songData, "bpm"))
+			songData.bpm = 0;
+		if (!Reflect.hasField(songData, "needsVoices"))
+			songData.needsVoices = true;
+		if (!Reflect.hasField(songData, "speed"))
+			songData.speed = 1;
+		if (!Reflect.hasField(songData, "player1"))
+			songData.player1 = 'bf';
+		if (!Reflect.hasField(songData, "player2"))
+			songData.player2 = 'dad';
+		if (!Reflect.hasField(songData, "stage"))
+			songData.stage = '';
+		if (!Reflect.hasField(songData, "gf"))
+			songData.gf = 'gf';
+
+		return cast songData;
 	}
+
 }

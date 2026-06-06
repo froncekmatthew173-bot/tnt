@@ -270,6 +270,7 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxTextThing;
 
 	public static var campaignScore:Int = 0;
+	public static var campaignValidScore:Bool = true;
 
 	var defaultCamZoom:Float = 1.05;
 
@@ -345,10 +346,16 @@ class PlayState extends MusicBeatState
 	public static var validWords:Array<String>;
 
 	var spellPrompts:Array<SpellPrompt> = [];
+	var runValidScore:Bool = false;
 
 	inline function isTypingBotplay():Bool
 	{
 		return autoPlay;
+	}
+
+	inline function isScoreValid():Bool
+	{
+		return runValidScore;
 	}
 
 
@@ -452,6 +459,7 @@ class PlayState extends MusicBeatState
 		FlxG.mouse.visible = false;
 		PlayerSettings.gameControls();
 		autoPlay = Config.botplay;
+		runValidScore = SONG != null && SONG.validScore && !autoPlay && !sectionStart;
 
 		// resetChatData();
 
@@ -4873,7 +4881,8 @@ class PlayState extends MusicBeatState
 		musicStream.volume = 0;
 		bfVoice.volume = 0;
 		dadVoice.volume = 0;
-		if (SONG.validScore)
+		var validScore = isScoreValid();
+		if (validScore)
 		{
 			#if !switch
 			Highscore.saveScore(SONG.song, songScore, curDifficulty);
@@ -4883,6 +4892,7 @@ class PlayState extends MusicBeatState
 		if (isStoryMode)
 		{
 			campaignScore += songScore;
+			campaignValidScore = campaignValidScore && validScore;
 
 			storyPlaylist.remove(storyPlaylist[0]);
 			storyDifficulties.remove(storyDifficulties[0]);
@@ -4903,7 +4913,7 @@ class PlayState extends MusicBeatState
 				// if ()
 				// StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
-				if (SONG.validScore)
+				if (campaignValidScore)
 				{
 					Highscore.saveWeekScore(storyWeek, campaignScore, 5);
 				}
