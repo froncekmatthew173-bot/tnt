@@ -170,6 +170,7 @@ class Main extends Sprite
 		characterColors["pump"] = 0xd57e00;
 		characterColors["senpai"] = 0xfac146;
 		characterColors["tankman"] = 0x383838;
+		characterColors["shaggy"] = 0x2b5648;
 		charToSong["prisma"] = "Fresnel";
 		charToSong["prisma2"] = "SiO2";
 

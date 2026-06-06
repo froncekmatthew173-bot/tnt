@@ -1516,7 +1516,7 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case '3d':
-				posChar(dad, -1660, -550);
+				posChar(dad, -220, -120);
 			case 'tankStage':
 				posChar(dad, 240, 850);
 			case 'prismaStage':
@@ -1528,7 +1528,7 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case '3d':
-				posChar(boyfriend, -100, -33.67);
+				posChar(boyfriend, 1250, 550);
 			case 'limo':
 				posChar(boyfriend, 1250, 630);
 			case 'tankStage':
@@ -1542,7 +1542,7 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case '3d':
-				posChar(gf, -850, -165.66);
+				posChar(gf, 400, 130);
 			case 'tankStage':
 				posChar(gf, 568, 778);
 			case 'prismaStage':

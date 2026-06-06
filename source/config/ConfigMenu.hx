@@ -239,9 +239,10 @@ class ConfigMenu extends MusicBeatState
 				changeItem(1);
 			}
 
-			switch (configSelected)
+				switch (configSelected)
 			{
 				case 0: // Offset
+
 					if (controls.RIGHT_P)
 					{
 						FlxG.sound.play(Paths.sound('scrollMenu'));

@@ -3,12 +3,11 @@
 
 // Disable opus/libopus backend for this build to avoid link-time missing symbols.
 // (Link errors currently show unresolved `op_*` functions from libopus/opusfile.)
-#define MA_NO_LIBOPUS
-#define MA_NO_OPUS
+// Enable opus/libopus backend.
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
-// Don’t include the libopus backend header when opus is disabled.
-// #include "extras/miniaudio_libopus.h"
+#include "extras/miniaudio_libopus.h"
+
 
 
 
@@ -156,13 +155,18 @@ ma_sound *loadSound(ma_engine *engine, const char *path, ma_sound_group *group =
 {
     ma_result result;
     ma_sound *sound = (ma_sound *)malloc(sizeof(ma_sound));
+
     result = ma_sound_init_from_file(engine, path, MA_SOUND_FLAG_STREAM | MA_SOUND_FLAG_NO_SPATIALIZATION, group, NULL, sound);
     if (result != MA_SUCCESS)
     {
-        return NULL; // Failed to load sound.
+        printf("ma_sound_init_from_file failed for %s with ma_result=%d\n", path, (int)result);
+        free(sound);
+        return NULL;
     }
+
     return sound;
 }
+
 
 void destroySound(ma_sound *sound)
 {
