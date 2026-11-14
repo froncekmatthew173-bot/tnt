@@ -1,0 +1,6 @@
+[submodule "mods/wednesdays-infidelity"]
+	path = mods/wednesdays-infidelity
+	url = https://github.com/lunarcleint/Wednesdays-Infidelity.git
+[submodule "mods/hypnos-lullaby-rebooted"]
+	path = mods/hypnos-lullaby-rebooted
+	url = https://github.com/Sans2280448/Hypnos-Lullaby-Rebooted-Decompiled.git
