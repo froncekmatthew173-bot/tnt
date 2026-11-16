@@ -8,7 +8,7 @@
     {
       "name": "hxjsonast",
       "type": "haxelib",
-      "version": null,
+      "version": null
     },
     {
       "name": "compiletime",
@@ -68,7 +68,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/MobilePorting/hxvlc.git"
+      "url": "https://github.com/MAJigsaw77/hxvlc.git"
     },
     {
       "name": "hxcpp",
