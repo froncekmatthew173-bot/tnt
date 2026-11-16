@@ -64,6 +64,10 @@ class PlayerSettings
 
 		menuControls();
 
+		#if mobile
+		Controls.initVirtualControls();
+		#endif
+
 		/*if (numGamepads > 1)
 		{
 			if (player2 == null)
