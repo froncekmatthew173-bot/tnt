@@ -52,6 +52,9 @@ jobs:
       - name: Install Flixel
         run: haxelib install flixel --quiet
 
+      - name: Install Flixel Addons
+        run: haxelib install flixel-addons --quiet
+
       - name: Setup Android SDK
         if: inputs.os == 'ubuntu-latest'
         run: |
