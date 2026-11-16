@@ -21,7 +21,6 @@ on:
 
 env:
   HAXE_VERSION: 4.3.6
-  PROJECT_NAME: TNT
 
 jobs:
   build:
@@ -46,7 +45,7 @@ jobs:
       - name: Install Libraries
         run: |-
           haxelib install hmm 
-          cd /home/runner/work/tnt/tnt && haxelib run hmm setup 
+          haxelib run hmm setup 
           haxelib run hmm install 
 
       - name: Install Flixel
