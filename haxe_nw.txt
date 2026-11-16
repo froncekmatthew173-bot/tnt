@@ -1,3 +1,0 @@
-source/PlayState.hx:7164: lines 7164-7204 : Warning : switchTo is deprecated, use startOutro
-source/PlayState.hx:2326: characters 6-65 : Float should be Int
-source/config/AutoOffsetState.hx:300: lines 300-305 : Warning : switchTo is deprecated, use startOutro
