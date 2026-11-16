@@ -33,11 +33,6 @@ jobs:
             buildArgs: android
             artifactName: androidBuild
             artifactPath: export/android/bin/*
-          - name: HTML5
-            os: ubuntu-latest
-            buildArgs: html5
-            artifactName: html5Build
-            artifactPath: export/html5/bin/*
     uses: ./.github/workflows/build.yml
     with:
         name: ${{ matrix.name }}
