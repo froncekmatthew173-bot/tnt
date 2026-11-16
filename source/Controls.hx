@@ -817,3 +817,11 @@ class Controls extends FlxActionSet
 		return input.device == GAMEPAD && (deviceID == FlxInputDeviceID.ALL || input.deviceID == deviceID);
 	}
 }
+
+#if mobile
+inline static function initVirtualControls()
+{
+	virtualPad = new FlxVirtualPad(FlixelG.ARCADE.width / 2 - 100, FlixelG.ARCADE.height - 200, FlixelG.ARCADE.width / 2 - 50);
+	virtualStick = new FlxVirtualStick(FlixelG.ARCADE.width / 2 - 100, FlixelG.ARCADE.height - 200, FlixelG.ARCADE.width / 2 - 50);
+}
+#end
