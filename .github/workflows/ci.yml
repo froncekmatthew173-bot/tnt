@@ -27,11 +27,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libstdc++6
           haxelib install hxcpp || true
-
-      - name: haxelib setup
-        run: |
-          haxelib --no-lib-paths
-
       - name: Build
         run: |
           # If your project supports "lime build html5" or "lime test" this is the right place.
@@ -57,11 +52,6 @@ jobs:
       - name: Install hxcpp
         run: |
           haxelib install hxcpp || true
-
-      - name: haxelib setup
-        run: |
-          haxelib --no-lib-paths
-
       - name: Build
         run: |
           if [ -f "Project.xml" ]; then
@@ -84,11 +74,6 @@ jobs:
       - name: Install hxcpp
         run: |
           haxelib install hxcpp || true
-
-      - name: haxelib setup
-        run: |
-          haxelib --no-lib-paths
-
       - name: Build
         run: |
           if [ -f "Project.xml" ]; then
