@@ -41,10 +41,16 @@ jobs:
         run: sudo apt install libvlc-dev libvlccore-dev
 
       - name: Install Libraries
+        run: |-
+          haxelib install hmm --quiet 2>/dev/null || true
+          cd /home/runner/work/tnt/tnt && haxelib run hmm setup 2>/dev/null || true
+          haxelib run hmm install --quiet 2>/dev/null || true
+
+      - name: Setup Android SDK
+        if: inputs.os == 'ubuntu-latest'
         run: |
-          haxelib install hmm --quiet
-          haxelib run hmm setup
-          haxelib run hmm install --quiet
+          sdkmanager "platforms;android-33" "build-tools;33.0.2" 2>/dev/null || true
+          echo "ANDROID_SDK_ROOT=${{ runner.temp }}/android" >> $GITHUB_ENV
 
       - name: Compile
         run: haxelib run lime build ${{ inputs.buildArgs }}
