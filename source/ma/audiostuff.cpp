@@ -1,14 +1,18 @@
 #define STB_VORBIS_HEADER_ONLY
 #include "extras/stb_vorbis.c"
 
-#define MA_NO_OPUS
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 #include "extras/miniaudio_libopus.h"
 
+
+
+
 #undef STB_VORBIS_HEADER_ONLY
 #include "extras/stb_vorbis.c"
 
+#if !defined(MA_NO_OPUS) && !defined(MA_NO_LIBOPUS)
+// Custom libopus decoding backend (only compiled when opus is enabled)
 static ma_result ma_decoding_backend_init__libopus(void* pUserData, ma_read_proc onRead, ma_seek_proc onSeek, ma_tell_proc onTell, void* pReadSeekTellUserData, const ma_decoding_backend_config* pConfig, const ma_allocation_callbacks* pAllocationCallbacks, ma_data_source** ppBackend)
 {
     ma_result result;
@@ -82,6 +86,8 @@ static ma_decoding_backend_vtable g_ma_decoding_backend_vtable_libopus =
     NULL, /* onInitMemory() */
     ma_decoding_backend_uninit__libopus
 };
+#endif
+
 
 ma_resource_manager *init_resource()
 {
@@ -100,20 +106,28 @@ ma_engine *init(ma_resource_manager *resourceManager)
     ma_engine_config engineConfig;
     ma_engine *engine = (ma_engine *)malloc(sizeof(ma_engine));
 
+    // Only register custom backends if opus is enabled.
+#if !defined(MA_NO_OPUS) && !defined(MA_NO_LIBOPUS)
     ma_decoding_backend_vtable* pCustomBackendVTables[] =
     {
         &g_ma_decoding_backend_vtable_libopus
     };
 
-
     resourceManagerConfig = ma_resource_manager_config_init();
     resourceManagerConfig.ppCustomDecodingBackendVTables = pCustomBackendVTables;
     resourceManagerConfig.customDecodingBackendCount = sizeof(pCustomBackendVTables) / sizeof(pCustomBackendVTables[0]);
+#else
+    resourceManagerConfig = ma_resource_manager_config_init();
+    resourceManagerConfig.ppCustomDecodingBackendVTables = NULL;
+    resourceManagerConfig.customDecodingBackendCount = 0;
+#endif
+
     resourceManagerConfig.pCustomDecodingBackendUserData = NULL;
 
     result = ma_resource_manager_init(&resourceManagerConfig, resourceManager);
     if (result != MA_SUCCESS) {
-        printf("Failed to initialize resource manager.");
+        printf("Failed to initialize resource manager with ma_result=%d.\n", (int)result);
+        free(engine);
         return NULL;
     }
 
@@ -122,7 +136,9 @@ ma_engine *init(ma_resource_manager *resourceManager)
 
     result = ma_engine_init(&engineConfig, engine);
     if (result != MA_SUCCESS) {
-        printf("Failed to initialize engine.");
+        printf("Failed to initialize engine with ma_result=%d.\n", (int)result);
+        ma_resource_manager_uninit(resourceManager);
+        free(engine);
         return NULL;
     }
 
@@ -139,13 +155,18 @@ ma_sound *loadSound(ma_engine *engine, const char *path, ma_sound_group *group =
 {
     ma_result result;
     ma_sound *sound = (ma_sound *)malloc(sizeof(ma_sound));
+
     result = ma_sound_init_from_file(engine, path, MA_SOUND_FLAG_STREAM | MA_SOUND_FLAG_NO_SPATIALIZATION, group, NULL, sound);
     if (result != MA_SUCCESS)
     {
-        return NULL; // Failed to load sound.
+        printf("ma_sound_init_from_file failed for %s with ma_result=%d\n", path, (int)result);
+        free(sound);
+        return NULL;
     }
+
     return sound;
 }
+
 
 void destroySound(ma_sound *sound)
 {

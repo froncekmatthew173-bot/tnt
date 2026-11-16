@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  buildLinux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Haxe/FNF build tooling varies widely between forks.
+      # This workflow focuses on a lightweight compile check if hxcpp exists.
+      # If you have a custom build script, replace the "Build" step.
+
+      - name: Set up Haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: '4.3.4'
+
+      - name: Install hxcpp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libstdc++6
+          haxelib install hxcpp || true
+
+      - name: haxelib setup
+        run: |
+          haxelib --no-lib-paths
+
+      - name: Build
+        run: |
+          # If your project supports "lime build html5" or "lime test" this is the right place.
+          # Project.xml exists, but the exact target may differ.
+          if [ -f "Project.xml" ]; then
+            # Try Linux target first (works in many Haxe/Lime projects).
+            lime build linux || lime build html5
+          else
+            echo "Project.xml not found; skipping build"
+          fi
+  buildWindows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: '4.3.4'
+
+      - name: Install hxcpp
+        run: |
+          haxelib install hxcpp || true
+
+      - name: haxelib setup
+        run: |
+          haxelib --no-lib-paths
+
+      - name: Build
+        run: |
+          if [ -f "Project.xml" ]; then
+            lime build windows || lime build html5
+          else
+            echo "Project.xml not found; skipping build"
+          fi
+  buildMac:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: '4.3.4'
+
+      - name: Install hxcpp
+        run: |
+          haxelib install hxcpp || true
+
+      - name: haxelib setup
+        run: |
+          haxelib --no-lib-paths
+
+      - name: Build
+        run: |
+          if [ -f "Project.xml" ]; then
+            lime build mac || lime build html5
+          else
+            echo "Project.xml not found; skipping build"
+          fi

@@ -23,7 +23,7 @@ class Config
 	public static var arrowColors:ColorzJSON;
 	public static var comboParticles:Bool = false;
 	public static var scrollSpeed:Float;
-	public static var maniaConverter:Bool;
+	public static var botplay:Bool = false;
 
 	public static function resetSettings():Void
 	{
@@ -42,7 +42,7 @@ class Config
 		resetArrowColors();
 		FlxG.save.data.comboParticles = true;
 		FlxG.save.data.scrollSpeed = 0;
-		FlxG.save.data.maniaConverter = false;
+		FlxG.save.data.botplay = false;
 		reload();
 	}
 
@@ -68,11 +68,6 @@ class Config
 				"inner": "f9393f",
 				"outer": "651038",
 				"base": "ffffff"
-			},
-			"space": {
-				"inner": "999999",
-				"outer": "201e31",
-				"base": "ffffff"
 			}
 		};
 		arrowColors = FlxG.save.data.arrowColors;
@@ -94,16 +89,14 @@ class Config
 		noteSplash = FlxG.save.data.noteSplash;
 		fpsDisplayValue = FlxG.save.data.fpsDisplayValue;
 		arrowColors = FlxG.save.data.arrowColors;
-		if (arrowColors != null && arrowColors.space == null)
-			arrowColors.space = {inner: "f1c40f", outer: "7a5a06", base: "ffffff"};
 		comboParticles = FlxG.save.data.comboParticles;
 		scrollSpeed = FlxG.save.data.scrollSpeed;
-		maniaConverter = FlxG.save.data.maniaConverter;
+		botplay = FlxG.save.data.botplay;
 	}
 
 	public static function write(offsetW:Float, accuracyW:String, healthMultiplierW:Float, healthDrainMultiplierW:Float, comboTypeW:Int, downscrollW:Bool,
 			noteGlowW:Bool, ghostTapTypeW:Int, noFpsCapW:Bool, controllerSchemeW:Int, bgDimW:Int, noteSplash:Bool, fpsDisplayValue:Int,
-			arrowColors:ColorzJSON, comboParticles:Bool, scrollSpeed:Float, maniaConverter:Bool):Void
+			arrowColors:ColorzJSON, comboParticles:Bool, scrollSpeed:Float, botplay:Bool):Void
 	{
 		FlxG.save.data.offset = offsetW;
 		FlxG.save.data.accuracy = accuracyW;
@@ -121,7 +114,7 @@ class Config
 		FlxG.save.data.arrowColors = arrowColors;
 		FlxG.save.data.comboParticles = comboParticles;
 		FlxG.save.data.scrollSpeed = scrollSpeed;
-		FlxG.save.data.maniaConverter = maniaConverter;
+		FlxG.save.data.botplay = botplay;
 
 		FlxG.save.flush();
 
@@ -164,10 +157,8 @@ class Config
 			FlxG.save.data.comboParticles = true;
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 0;
-		if (FlxG.save.data.maniaConverter == null)
-			FlxG.save.data.maniaConverter = false;
 
-		if (FlxG.save.data.ee1 == null)
-			FlxG.save.data.ee1 = false;
+	    if (FlxG.save.data.botplay == null)
+			FlxG.save.data.botplay = false;
 	}
 }

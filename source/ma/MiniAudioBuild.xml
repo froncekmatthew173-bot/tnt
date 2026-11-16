@@ -7,6 +7,7 @@
 	</files>
 
 	<target id='haxe' tool='linker' toolid='exe'>
+		<!-- The custom miniaudio backend uses libopusfile, which also depends on libopus and libogg. -->
 		<lib name='${PROJECT_DIR}/lib/libogg.lib' if='windows HXCPP_M64' />
 		<lib name='${PROJECT_DIR}/lib/opus.lib' if='windows HXCPP_M64' />
 		<lib name='${PROJECT_DIR}/lib/opusfile.lib' if='windows HXCPP_M64' />

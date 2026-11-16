@@ -34,8 +34,6 @@ class Main extends Sprite
 
 	public static var lol:AudioStreamThing;
 
-	public static var god:Bool = false;
-
 	public static function addCharacter(who:String, name:String, quote:String, desc:String, song:String, color:FlxColor = FlxColor.WHITE, ?credit:String)
 	{
 		characters.push(who);
@@ -165,18 +163,6 @@ class Main extends Sprite
 		addCharacter("atlanta", "Atlanta", "I'm pretty so-Fish-ticated myself!",
 			"A literal fish out of water, she's trying her best to fit in with the land-dwellers. All while cracking fish puns in every sentence, she can be pretty obnoxious at times.",
 			"Tune-A-Fish", 0x4c6b9b, "Ket Overkill");
-		addCharacter("shaggy", "Shaggy", "Like, let's do this!",
-			"A laid-back hero who brings more keys to the battle as the songs get tougher.",
-			"Where-are-you", 0x33724a, "The Shaggy Mod team");
-		addCharacter("shaggy3d", "Shaggy 3D", "Like, I'm in 3D now!",
-			"A 3D-rendered version of Shaggy with ultra instinct powers.",
-			"Where-are-you", 0x2bb673, "The Shaggy Mod team");
-		addCharacter("bloxbi", "Bloxbi", "I'm a blob!",
-			"A friendly blob who loves to dance and sing.",
-			"Places", 0x31b0d1, "The Places Mod team");
-		addCharacter("bf-places", "Boyfriend (Places)", "Beep.",
-			"A version of Boyfriend from the Places mod.",
-			"Places", 0x31b0d1, "The Places Mod team");
 
 		characterColors["gf"] = 0xa5004d;
 		characterColors["prisma"] = 0x9fd5ed;
@@ -184,9 +170,7 @@ class Main extends Sprite
 		characterColors["pump"] = 0xd57e00;
 		characterColors["senpai"] = 0xfac146;
 		characterColors["tankman"] = 0x383838;
-		characterColors["bf-pixel"] = 0x31b0d1;
-		characterColors["shaggy"] = 0x7034e0;
-		characterColors["shaggy3d"] = 0x33724a;
+		characterColors["shaggy"] = 0x2b5648;
 		charToSong["prisma"] = "Fresnel";
 		charToSong["prisma2"] = "SiO2";
 
@@ -197,17 +181,6 @@ class Main extends Sprite
 		setCampaign("mom", ["pico", "dad", "spooky", "atlanta", "bf", "lily", "prisma"], ["easy", "easy", "normal", "normal", "hard", "hard", "normal"]);
 		setCampaign("lily", ["bf", "atlanta", "dad", "mom", "pico", "spooky", "prisma2"], ["easy", "easy", "normal", "normal", "hard", "hard", "normal"]);
 		setCampaign("atlanta", ["mom", "spooky", "bf", "dad", "lily", "pico", "prisma2"], ["easy", "easy", "normal", "normal", "hard", "hard", "normal"]);
-		setCampaign("prisma", ["bf", "dad", "spooky", "pico", "mom", "lily", "atlanta"], ["easy", "easy", "normal", "normal", "hard", "hard", "normal"]);
-		setCampaign("shaggy", ["spooky", "pico", "atlanta", "lily", "mom", "dad", "prisma2"], ["easy", "easy", "normal", "normal", "hard", "hard", "normal"]);
-
-		characterColors["shaggy"] = 0x7034e0;
-		characterColors["shaggy3d"] = 0x2bb673;
-		characterColors["sshaggy"] = 0x54317c;
-		characterColors["rshaggy"] = 0xd11a1a;
-		characterColors["pshaggy"] = 0x4b3372;
-		characterColors["zshaggy"] = 0x3f7a76;
-		characterColors["wbshaggy"] = 0x7027ad;
-		characterColors["spamton"] = 0x28389d;
 	}
 
 	public static function changeFramerate(newRate:Int)

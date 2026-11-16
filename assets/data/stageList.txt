@@ -9,3 +9,4 @@ atlantaStage
 tankStage
 prismaStage
 prismaStage2
+3d

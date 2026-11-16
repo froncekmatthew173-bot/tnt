@@ -1,0 +1,168 @@
+{
+	"events": [
+		[
+			0,
+			[
+				["Set Key Count", "4", "false"],
+				["Hide Stuff", "", ""]
+			]
+		],
+		[
+			29381.4432989691,
+			[
+				["Scroll Speed Change", "true", "2.4"]
+			]
+		],
+		[
+			69278.3505154639,
+			[
+				["Scroll Speed Change", "false", "1"]
+			]
+		],
+		[
+			69355.6701030928,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			69742.2680412371,
+			[
+				["Scroll Speed Change", "false", "1"]
+			]
+		],
+		[
+			69819.587628866,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			70206.1855670103,
+			[
+				["Scroll Speed Change", "false", "1"]
+			]
+		],
+		[
+			70515.4639175258,
+			[
+				["Scroll Speed Change", "false", "3"]
+			]
+		],
+		[
+			70592.7835051546,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			79175.2577319587,
+			[
+				["Scroll Speed Change", "false", "1"]
+			]
+		],
+		[
+			79252.5773195876,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			79639.175257732,
+			[
+				["Scroll Speed Change", "false", "1"]
+			]
+		],
+		[
+			79716.4948453608,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			80103.0927835052,
+			[
+				["Scroll Speed Change", "false", "1"]
+			]
+		],
+		[
+			80412.3711340206,
+			[
+				["Scroll Speed Change", "false", "3"]
+			]
+		],
+		[
+			80489.6907216495,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			89072.1649484536,
+			[
+				["Scroll Speed Change", "true", "1"]
+			]
+		],
+		[
+			108788.659793814,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			108865.979381443,
+			[
+				["Set Key Count", "5", "false"]
+			]
+		],
+		[
+			118762.886597938,
+			[
+				["Scroll Speed Change", "true", "3"]
+			]
+		],
+		[
+			128659.793814433,
+			[
+				["Scroll Speed Change", "true", "2.2"]
+			]
+		],
+		[
+			208453.608247423,
+			[
+				["Scroll Speed Change", "false", "1"]
+			]
+		],
+		[
+			210927.835051546,
+			[
+				["Set Key Count", "6", "false"]
+			]
+		],
+		[
+			211005.154639175,
+			[
+				["Scroll Speed Change", "false", "5"]
+			]
+		],
+		[
+			211546.391752577,
+			[
+				["Scroll Speed Change", "true", "2.5"]
+			]
+		],
+		[
+			268016.715043539,
+			[
+				["Scroll Speed Change", "true", "2"]
+			]
+		],
+		[
+			287883.345010509,
+			[
+				["Scroll Speed Change", "true", "1"]
+			]
+		]
+	],
+	"format": "psych_v1_convert"
+}
