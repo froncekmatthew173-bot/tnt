@@ -13,6 +13,9 @@ import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
+import flixel.ui.FlxVirtualPad;
+import flixel.ui.FlxVirtualStick;
+
 #if (haxe >= "4.0.0")
 enum abstract Action(String) to String from String
 {
@@ -122,6 +125,10 @@ class Controls extends FlxActionSet
 
 	public var gamepadsAdded:Array<Int> = [];
 	public var keyboardScheme = KeyboardScheme.None;
+	#if mobile
+	public var virtualPad:FlxVirtualPad;
+	public var virtualStick:FlxVirtualStick;
+	#end
 
 	public var UP(get, never):Bool;
 

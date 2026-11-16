@@ -18,6 +18,26 @@ jobs:
             buildArgs: windows
             artifactName: windowsBuild
             artifactPath: export\release\windows\bin\*
+          - name: Linux
+            os: ubuntu-latest
+            buildArgs: linux
+            artifactName: linuxBuild
+            artifactPath: export/linux/bin/*
+          - name: macOS
+            os: macos-latest
+            buildArgs: osx
+            artifactName: macBuild
+            artifactPath: export/macos/bin/*
+          - name: Android
+            os: ubuntu-latest
+            buildArgs: android
+            artifactName: androidBuild
+            artifactPath: export/android/bin/*
+          - name: HTML5
+            os: ubuntu-latest
+            buildArgs: html5
+            artifactName: html5Build
+            artifactPath: export/html5/bin/*
     uses: ./.github/workflows/build.yml
     with:
         name: ${{ matrix.name }}

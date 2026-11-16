@@ -37,7 +37,7 @@ jobs:
           haxe-version: ${{ env.HAXE_VERSION }}
 
       - name: Install libVLC
-        if: inputs.name == 'Linux'
+        if: inputs.os == 'linux-latest'
         run: sudo apt install libvlc-dev libvlccore-dev
 
       - name: Install Libraries
@@ -48,6 +48,12 @@ jobs:
 
       - name: Compile
         run: haxelib run lime build ${{ inputs.buildArgs }}
+
+      - name: Fix RC2104 FNF error (Windows only)
+        if: inputs.os == 'windows-2022'
+        run: |
+          echo "#define FNF" | cat - export/debug/windows/obj/ApplicationMain.rc > /tmp/rc_debug.tmp && mv /tmp/rc_debug.tmp export/debug/windows/obj/ApplicationMain.rc
+          echo "#define FNF" | cat - export/release/windows/obj/ApplicationMain.rc > /tmp/rc_release.tmp && mv /tmp/rc_release.tmp export/release/windows/obj/ApplicationMain.rc
 
       - name: Upload Artifact
         uses: actions/upload-artifact@main
