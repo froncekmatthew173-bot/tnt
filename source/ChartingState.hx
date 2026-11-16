@@ -216,7 +216,11 @@ class ChartingState extends MusicBeatState
 				speed: 1,
 				validScore: false,
 				vocalVolume: 1,
-				songVolume: 1
+				songVolume: 1,
+				audioFolder: null,
+				chartFolder: null,
+				soundfont1: null,
+				soundfont2: null
 			};
 		}
 
@@ -335,7 +339,11 @@ class ChartingState extends MusicBeatState
 				speed: 1,
 				validScore: false,
 				vocalVolume: 1,
-				songVolume: 1
+				songVolume: 1,
+				soundfont1: null,
+				soundfont2: null,
+                chartFolder: null,
+				audioFolder: null
 			};
 
 			FlxG.resetState();
