@@ -43,6 +43,7 @@ jobs:
       - name: Install Libraries
         run: |
           haxelib install hmm --quiet
+          haxelib run hmm setup
           haxelib run hmm install --quiet
 
       - name: Compile
