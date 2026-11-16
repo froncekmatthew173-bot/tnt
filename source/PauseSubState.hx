@@ -60,6 +60,8 @@ class PauseSubState extends MusicBeatSubstate
 			menuItems.insert(2, "Skip Song");
 		}
 
+		menuItems.insert(1, botplayLabel());
+
 		if (!PlayState.isStoryMode)
 		{
 			menuItems.insert(2, "Chart Editor");
@@ -146,6 +148,12 @@ class PauseSubState extends MusicBeatSubstate
 				case "Resume":
 					unpause();
 
+				case "Botplay: ON" | "Botplay: OFF":
+					PlayState.autoPlay = !PlayState.autoPlay;
+					menuItems[curSelected] = botplayLabel();
+					grpMenuText.members[curSelected].text = menuItems[curSelected];
+					FlxG.sound.play(Paths.sound(PlayState.autoPlay ? "scrollfaster" : "scrollslower"), 0.5);
+
 				case "Restart Song":
 					// FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, PlayState.instance.keyDown);
 					// FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, PlayState.instance.keyUp);
@@ -231,6 +239,11 @@ class PauseSubState extends MusicBeatSubstate
 			tween.active = true;
 		}
 		close();
+	}
+
+	function botplayLabel():String
+	{
+		return "Botplay: " + (PlayState.autoPlay ? "ON" : "OFF");
 	}
 
 	override public function destroy()

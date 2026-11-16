@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, why is Red Shaggy so mad all the time?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... why are we fighting, red me?",
+      "face": "f_rsh_normal",
+      "speaker": "rshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! I didn't do anything to you!",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! Calm down, it's just rap.",
+      "face": "f_rsh_normal",
+      "speaker": "rshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Like, do you want a hug instead of a fight?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... can we be red and normal friends?",
+      "face": "f_rsh_normal",
+      "speaker": "rshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Your red eyes are scary, man.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! Why so angry, other me?",
+      "face": "f_rsh_normal",
+      "speaker": "rshaggy",
+      "side": "left"
+    }
+  ]
+}

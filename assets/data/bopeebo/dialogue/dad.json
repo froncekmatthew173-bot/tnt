@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Oh, it's you again.",
+      "speaker": "dad",
+      "face": "mad",
+      "side": "left"
+    },
+    {
+      "line": "You think you can beat me?",
+      "speaker": "dad",
+      "side": "left"
+    },
+    {
+      "line": "Let's see what you've got, boy.",
+      "speaker": "dad",
+      "face": "smirk",
+      "side": "left"
+    }
+  ]
+}

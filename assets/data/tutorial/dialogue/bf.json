@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Hey GF!",
+      "speaker": "bf",
+      "face": "happy",
+      "side": "right"
+    },
+    {
+      "line": "You want to rap battle?",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "Alright, let's go!",
+      "speaker": "bf",
+      "face": "smirk",
+      "side": "right"
+    }
+  ]
+}

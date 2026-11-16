@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Red Shaggy with lightning? Like, intense!",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "The storm is really picking up...",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "I better sing fast before I get struck!",
+      "speaker": "bf",
+      "face": "worried",
+      "side": "right"
+    }
+  ]
+}

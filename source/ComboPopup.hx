@@ -94,10 +94,13 @@ class ComboPopup extends FlxSpriteGroup
 			// var digit = new FlxSprite(numberPosition[0] + (numberInfo.width * numberScale * i),
 			// 	numberPosition[1]).loadGraphic(numberInfo.graphic, true, numberInfo.width, numberInfo.height);
 			var digit = comboPool.recycle(FlxSprite, digitFactory);
+			if (digit == null)
+				continue;
 			digit.setPosition(numberPosition[0] + (numberInfo.width * numberScale * i), numberPosition[1]);
 			digit.setGraphicSize(Std.int(digit.width * numberScale));
 			
-			digit.animation.play(combo.charAt(i));
+			if (digit.animation != null)
+				digit.animation.play(combo.charAt(i));
 
 			add(digit);
 
@@ -142,6 +145,8 @@ class ComboPopup extends FlxSpriteGroup
 
 		// var ratingSprite = new FlxSprite(ratingPosition[0], ratingPosition[1]).loadGraphic(ratingInfo.graphic, true, ratingInfo.width, ratingInfo.height);
 		var ratingSprite = ratingPool.recycle(FlxSprite, ratingFactory);
+		if (ratingSprite == null || ratingSprite.animation == null)
+			return;
 		ratingSprite.setPosition(ratingPosition[0], ratingPosition[1]);
 		ratingSprite.setGraphicSize(Std.int(ratingSprite.width * ratingScale));
 		ratingSprite.animation.play(_rating);

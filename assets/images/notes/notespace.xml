@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="notespace.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="space pressA0000" x="490" y="173" width="165" height="164" frameX="-38" frameY="-45" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="space pressA0001" x="0" y="464" width="165" height="164" frameX="-38" frameY="-45" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="space pressA0002" x="663" y="0" width="153" height="166" frameX="-44" frameY="-51" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="space pressA0003" x="663" y="0" width="153" height="166" frameX="-44" frameY="-51" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="active space0000" x="221" y="243" width="173" height="173" frameX="2" frameY="2" frameWidth="169" frameHeight="169"/>
+	<SubTexture name="space pressB0000" x="0" y="0" width="245" height="243" frameX="0" frameY="-1" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="space pressB0001" x="245" y="0" width="245" height="243" frameX="0" frameY="-1" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="space pressB0002" x="0" y="243" width="221" height="221" frameX="-10" frameY="-17" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="space pressB0003" x="0" y="243" width="221" height="221" frameX="-10" frameY="-17" frameWidth="251" frameHeight="249"/>
+	<SubTexture name="space0000" x="165" y="464" width="157" height="157" frameX="-2" frameY="-1" frameWidth="161" frameHeight="160"/>
+	<SubTexture name="space0001" x="165" y="464" width="157" height="157" frameX="-2" frameY="-1" frameWidth="161" frameHeight="160"/>
+	<SubTexture name="arrowSPACE0000" x="490" y="0" width="173" height="173" frameX="2" frameY="2" frameWidth="169" frameHeight="169"/>
+	<SubTexture name="space0002" x="165" y="464" width="157" height="157" frameX="-2" frameY="-1" frameWidth="161" frameHeight="160"/>
+	<SubTexture name="space0003" x="165" y="464" width="157" height="157" frameX="-2" frameY="-1" frameWidth="161" frameHeight="160"/>
+</TextureAtlas>

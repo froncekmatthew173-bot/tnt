@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, what even are you, Spamton? A big shot?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Now [BIG SHOT] QUIET, MUTT!",
+      "face": "default",
+      "speaker": "spamton",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Your voice glitches out, like, a lot.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "[ADD] A DOG TO THE BLOCK LIST!",
+      "face": "default",
+      "speaker": "spamton",
+      "side": "left"
+    },
+    {
+      "line": "Like, are you a robot or a salesman?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "[LIGHTNER] YOU TALK TOO MUCH!",
+      "face": "default",
+      "speaker": "spamton",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Now I have a headache, man.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "[SALE] ON SILENCE \u2014 BUY ONE, GET ONE FREE!",
+      "face": "default",
+      "speaker": "spamton",
+      "side": "left"
+    }
+  ]
+}

@@ -23,7 +23,10 @@ class StoryStageState extends UIStateExt
 
 	override function create()
 	{
-		SoundFontThing.asyncSongGen();
+		if (PlayState.usesStreamedVocals(PlayState.SONG))
+			PlayState.p1WriteDone = PlayState.p2WriteDone = true;
+		else
+			SoundFontThing.asyncSongGen();
 		// openfl.Lib.current.stage.frameRate = 144;
 		Main.changeFramerate(144);
 		customTransIn = new IconIn(0.5, PlayState.transIcon, PlayState.transColor, "png");
@@ -64,8 +67,10 @@ class StoryStageState extends UIStateExt
 		add(diffText);
 		add(diffText2);
 
-		var prevName = (curIndex == 0 ? " " : Main.characterNames[Main.characters.indexOf(foes[curIndex - 1])]);
-		var name = Main.characterNames[Main.characters.indexOf(PlayState.SONG.player2)];
+		var prevNameIndex = curIndex == 0 ? -1 : Main.characters.indexOf(foes[curIndex - 1]);
+		var nameIndex = Main.characters.indexOf(PlayState.SONG.player2);
+		var prevName = curIndex == 0 ? " " : (prevNameIndex >= 0 ? Main.characterNames[prevNameIndex] : foes[curIndex - 1].toUpperCase());
+		var name = nameIndex >= 0 ? Main.characterNames[nameIndex] : PlayState.SONG.player2.toUpperCase();
 		nameText = new FontAtlasThing(Paths.getSparrowAtlasFunk("fnt/font3"), FlxG.camera, true);
 		nameText.text = prevName;
 		nameText.y = FlxG.height / 2 + 100 - nameText.height / 2;

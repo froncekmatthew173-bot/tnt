@@ -100,6 +100,18 @@ class Paths
 			return file(key, "music", audioExtension);
 	}
 
+	inline static public function voices(song:String)
+	{
+		if (song.toLowerCase() == "final-destination" && Main.god)
+		{
+			return 'songs:assets/music/shaggy/${song.toLowerCase()}/GodVoice.$audioExtension';
+		}
+		else
+		{
+			return 'songs:assets/music/shaggy/${song.toLowerCase()}/Voices.$audioExtension';
+		}
+	}
+
 	inline static public function getSparrowAtlas(key:String)
 	{
 		return FlxAtlasFrames.fromSparrow(image(key), xml(key));

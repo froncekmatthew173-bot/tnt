@@ -1,0 +1,19 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Another challenger?",
+      "speaker": "senpai",
+      "side": "left"
+    },
+    {
+      "line": "You dare challenge me?",
+      "speaker": "senpai",
+      "side": "left"
+    },
+    {
+      "line": "I will destroy you.",
+      "speaker": "senpai",
+      "side": "left"
+    }
+  ]
+}

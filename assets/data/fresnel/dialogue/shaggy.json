@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, you're really... triangular, Prismy!",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Silence, creature. I am superior to you.",
+      "face": "irate",
+      "speaker": "prisma",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! I don't like your dimension, man.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Your chatter bores me, dog.",
+      "face": "irate",
+      "speaker": "prisma",
+      "side": "left"
+    },
+    {
+      "line": "Like, are you made of paper or something?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I am a perfect 2D being, not your toy.",
+      "face": "irate",
+      "speaker": "prisma",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Your voice echoes, like, a lot.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Stop talking and lose already.",
+      "face": "mad2",
+      "speaker": "prisma",
+      "side": "left"
+    }
+  ]
+}

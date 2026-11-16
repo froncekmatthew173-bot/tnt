@@ -1,22 +1,27 @@
 {
-  "left":{
-    "inner":"c24b99",
-    "outer":"3c1f56",
-    "base":"ffffff"
+  "left": {
+    "inner": "c24b99",
+    "outer": "3c1f56",
+    "base": "ffffff"
   },
-  "down":{
-    "inner":"00ffff",
-    "outer":"1542b7",
-    "base":"ffffff"
+  "down": {
+    "inner": "00ffff",
+    "outer": "1542b7",
+    "base": "ffffff"
   },
-  "up":{
-    "inner":"12fa05",
-    "outer":"0a4447",
-    "base":"ffffff"
+  "up": {
+    "inner": "12fa05",
+    "outer": "0a4447",
+    "base": "ffffff"
   },
-  "right":{
-    "inner":"f9393f",
-    "outer":"651038",
-    "base":"ffffff"
+  "right": {
+    "inner": "f9393f",
+    "outer": "651038",
+    "base": "ffffff"
+  },
+  "space": {
+    "inner": "f1c40f",
+    "outer": "7a5a06",
+    "base": "ffffff"
   }
 }

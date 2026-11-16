@@ -1,0 +1,19 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Listen up, kid.",
+      "speaker": "tankman",
+      "side": "left"
+    },
+    {
+      "line": "You don't stand a chance.",
+      "speaker": "tankman",
+      "side": "left"
+    },
+    {
+      "line": "Get out of my way.",
+      "speaker": "tankman",
+      "side": "left"
+    }
+  ]
+}

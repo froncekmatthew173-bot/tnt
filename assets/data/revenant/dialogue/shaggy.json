@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, are those kids in costumes? Zoinks!",
+      "speaker": "shaggy",
+      "face": "f_sh_con",
+      "side": "right"
+    },
+    {
+      "line": "Hello there! We're Skid and Pump!",
+      "speaker": "skid",
+      "face": "default",
+      "side": "left"
+    },
+    {
+      "line": "And we're here for Spooky Month!",
+      "speaker": "pump",
+      "face": "default",
+      "side": "left"
+    },
+    {
+      "line": "Like, I just want Scooby Snacks, not candy.",
+      "speaker": "shaggy",
+      "face": "f_sh_normal",
+      "side": "right"
+    },
+    {
+      "line": "Do you want to do the spooky dance with us?",
+      "speaker": "skid",
+      "face": "happy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! I don't know any spooky dances!",
+      "speaker": "shaggy",
+      "face": "f_sh_con",
+      "side": "right"
+    },
+    {
+      "line": "It's easy! Just move your bones like this!",
+      "speaker": "pump",
+      "face": "happy",
+      "side": "left"
+    },
+    {
+      "line": "Like, alright, let's rap instead. Less dancing.",
+      "speaker": "shaggy",
+      "face": "f_sh_normal",
+      "side": "right"
+    }
+  ]
+}

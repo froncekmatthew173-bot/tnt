@@ -111,6 +111,9 @@ class ModelView
 
 	public function destroy()
 	{
+		if (view == null)
+			return;
+
 		cameraController = null;
 		_lookAtPosition = null;
 		if (view.camera != null)
@@ -137,18 +140,19 @@ class ModelView
 			sprite.graphic.destroy();
 		}
 		sprite = FlxDestroyUtil.destroy(sprite);
-		for (i in 0...view.scene.numChildren)
+		while (view.scene != null && view.scene.numChildren > 0)
 		{
-			if (view.scene.getChildAt(i) != null)
+			var child = view.scene.getChildAt(0);
+			if (child != null)
 			{
-				view.scene.getChildAt(i).disposeWithChildren();
-				view.scene.removeChildAt(i);
+				child.disposeWithChildren();
 			}
+			view.scene.removeChildAt(0);
 		}
 		FlxG.removeChild(view);
 		view.dispose();
 		@:privateAccess
-		if (fb != null)
+		if (fb != null && FlxG.stage != null && FlxG.stage.context3D != null && FlxG.stage.context3D.gl != null)
 		{
 			FlxG.stage.context3D.gl.deleteFramebuffer(fb);
 			trace("DELETED");

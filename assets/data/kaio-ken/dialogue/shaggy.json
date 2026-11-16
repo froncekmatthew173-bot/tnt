@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, I feel you, other Shaggy. We're the same.",
+      "face": "f_sh_happy",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... we're the same guy, right?",
+      "face": "f_sh_normal",
+      "speaker": "sshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You power up way more than I do.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! This is weird, man.",
+      "face": "f_sh_con",
+      "speaker": "sshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Like, do you also only use 1 percent?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... why are there two of us?",
+      "face": "f_sh_con",
+      "speaker": "sshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Your gold hair is blinding me.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! This is giving me a headache.",
+      "face": "f_sh_con",
+      "speaker": "sshaggy",
+      "side": "left"
+    }
+  ]
+}

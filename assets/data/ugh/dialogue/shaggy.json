@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, that's a really big tank you're in.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Listen up, mutt. You're in my way.",
+      "face": "mad",
+      "speaker": "tankman",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! I feel tiny next to you, man.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I don't have time for talking dogs.",
+      "face": "mad",
+      "speaker": "tankman",
+      "side": "left"
+    },
+    {
+      "line": "Like, do you ever get out of that tank?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "My tank will roll right over you.",
+      "face": "mad",
+      "speaker": "tankman",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Your voice booms like thunder.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Sing fast or get crushed, mutt.",
+      "face": "mad",
+      "speaker": "tankman",
+      "side": "left"
+    }
+  ]
+}

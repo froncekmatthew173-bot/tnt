@@ -55,6 +55,7 @@ class ModelThing
 	public var modelView:ModelView;
 
 	public var fullyLoaded:Bool = false;
+	private var destroyed:Bool = false;
 	public var animSpeed:Map<String, Float>;
 	public var noLoopList:Array<String>;
 
@@ -164,6 +165,9 @@ class ModelThing
 
 	private function onAssetComplete(event:Asset3DEvent):Void
 	{
+		if (destroyed || event == null || event.asset == null)
+			return;
+
 		if (event.asset.assetType == Asset3DType.MESH)
 		{
 			mesh = cast(event.asset, Mesh);
@@ -188,6 +192,17 @@ class ModelThing
 
 	private function onResourceComplete(event:LoaderEvent):Void
 	{
+		if (destroyed || mesh == null || animationSet == null || modelView == null)
+		{
+			if (Character.modelMutex && Character.modelMutexThing == this)
+			{
+				Character.modelMutex = false;
+				Character.modelMutexThing = null;
+			}
+			begoneEventListeners();
+			return;
+		}
+
 		if (vertexAnimator == null)
 			vertexAnimator = new VertexAnimator(animationSet);
 		// vertexAnimator.playbackSpeed = animSpeed["default"];
@@ -206,6 +221,9 @@ class ModelThing
 
 	public function render(xPos:Float = 0, yPos:Float = 0, zPos:Float = 0):Void
 	{
+		if (destroyed || mesh == null || modelView == null)
+			return;
+
 		mesh.y = yPos;
 		mesh.x = xPos;
 		mesh.z = zPos;
@@ -271,6 +289,11 @@ class ModelThing
 
 	public function destroy()
 	{
+		if (destroyed)
+			return;
+		destroyed = true;
+		begoneEventListeners();
+
 		if (mesh != null)
 		{
 			if (mesh.geometry != null)
@@ -386,15 +409,14 @@ class ModelThing
 		maskMethod = null;
 		animSpeed.clear();
 		animSpeed = null;
-		begoneEventListeners();
 		System.gc();
 	}
 
 	public function begoneEventListeners()
 	{
-		Asset3DLibrary.stopLoad();
 		Asset3DLibrary.removeEventListener(Asset3DEvent.ASSET_COMPLETE, onAssetComplete);
 		Asset3DLibrary.removeEventListener(LoaderEvent.RESOURCE_COMPLETE, onResourceComplete);
+		Asset3DLibrary.stopLoad();
 	}
 
 	public function addYaw(angle:Float)

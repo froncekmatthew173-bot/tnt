@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Hi boyfriend!",
+      "speaker": "gf",
+      "face": "happy",
+      "side": "left"
+    },
+    {
+      "line": "I bet you can't beat me!",
+      "speaker": "gf",
+      "side": "left"
+    },
+    {
+      "line": "Show me what you got!",
+      "speaker": "gf",
+      "face": "unsure",
+      "side": "left"
+    }
+  ]
+}

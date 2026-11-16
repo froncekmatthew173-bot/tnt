@@ -1,0 +1,28 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Zoinks! Like, what is this place?",
+      "speaker": "shaggy",
+      "face": "f_sh_normal",
+      "side": "left"
+    },
+    {
+      "line": "Like, I only want Scooby Snacks...",
+      "speaker": "shaggy",
+      "face": "f_sh_pens",
+      "side": "left"
+    },
+    {
+      "line": "Ruh-roh! This looks dangerous.",
+      "speaker": "shaggy",
+      "face": "f_sh_con",
+      "side": "left"
+    },
+    {
+      "line": "Like, can we just rap and go home?",
+      "speaker": "shaggy",
+      "face": "f_sh_ser",
+      "side": "left"
+    }
+  ]
+}

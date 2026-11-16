@@ -39,6 +39,8 @@ class SongMetaTags extends FlxSpriteGroup
 				"\nNormal";
 			case 2:
 				"\nHard";
+			case 3:
+				"\nGod";
 			default:
 				"";
 		}

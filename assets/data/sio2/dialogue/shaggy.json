@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, another Prisma? Which dimension are you from?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Another mutt? How tedious.",
+      "face": "mad",
+      "speaker": "prisma2",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You look familiar but different.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Your dimension is irrelevant to me.",
+      "face": "mad",
+      "speaker": "prisma2",
+      "side": "left"
+    },
+    {
+      "line": "Like, are you the evil twin or the good twin?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I have better things to do than listen to a dog.",
+      "face": "irate",
+      "speaker": "prisma2",
+      "side": "left"
+    },
+    {
+      "line": "I can't tell you two apart, man.",
+      "face": "f_sh_normal",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You are a glitch in my perfect world.",
+      "face": "mad2",
+      "speaker": "prisma2",
+      "side": "left"
+    }
+  ]
+}

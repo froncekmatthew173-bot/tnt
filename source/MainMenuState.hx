@@ -24,7 +24,7 @@ class MainMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxTypedGroup<FlxSprite>>;
 
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'options', 'credits'];
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'options', 'editors', 'credits'];
 	var optionTweens:Map<FlxSprite, FlxTween>;
 
 	// var versionText:FlxText;
@@ -62,12 +62,15 @@ class MainMenuState extends MusicBeatState
 		for (i in 0...optionShit.length)
 		{
 			var menuItem = new FlxTypedGroup<FlxSprite>();
-			var menuBar = new FlxSprite(-266, 22 + i * 177);
+			var menuBar = new FlxSprite(-266, 14 + i * 138);
 			menuBar.loadGraphic(Paths.getImagePNG("mainmenu/item"));
 			var menuText = new FlxTextThing(0, 0, 765, optionShit[i].toUpperCase());
 			menuText.setFormat(Paths.font("bungee"), 72, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			menuText.setPosition(menuBar.x + menuBar.width / 2 - menuText.width / 2, menuBar.y + menuBar.height / 2 - menuText.height / 2);
-			var menuIcon = new FlxSprite(menuBar.x + menuBar.width + 70, 0).loadGraphic(Paths.getImagePNG("mainmenu/" + optionShit[i].replace(" ", "")));
+			var iconName = optionShit[i].replace(" ", "");
+			if (iconName == "editors")
+				iconName = "options";
+			var menuIcon = new FlxSprite(menuBar.x + menuBar.width + 70, 0).loadGraphic(Paths.getImagePNG("mainmenu/" + iconName));
 			menuIcon.y = menuBar.y + menuBar.height / 2 - menuIcon.height / 2;
 			menuBar.antialiasing = true;
 			menuText.antialiasing = true;
@@ -179,6 +182,8 @@ class MainMenuState extends MusicBeatState
 						case 'options':
 							switchState(new ConfigMenu());
 							trace("options time");
+						case 'editors':
+							switchState(new EditorsMenuState());
 						case 'credits':
 							switchState(new CreditsMenu());
 							// FlxG.resetState();

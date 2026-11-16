@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, are you a zombie? Do you eat brains?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I don't eat dogs. But I might eat your microphone.",
+      "face": "default",
+      "speaker": "lily",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! I only want Scooby Snacks, not people.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You talk too much. I like quiet prey.",
+      "face": "unsure",
+      "speaker": "lily",
+      "side": "left"
+    },
+    {
+      "line": "Like, why are you so quiet? Are you ok?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You smell like dog food, mutt.",
+      "face": "drowsy",
+      "speaker": "lily",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You stare at me weird, Lily.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Be quiet so I can focus on eating... I mean singing.",
+      "face": "default",
+      "speaker": "lily",
+      "side": "left"
+    }
+  ]
+}

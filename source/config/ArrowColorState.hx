@@ -34,10 +34,10 @@ class ArrowColorState extends MusicBeatState
 		Note.loadColorz("user");
 
 		arrows = new FlxTypedGroup<FlxExtendedSprite>();
-		for (i in 0...4)
+		for (i in 0...5)
 		{
 			var arrow = new ArrowSprite(i);
-			arrow.x = (i + 1) / 5 * FlxG.width - arrow.width / 2;
+			arrow.x = (i + 0.5) / 5 * FlxG.width - arrow.width / 2;
 			arrow.screenCenter(Y);
 			arrow.ID = i;
 			arrows.add(arrow);
@@ -91,7 +91,7 @@ class ArrowColorState extends MusicBeatState
 		FlxG.mouse.visible = false;
 		Config.write(Config.offset, Config.accuracy, Config.healthMultiplier, Config.healthDrainMultiplier, Config.comboType, Config.downscroll,
 			Config.noteGlow, Config.ghostTapType, Config.noFpsCap, Config.controllerScheme, Config.bgDim, Config.noteSplash, Config.fpsDisplayValue,
-			Config.arrowColors, Config.comboParticles, Config.scrollSpeed);
+			Config.arrowColors, Config.comboParticles, Config.scrollSpeed, Config.maniaConverter);
 		switchState(new ConfigMenu());
 	}
 }
@@ -306,8 +306,10 @@ class ArrowChanger extends FlxSubState
 				Config.arrowColors.down;
 			case 2:
 				Config.arrowColors.up;
-			default:
+			case 3:
 				Config.arrowColors.right;
+			default:
+				Config.arrowColors.space;
 		}
 	}
 
@@ -321,8 +323,10 @@ class ArrowChanger extends FlxSubState
 				Config.arrowColors.down;
 			case 2:
 				Config.arrowColors.up;
-			default:
+			case 3:
 				Config.arrowColors.right;
+			default:
+				Config.arrowColors.space;
 		}
 		switch (part)
 		{
@@ -374,22 +378,31 @@ class ArrowSprite extends FlxExtendedSprite
 	override public function new(index:Int)
 	{
 		super();
-		frames = Paths.getSparrowAtlasFunk("notes/note");
-		animation.addByPrefix('Scroll', 'scroll', 0, false);
+		if (index == 4)
+		{
+			// Center "space" key uses the extra-key atlas.
+			frames = Paths.getSparrowAtlasPNG("notes/extrakey");
+			animation.addByPrefix('Scroll', 'arrowSPACE');
+		}
+		else
+		{
+			frames = Paths.getSparrowAtlasFunk("notes/note");
+			animation.addByPrefix('Scroll', 'scroll', 0, false);
+			switch (index)
+			{
+				case 0:
+					angle = 90;
+				case 1:
+					angle = 0;
+				case 2:
+					angle = 180;
+				case 3:
+					angle = 270;
+			}
+		}
 		animation.play("Scroll");
 		antialiasing = true;
-		switch (index)
-		{
-			case 0:
-				angle = 90;
-			case 1:
-				angle = 0;
-			case 2:
-				angle = 180;
-			case 3:
-				angle = 270;
-		}
-		shader = Note.getShader(index, true);
+		shader = Note.getShader(index == 4 ? 4 : index, true);
 		updateHitbox();
 	}
 }

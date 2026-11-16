@@ -1,0 +1,26 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Shaggy?! Where are you?!",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "I didn't expect to see you here, like...",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "You still only using a fraction of your power?",
+      "speaker": "bf",
+      "face": "smirk",
+      "side": "right"
+    },
+    {
+      "line": "Alright Shaggy, let's go!",
+      "speaker": "bf",
+      "side": "right"
+    }
+  ]
+}

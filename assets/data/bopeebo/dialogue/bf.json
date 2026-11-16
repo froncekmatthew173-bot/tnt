@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Hey Dad! I'm here to rap!",
+      "speaker": "bf",
+      "face": "happy",
+      "side": "right"
+    },
+    {
+      "line": "You better watch out, I'm gonna win!",
+      "speaker": "bf",
+      "face": "smirk",
+      "side": "right"
+    },
+    {
+      "line": "Like, this is gonna be fun!",
+      "speaker": "bf",
+      "side": "right"
+    }
+  ]
+}

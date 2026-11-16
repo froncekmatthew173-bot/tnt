@@ -1,0 +1,22 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Zombie Shaggy?! Like, that's just wrong.",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "He smells like... old snacks.",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "I hope he doesn't try to eat me!",
+      "speaker": "bf",
+      "face": "worried",
+      "side": "right"
+    }
+  ]
+}

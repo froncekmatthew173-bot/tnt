@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Who are you supposed to be?",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "You look... triangular.",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "Alright, let's do this!",
+      "speaker": "bf",
+      "face": "smirk",
+      "side": "right"
+    }
+  ]
+}

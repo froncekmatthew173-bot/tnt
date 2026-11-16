@@ -1,0 +1,1167 @@
+{
+    "notes": [
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        },
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        },
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        },
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        },
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        },
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        },
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        },
+        {
+            "sectionNotes": [],
+            "sectionBeats": 4,
+            "mustHitSection": false
+        }
+    ],
+    "events": [
+        {
+            "time": 0,
+            "params": [
+                4,
+                false,
+                true,
+                0
+            ],
+            "name": "Set Key Count"
+        },
+        {
+            "time": 0,
+            "name": "Hey",
+            "params": [
+                "bf-places"
+            ]
+        },
+        {
+            "time": 8000,
+            "name": "Hey",
+            "params": [
+                "bloxbi"
+            ]
+        },
+        {
+            "time": 16000,
+            "name": "Hey",
+            "params": [
+                "bf-places"
+            ]
+        },
+        {
+            "time": 24000,
+            "name": "Hey",
+            "params": [
+                "bloxbi"
+            ]
+        },
+        {
+            "time": 32000,
+            "name": "Hey",
+            "params": [
+                "bf-places"
+            ]
+        },
+        {
+            "time": 0,
+            "params": [],
+            "name": "Hide Stuff"
+        },
+        {
+            "time": 29381.4432989691,
+            "name": "RGB Effect",
+            "params": [
+                "255,0,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 69278.3505154639,
+            "name": "RGB Effect",
+            "params": [
+                "0,255,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 69355.6701030928,
+            "name": "RGB Effect",
+            "params": [
+                "0,0,255",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 69742.2680412371,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 70206.1855670103,
+            "name": "RGB Effect",
+            "params": [
+                "0,255,255",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 70515.4639175258,
+            "name": "RGB Effect",
+            "params": [
+                "255,0,255",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 70592.7835051546,
+            "name": "RGB Effect",
+            "params": [
+                "128,128,128",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 79175.2577319587,
+            "name": "RGB Effect",
+            "params": [
+                "255,165,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 79252.5773195876,
+            "name": "RGB Effect",
+            "params": [
+                "138,43,226",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 79639.175257732,
+            "name": "RGB Effect",
+            "params": [
+                "34,139,34",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 79716.4948453608,
+            "name": "RGB Effect",
+            "params": [
+                "255,20,147",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 80103.0927835052,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,255",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 80412.3711340206,
+            "name": "RGB Effect",
+            "params": [
+                "255,192,203",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 89072.1649484536,
+            "name": "RGB Effect",
+            "params": [
+                "173,216,230",
+                "quad",
+                "InOut",
+                0
+            ]
+        },
+        {
+            "time": 108788.659793814,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,224",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 108865.979381443,
+            "name": "RGB Effect",
+            "params": [
+                "144,238,144",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 118762.886597938,
+            "name": "RGB Effect",
+            "params": [
+                "219,112,147",
+                "quart",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 128659.793814433,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,0",
+                "bounce",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 148000,
+            "name": "RGB Effect",
+            "params": [
+                "255,0,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 160000,
+            "name": "RGB Effect",
+            "params": [
+                "0,255,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 172000,
+            "name": "RGB Effect",
+            "params": [
+                "0,0,255",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 184000,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 196000,
+            "name": "RGB Effect",
+            "params": [
+                "0,255,255",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 208000,
+            "name": "RGB Effect",
+            "params": [
+                "255,0,255",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 220000,
+            "name": "RGB Effect",
+            "params": [
+                "128,128,128",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 232000,
+            "name": "RGB Effect",
+            "params": [
+                "255,165,0",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 244000,
+            "name": "RGB Effect",
+            "params": [
+                "138,43,226",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 256000,
+            "name": "RGB Effect",
+            "params": [
+                "34,139,34",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 268000,
+            "name": "RGB Effect",
+            "params": [
+                "255,20,147",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 276000,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,255",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 280000,
+            "name": "RGB Effect",
+            "params": [
+                "173,216,230",
+                "quad",
+                "InOut",
+                0
+            ]
+        },
+        {
+            "time": 284000,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,224",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 286000,
+            "name": "RGB Effect",
+            "params": [
+                "144,238,144",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 287000,
+            "name": "RGB Effect",
+            "params": [
+                "219,112,147",
+                "bounce",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 287883,
+            "name": "RGB Effect",
+            "params": [
+                "176,196,222",
+                "linear",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 208453.608247423,
+            "name": "RGB Effect",
+            "params": [
+                "176,196,222",
+                "linear",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 210927.835051546,
+            "name": "RGB Effect",
+            "params": [
+                "255,255,255",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 0,
+            "name": "Background Change",
+            "params": [
+                "bg1.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 29381.4432989691,
+            "name": "Background Change",
+            "params": [
+                "bg2.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 69278.3505154639,
+            "name": "Background Change",
+            "params": [
+                "bg3.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 69355.6701030928,
+            "name": "Background Change",
+            "params": [
+                "bg4.png",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 69742.2680412371,
+            "name": "Background Change",
+            "params": [
+                "bg5.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 69819.587628866,
+            "name": "Background Change",
+            "params": [
+                "bg6.png",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 70206.1855670103,
+            "name": "Background Change",
+            "params": [
+                "bg7.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 70515.4639175258,
+            "name": "Background Change",
+            "params": [
+                "bg8.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 70592.7835051546,
+            "name": "Background Change",
+            "params": [
+                "bg9.png",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 79175.2577319587,
+            "name": "Background Change",
+            "params": [
+                "bg10.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 79252.5773195876,
+            "name": "Background Change",
+            "params": [
+                "bg11.png",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 79639.175257732,
+            "name": "Background Change",
+            "params": [
+                "bg12.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 79716.4948453608,
+            "name": "Background Change",
+            "params": [
+                "bg13.png",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 80103.0927835052,
+            "name": "Background Change",
+            "params": [
+                "bg14.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 80412.3711340206,
+            "name": "Background Change",
+            "params": [
+                "bg15.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 80489.6907216495,
+            "name": "Background Change",
+            "params": [
+                "bg16.png",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 89072.1649484536,
+            "name": "Background Change",
+            "params": [
+                "bg17.png",
+                "quad",
+                "InOut",
+                0
+            ]
+        },
+        {
+            "time": 108788.659793814,
+            "name": "Background Change",
+            "params": [
+                "bg18.png",
+                "quad",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 108865.979381443,
+            "name": "Background Change",
+            "params": [
+                "bg19.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 118762.886597938,
+            "name": "Background Change",
+            "params": [
+                "bg20.png",
+                "quart",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 128659.793814433,
+            "name": "Background Change",
+            "params": [
+                "bg21.png",
+                "bounce",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 208453.608247423,
+            "name": "Background Change",
+            "params": [
+                "bg22.png",
+                "linear",
+                "Out",
+                0
+            ]
+        },
+        {
+            "time": 210927.835051546,
+            "name": "Background Change",
+            "params": [
+                "bg1.png",
+                "linear",
+                "In",
+                0
+            ]
+        },
+        {
+            "time": 29381.4432989691,
+            "params": [
+                true,
+                2.4,
+                1,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 69278.3505154639,
+            "params": [
+                false,
+                1,
+                0.25,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 69355.6701030928,
+            "params": [
+                true,
+                2.2,
+                4,
+                "quad",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 69742.2680412371,
+            "params": [
+                false,
+                1,
+                0.25,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 69819.587628866,
+            "params": [
+                true,
+                2.2,
+                4,
+                "quad",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 70206.1855670103,
+            "params": [
+                false,
+                1,
+                0.25,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 70515.4639175258,
+            "params": [
+                false,
+                3,
+                1,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 70592.7835051546,
+            "params": [
+                true,
+                2.2,
+                10,
+                "quad",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 79175.2577319587,
+            "params": [
+                false,
+                1,
+                0.25,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 79252.5773195876,
+            "params": [
+                true,
+                2.2,
+                4,
+                "quad",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 79639.175257732,
+            "params": [
+                false,
+                1,
+                0.25,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 79716.4948453608,
+            "params": [
+                true,
+                2.2,
+                4,
+                "quad",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 80103.0927835052,
+            "params": [
+                false,
+                1,
+                0.25,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 80412.3711340206,
+            "params": [
+                false,
+                3,
+                1,
+                "linear",
+                "In",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 80489.6907216495,
+            "params": [
+                true,
+                2.2,
+                10,
+                "quad",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 89072.1649484536,
+            "params": [
+                true,
+                1,
+                20,
+                "quad",
+                "InOut",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 108788.659793814,
+            "params": [
+                true,
+                2.2,
+                10,
+                "quad",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 108865.979381443,
+            "params": [
+                4,
+                false,
+                true,
+                0
+            ],
+            "name": "Set Key Count"
+        },
+        {
+            "time": 118762.886597938,
+            "params": [
+                true,
+                3,
+                1,
+                "quart",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 128659.793814433,
+            "params": [
+                true,
+                2.2,
+                10,
+                "bounce",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 208453.608247423,
+            "params": [
+                false,
+                1,
+                5,
+                "linear",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 210927.835051546,
+            "params": [
+                4,
+                false,
+                true,
+                0
+            ],
+            "name": "Set Key Count"
+        },
+        {
+            "time": 211005.154639175,
+            "params": [
+                false,
+                5,
+                5,
+                "linear",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 211546.391752577,
+            "params": [
+                true,
+                2.5,
+                5,
+                "linear",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 212203.608247423,
+            "params": [
+                206
+            ],
+            "name": "BPM Change"
+        },
+        {
+            "time": 268016.715043539,
+            "params": [
+                true,
+                2,
+                5,
+                "linear",
+                "Out",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 268089.53057752,
+            "params": [
+                194
+            ],
+            "name": "BPM Change"
+        },
+        {
+            "time": 287883.345010509,
+            "params": [
+                true,
+                1,
+                50,
+                "linear",
+                "InOut",
+                false
+            ],
+            "name": "Scroll Speed Change"
+        },
+        {
+            "time": 148000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 160000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 172000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 184000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 196000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 208000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 220000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 232000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 244000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 256000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 268000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 276000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 280000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 284000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 286000,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        },
+        {
+            "time": 287883,
+            "name": "Logo Popup",
+            "params": [
+                "places/logo.png",
+                "center",
+                3000
+            ]
+        }
+    ],
+    "bpm": 223,
+    "speed": 1.2,
+    "mania": 4,
+    "song": "places",
+    "beatmapId": "places"
+}

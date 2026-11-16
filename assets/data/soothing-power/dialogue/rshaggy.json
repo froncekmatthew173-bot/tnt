@@ -1,0 +1,19 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Grr... Red Shaggy does not like to lose.",
+      "speaker": "rshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Like, why are you making me mad?",
+      "speaker": "rshaggy",
+      "side": "left"
+    },
+    {
+      "line": "You're going down, like, hard!",
+      "speaker": "rshaggy",
+      "side": "left"
+    }
+  ]
+}

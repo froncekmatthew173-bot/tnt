@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, you're really good at this, GF!",
+      "face": "f_sh_happy",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Aww, you're so cute! Want to sing with me?",
+      "face": "happy",
+      "speaker": "gf",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You sing like an angel, like, literally.",
+      "face": "f_sh_happy",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You're funny, Shaggy. I like you.",
+      "face": "happy",
+      "speaker": "gf",
+      "side": "left"
+    },
+    {
+      "line": "Like, want to share some Scooby Snacks after?",
+      "face": "f_sh_happy",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Don't worry, I'll carry us both to victory.",
+      "face": "happy",
+      "speaker": "gf",
+      "side": "left"
+    },
+    {
+      "line": "You're the best girlfriend ever, GF.",
+      "face": "f_sh_happy",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You're adorable when you're nervous.",
+      "face": "unsure",
+      "speaker": "gf",
+      "side": "left"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "His hair is gold... like, SUPER gold!",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "Shaggy went Super Saiyan?!",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "I've got to sing my best to keep up!",
+      "speaker": "bf",
+      "face": "determined",
+      "side": "right"
+    }
+  ]
+}

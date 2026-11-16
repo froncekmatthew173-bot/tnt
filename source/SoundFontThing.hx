@@ -22,7 +22,14 @@ using StringTools;
 
 class SoundFontThing
 {
-	var tsf:RawPointer<TSF>;
+	static inline final SHAGGY_SOUNDFONT_VOCAL_BOOST:Float = 1.25;
+
+	static function shaggyVocalBoost(soundfont:String):Float
+	{
+		return (soundfont == "shaggy" || soundfont == "rshaggy-thunderstorm") ? SHAGGY_SOUNDFONT_VOCAL_BOOST : 4.5;
+	}
+
+	var soundFont:RawPointer<TSF>;
 
 	public var sounds:FlxTypedGroup<FlxSound> = new FlxTypedGroup<FlxSound>();
 	public var globalVolume:Float = 1.0;
@@ -31,25 +38,25 @@ class SoundFontThing
 
 	public function new(path:String)
 	{
-		tsf = TinySoundFont.load_filename(path);
+		soundFont = TinySoundFont.load_filename(path);
 
-		if (tsf == null)
+		if (soundFont == null)
 		{
 			trace("NO SOUNDFONT FOUND. USING DEFAULT.");
-			tsf = TinySoundFont.load_filename("assets/soundfonts/default.sf2");
-			if (tsf == null)
+			soundFont = TinySoundFont.load_filename("assets/soundfonts/default.sf2");
+			if (soundFont == null)
 			{
 				trace("DEFAULT SOUNDFONT MISSING!");
 			}
 		}
 
-		TinySoundFont.set_output(tsf);
-		presetCount = TinySoundFont.preset_count(tsf);
+		TinySoundFont.set_output(soundFont);
+		presetCount = TinySoundFont.preset_count(soundFont);
 	}
 
 	public function getBytes(length:Float, preset_index:Int, key:Int, vel:Float, tuning:Float = 0.0):Array<Int16>
 	{
-		if (tsf == null)
+		if (soundFont == null)
 		{
 			trace("NOT PLAYING. NO SOUNDFONT.");
 			return null;
@@ -57,12 +64,17 @@ class SoundFontThing
 
 		var sampleCount:Int = Math.round(48000 * length);
 		var indexToPlay = (preset_index < presetCount ? preset_index : 0);
-		var dataShort = TinySoundFont.loadToBuffer(tsf, sampleCount, indexToPlay, key, vel, tuning);
-		var dataArray:Array<Int16> = dataShort.toUnmanagedArray(sampleCount);
+		var sampleBuffer = TinySoundFont.loadToBuffer(soundFont, sampleCount, indexToPlay, key, normalizeVelocity(vel), tuning);
+		var dataArray:Array<Int16> = sampleBuffer.toUnmanagedArray(sampleCount);
 
-		// dataShort.destroyArray();
+		// sampleBuffer.destroyArray();
 
 		return dataArray;
+	}
+
+	static function normalizeVelocity(vel:Float):Float
+	{
+		return Math.max(0, Math.min(vel, 1));
 	}
 
 	// public function getBytesNote(note:Note, vol:Float = 1.0):Array<Int16>
@@ -91,15 +103,15 @@ class SoundFontThing
 
 	public function render(length:Float, preset_index:Int, key:Int, vel:Float):FlxSound
 	{
-		if (tsf == null)
+		if (soundFont == null)
 		{
 			trace("NOT PLAYING. NO SOUNDFONT.");
 			return null;
 		}
 
 		var sampleCount:Int = Math.round(48000 * length);
-		var dataShort = TinySoundFont.loadToBuffer(tsf, sampleCount, preset_index, key, vel);
-		var dataArray:Array<Int16> = dataShort.toUnmanagedArray(sampleCount);
+		var sampleBuffer = TinySoundFont.loadToBuffer(soundFont, sampleCount, preset_index, key, normalizeVelocity(vel));
+		var dataArray:Array<Int16> = sampleBuffer.toUnmanagedArray(sampleCount);
 
 		// var bytes:Bytes = Bytes.alloc(sampleCount * 2);
 		// for (i in 0...dataArray.length)
@@ -114,7 +126,7 @@ class SoundFontThing
 			bytes.setUInt16(i * 4 + 2, dataArray[i]);
 		}
 
-		dataShort.destroyArray();
+		sampleBuffer.destroyArray();
 
 		var byteData = ByteArray.fromBytes(bytes);
 
@@ -168,11 +180,11 @@ class SoundFontThing
 
 	public function destroy()
 	{
-		if (tsf == null)
+		if (soundFont == null)
 			return;
 		sounds = FlxDestroyUtil.destroy(sounds);
-		TinySoundFont.cleanup(tsf);
-		tsf = null;
+		TinySoundFont.cleanup(soundFont);
+		soundFont = null;
 	}
 
 	public function stopSounds()
@@ -206,8 +218,8 @@ class SoundFontThing
 		var bfStr:Star<Int16> = Native.malloc(voiceTime * 2);
 		var dadShort:Array<Int16> = Pointer.fromStar(dadStr).toUnmanagedArray(voiceTime);
 		var bfShort:Array<Int16> = Pointer.fromStar(bfStr).toUnmanagedArray(voiceTime);
-		var bfSound = new SoundFontThing("assets/soundfonts/" + song.player1 + ".sf2");
-		var dadSound = new SoundFontThing("assets/soundfonts/" + song.player2 + ".sf2");
+		var bfSound = new SoundFontThing("assets/soundfonts/" + (song.soundfont1 != null ? song.soundfont1 : song.player1) + ".sf2");
+		var dadSound = new SoundFontThing("assets/soundfonts/" + (song.soundfont2 != null ? song.soundfont2 : song.player2) + ".sf2");
 		var volumes = getVolumes(song);
 		var pitchOffsets = getPitches(song);
 		var dadVolume = volumes[0];
@@ -230,7 +242,7 @@ class SoundFontThing
 
 				var sampleTime:Int = Math.floor(note[0] / 1000 * 48000);
 				var length:Float = ((note[6] > 0 ? note[6] : note[2] > 0 ? note[2] : 0) + stepCrochet()) / 1000;
-				var notePreset:Int = (note[4] != null ? note[4] : -1);
+				var notePreset:Int = (note[4] != null ? note[4] : 0);
 				var noteKey:Int = (note[3] != null ? note[3] : 60);
 				var noteVel:Float = (note[5] != null ? note[5] : 1.0);
 
@@ -239,13 +251,15 @@ class SoundFontThing
 
 				if (section.mustHitSection && note[1] <= 3 || !section.mustHitSection && note[1] > 3)
 				{
-					var bytes:Array<Int16> = bfSound.getBytes(length, notePreset, noteKey + bfPitchOffset, noteVel * bfVolume);
+					var bytes:Array<Int16> = bfSound.getBytes(length, notePreset, noteKey + bfPitchOffset,
+						noteVel * bfVolume * shaggyVocalBoost(song.soundfont1 != null ? song.soundfont1 : song.player1));
 					append_short(bfShort, bytes, sampleTime, bytes.length);
 					Pointer.ofArray(bytes).destroyArray();
 				}
 				else if (section.mustHitSection && note[1] > 3 || !section.mustHitSection && note[1] <= 3)
 				{
-					var bytes:Array<Int16> = dadSound.getBytes(length, notePreset, noteKey + dadPitchOffset, noteVel * dadVolume, samePlayers ? 0.1 : 0);
+					var bytes:Array<Int16> = dadSound.getBytes(length, notePreset, noteKey + dadPitchOffset,
+						noteVel * dadVolume * shaggyVocalBoost(song.soundfont2 != null ? song.soundfont2 : song.player2), samePlayers ? 0.1 : 0);
 					append_short(dadShort, bytes, sampleTime, bytes.length);
 					Pointer.ofArray(bytes).destroyArray();
 				}
@@ -297,10 +311,11 @@ class SoundFontThing
 		var bfShort:Array<Int16> = Pointer.fromStar(bfStr).toUnmanagedArray(voiceTime);
 		var player:String = "";
 		if (char == 1)
-			player = song.player1;
+			player = song.soundfont1 != null ? song.soundfont1 : song.player1;
 		else
-			player = song.player2;
+			player = song.soundfont2 != null ? song.soundfont2 : song.player2;
 		var bfSound = new SoundFontThing("assets/soundfonts/" + player + ".sf2");
+		var shaggyBoost = shaggyVocalBoost(player);
 		var volumes = getVolumes(song);
 		var pitchOffsets = getPitches(song);
 		var dadVolume = volumes[0];
@@ -321,7 +336,7 @@ class SoundFontThing
 
 				var sampleTime:Int = Math.floor(note[0] / 1000 * 48000);
 				var length:Float = ((note[6] > 0 ? note[6] : note[2] > 0 ? note[2] : 0) + stepCrochet()) / 1000;
-				var notePreset:Int = (note[4] != null ? note[4] : -1);
+				var notePreset:Int = (note[4] != null ? note[4] : 0);
 				var noteKey:Int = (note[3] != null ? note[3] : 60);
 				var noteVel:Float = (note[5] != null ? note[5] : 1.0);
 
@@ -332,7 +347,7 @@ class SoundFontThing
 				{
 					if (section.mustHitSection && note[1] <= 3 || !section.mustHitSection && note[1] > 3)
 					{
-						var bytes:Array<Int16> = bfSound.getBytes(length, notePreset, noteKey + bfPitchOffset, noteVel * bfVolume);
+						var bytes:Array<Int16> = bfSound.getBytes(length, notePreset, noteKey + bfPitchOffset, noteVel * bfVolume * shaggyBoost);
 						append_short(bfShort, bytes, sampleTime, bytes.length);
 						Pointer.ofArray(bytes).destroyArray();
 					}
@@ -341,7 +356,8 @@ class SoundFontThing
 				{
 					if (section.mustHitSection && note[1] > 3 || !section.mustHitSection && note[1] <= 3)
 					{
-						var bytes:Array<Int16> = bfSound.getBytes(length, notePreset, noteKey + dadPitchOffset, noteVel * dadVolume, samePlayers ? 0.1 : 0);
+						var bytes:Array<Int16> = bfSound.getBytes(length, notePreset, noteKey + dadPitchOffset, noteVel * dadVolume * shaggyBoost,
+							samePlayers ? 0.1 : 0);
 						append_short(bfShort, bytes, sampleTime, bytes.length);
 						Pointer.ofArray(bytes).destroyArray();
 					}
@@ -374,9 +390,10 @@ class SoundFontThing
 
 	static function getVolumes(SONG:SwagSong)
 	{
-		var theSong = SONG.song.split("_")[0];
-		var bfVolume = SONG.vocalVolume;
-		var dadVolume = SONG.vocalVolume;
+		var theSong = SONG.chartFolder != null ? SONG.chartFolder : SONG.song.split("_")[0];
+		var defaultVolume:Float = (SONG.vocalVolume == null ? 1.0 : SONG.vocalVolume);
+		var bfVolume = defaultVolume;
+		var dadVolume = defaultVolume;
 		if (FileSystem.exists(Paths.json(theSong + '/' + "volumes")))
 		{
 			var songVolJson:String = File.getContent(Paths.json(theSong + '/' + "volumes")).trim();
@@ -429,7 +446,7 @@ class SoundFontThing
 
 	static function getPitches(SONG:SwagSong)
 	{
-		var theSong = SONG.song.split("_")[0];
+		var theSong = SONG.chartFolder != null ? SONG.chartFolder : SONG.song.split("_")[0];
 		var bfPitch = 0;
 		var dadPitch = 0;
 		if (FileSystem.exists(Paths.json(theSong + '/' + "pitches")))

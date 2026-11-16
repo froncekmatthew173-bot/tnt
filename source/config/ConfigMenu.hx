@@ -41,6 +41,7 @@ class ConfigMenu extends MusicBeatState
 	var fpsDisplayValue:Int;
 	var comboParticlesValue:Bool;
 	var scrollSpeedValue:Int;
+	var maniaConverterValue:Bool;
 
 	var tabKeys:Array<String> = [];
 
@@ -68,6 +69,7 @@ class ConfigMenu extends MusicBeatState
 		"CONTROLLER SCHEME",
 		"EDIT KEY BINDS",
 		"EDIT NOTE COLORS",
+		"SHAGGY MANIA CONVERTER",
 	];
 
 	// Any descriptions that say TEMP are replaced with a changing description based on the current config setting.
@@ -89,7 +91,8 @@ class ConfigMenu extends MusicBeatState
 		"Shows a FPS counter in the top-left corner",
 		"TEMP",
 		"Change key binds.",
-		"Change the colors of your notes"
+		"Change the colors of your notes",
+		"Automatically convert Shaggy charts to 6/7/9 keys based on note density and types when Shaggy is player 1."
 	];
 
 	final ghostTapDesc:Array<String> = [
@@ -162,6 +165,7 @@ class ConfigMenu extends MusicBeatState
 		splashValue = Config.noteSplash;
 		fpsDisplayValue = Config.fpsDisplayValue;
 		scrollSpeedValue = Std.int(Config.scrollSpeed * 10);
+		maniaConverterValue = Config.maniaConverter;
 
 		var tex = Paths.getSparrowAtlasFunk('FNF_main_menu_assets');
 		var optionTitle:FlxSprite = new FlxSprite(0, 5);
@@ -598,6 +602,13 @@ class ConfigMenu extends MusicBeatState
 						writeToConfig();
 						switchState(new ArrowColorState());
 					}
+
+				case 16: // Shaggy Mania Converter
+					if (controls.RIGHT_P || controls.LEFT_P || controls.ACCEPT)
+					{
+						FlxG.sound.play(Paths.sound('scrollMenu'));
+						maniaConverterValue = !maniaConverterValue;
+					}
 			}
 		}
 		else if (FlxG.keys.pressed.TAB)
@@ -669,6 +680,7 @@ class ConfigMenu extends MusicBeatState
 				configText.addFormat(new FlxTextFormat(0xFFFFFF00), sectionStart, sectionEnd);
 			}
 		}
+		configText.y = 165 - (Math.max(0, configSelected - 9) * 44);
 
 		switch (configSelected)
 		{
@@ -725,6 +737,8 @@ class ConfigMenu extends MusicBeatState
 				return ": " + fpsDisplays[fpsDisplayValue];
 			case 13:
 				return ": " + controlSchemes[scheme];
+			case 16:
+				return ": " + genericOnOff[maniaConverterValue ? 0 : 1];
 		}
 
 		return "";
@@ -769,15 +783,15 @@ class ConfigMenu extends MusicBeatState
 		{
 			case "KADE":
 				Config.write(offsetValue, "complex", 5, 5, 1, downValue, false, 2, noCapValue, scheme, dimValue, splashValue, fpsDisplayValue,
-					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0);
+					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0, maniaConverterValue);
 				exit();
 			case "ROZE":
 				Config.write(offsetValue, "simple", 1, 1, 0, true, true, 0, noCapValue, scheme, dimValue, splashValue, fpsDisplayValue, Config.arrowColors,
-					Config.comboParticles, scrollSpeedValue / 10.0);
+					Config.comboParticles, scrollSpeedValue / 10.0, maniaConverterValue);
 				exit();
 			case "CVAL":
 				Config.write(offsetValue, "simple", 1, 1, comboValue, false, false, 1, noCapValue, scheme, dimValue, splashValue, fpsDisplayValue,
-					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0);
+					Config.arrowColors, Config.comboParticles, scrollSpeedValue / 10.0, maniaConverterValue);
 				exit();
 			case "GOTOHELLORSOMETHING":
 				System.exit(0); // I am very funny.
@@ -787,6 +801,6 @@ class ConfigMenu extends MusicBeatState
 	function writeToConfig()
 	{
 		Config.write(offsetValue, accuracyType, healthValue / 10.0, healthDrainValue / 10.0, comboValue, downValue, false, randomTapValue, noCapValue, scheme,
-			dimValue, splashValue, fpsDisplayValue, Config.arrowColors, comboParticlesValue, scrollSpeedValue / 10.0);
+			dimValue, splashValue, fpsDisplayValue, Config.arrowColors, comboParticlesValue, scrollSpeedValue / 10.0, maniaConverterValue);
 	}
 }

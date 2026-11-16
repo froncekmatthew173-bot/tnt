@@ -9,11 +9,13 @@ typedef SwagSection =
 	var bpm:Int;
 	var changeBPM:Bool;
 	var altAnim:Bool;
+	@:optional var dType:Int;
 }
 
 class Section
 {
 	public var sectionNotes:Array<Dynamic> = [];
+	@:optional public var dType:Int = 0;
 
 	public var lengthInSteps:Int = 16;
 	public var typeOfSection:Int = 0;

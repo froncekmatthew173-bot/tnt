@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, space Shaggy... are you from another galaxy?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... space is quiet, man.",
+      "face": "f_wbsh_normal",
+      "speaker": "wbshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You glow in the dark, man!",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! I hear the cosmos singing.",
+      "face": "f_wbsh_normal",
+      "speaker": "wbshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Like, do aliens like Scooby Snacks?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... do you hear the stars too?",
+      "face": "f_wbsh_normal",
+      "speaker": "wbshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You're way too calm for space.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! Space is really big, man.",
+      "face": "f_wbsh_normal",
+      "speaker": "wbshaggy",
+      "side": "left"
+    }
+  ]
+}

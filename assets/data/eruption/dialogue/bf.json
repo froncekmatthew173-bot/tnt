@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Whoa, is that a volcano or just Shaggy powering up?",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "Like, the heat is getting intense!",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "I better not hold back either!",
+      "speaker": "bf",
+      "face": "determined",
+      "side": "right"
+    }
+  ]
+}

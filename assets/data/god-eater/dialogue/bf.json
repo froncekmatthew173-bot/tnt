@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Whoa... phantom Shaggy?",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "Like, this is some spooky stuff!",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! He looks seriously powerful.",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    }
+  ]
+}

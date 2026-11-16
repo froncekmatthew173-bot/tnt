@@ -16,12 +16,12 @@ class Boyfriend extends Character
 		super(x, y, char, true);
 	}
 
-	override public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
+	override public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0, AllowSpam:Bool = true):Void
 	{
-		super.playAnim(AnimName, Force, Reversed, Frame);
+		super.playAnim(AnimName, Force, Reversed, Frame, AllowSpam);
 		if (shadow != null && shadow.alpha > 0)
 		{
-			shadow.playAnim(AnimName, Force, Reversed, Frame);
+			shadow.playAnim(AnimName, Force, Reversed, Frame, AllowSpam);
 		}
 	}
 

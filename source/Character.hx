@@ -14,6 +14,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
+import haxe.Json;
 
 using StringTools;
 
@@ -38,6 +39,8 @@ class Character extends FlxNestedSkewSprite
 
 	public var camOffsets:Array<Float> = [0, 0];
 	public var posOffsets:Array<Float> = [0, 0];
+	// Per-character health bar RGB, loaded from the shaggy character JSON.
+	public var healthColorArray:Array<Int> = null;
 
 	// 3D
 	public var isModel:Bool = false;
@@ -83,6 +86,83 @@ class Character extends FlxNestedSkewSprite
 
 		switch (curCharacter)
 		{
+
+			case 'rshaggy':
+				// DAD ANIMATION LOADING CODE
+				frames = Paths.getSparrowAtlas('characters/rshaggy');
+				if (Main.god) frames = Paths.getSparrowAtlas('characters/god_shaggy');
+
+				animation.addByPrefix('idle', 'shaggy_idle', 24);
+				animation.addByPrefix('idle2', 'shaggy_idle2', 24);
+				animation.addByPrefix('singUP', 'shaggy_up', 30);
+				animation.addByPrefix('singRIGHT', 'shaggy_right', 30);
+				animation.addByPrefix('singDOWN', 'shaggy_down', 30);
+				animation.addByPrefix('singLEFT', 'shaggy_left', 30);
+
+				addOffset('idle');
+				addOffset('idle2');
+				addOffset("singUP", -6, 0);
+				addOffset("singRIGHT", -20, -40);
+				addOffset("singLEFT", 100, -120);
+				addOffset("singDOWN", 0, -170);
+
+				if (Main.god)
+				{
+					animation.addByPrefix('idle', 'shaggy_idle', 60);
+					animation.addByPrefix('idle2', 'shaggy_idle2', 60);
+				}
+
+				playAnim('idle');
+
+			case 'matt':
+				frames = Paths.getSparrowAtlas('characters/matt');
+				if (Main.god) frames = Paths.getSparrowAtlas('characters/god_matt');
+			
+				animation.addByPrefix('idle', "matt idle", 24, false);
+				animation.addByPrefix('singUP', "matt up new", 24, false);
+				animation.addByPrefix('singDOWN', "matt down new", 24, false);
+				animation.addByPrefix('singLEFT', 'matt left new', 24, false);
+				animation.addByPrefix('singRIGHT', 'matt right new', 24, false);
+
+				animation.addByPrefix('singUPmiss', "matt up miss", 24, false);
+				animation.addByPrefix('singDOWNmiss', "matt down miss", 24, false);
+				animation.addByPrefix('singLEFTmiss', 'matt left miss', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'matt right miss', 24, false);
+
+				addOffset('idle', 0, 70);
+
+				addOffset("singUP", -5, 80);
+				addOffset("singRIGHT", -47, 18);
+				addOffset("singLEFT", 180, 19);
+				addOffset("singDOWN", 64, -20);
+
+				if (isPlayer)
+				{
+					addOffset("singUP", 15, 80);
+					addOffset("singLEFT", 139, 21);
+					addOffset("singRIGHT", -52, 27);
+					addOffset("singDOWN", 87, -16);
+				}
+				addOffset("singUPmiss", 8, 80);
+				addOffset("singLEFTmiss", 153, 26);
+				addOffset("singRIGHTmiss", -23, 23);
+				addOffset("singDOWNmiss", 75, -14);
+
+				if (Main.god)
+				{
+					animation.addByPrefix('singUP', "matt up note", 24, false);
+					animation.addByPrefix('singDOWN', "matt down note", 24, false);
+					animation.addByPrefix('singLEFT', 'matt left note', 24, false);
+					animation.addByPrefix('singRIGHT', 'matt right note', 24, false);
+					
+					addOffset('idle', 0, 0);
+					addOffset("singUP", -105, 136);
+					addOffset("singRIGHT", -133, -51);
+					addOffset("singLEFT", 86, -23);
+					addOffset("singDOWN", -111, 8);
+				}
+
+
 			case 'spirit':
 				frames = Paths.getSparrowAtlasFunk('characters/spirit');
 				animation.addByPrefix('idle', "idle spirit", 24, false);
@@ -361,35 +441,42 @@ class Character extends FlxNestedSkewSprite
 				initFacing = FlxObject.LEFT;
 
 			case 'bf':
-				createAtlas();
-
-				setAtlasAnim('idle', 'BF idle danceF');
-				setAtlasAnim('singUP', 'BF NOTE UPF');
-				setAtlasAnim('singLEFT', 'BF NOTE LEFTF');
-				setAtlasAnim('singRIGHT', 'BF NOTE RIGHTF');
-				setAtlasAnim('singDOWN', 'BF NOTE DOWNF');
-				setAtlasAnim('singUPmiss', 'BF NOTE UP MISSF');
-				setAtlasAnim('singLEFTmiss', 'BF NOTE LEFT MISSF');
-				setAtlasAnim('singRIGHTmiss', 'BF NOTE RIGHT MISSF');
-				setAtlasAnim('singDOWNmiss', 'BF NOTE DOWN MISSF');
-				setAtlasAnim('hey', 'BF HEY!!F');
-				// setAtlasAnim('attack', 'boyfriend attack');
-				setAtlasAnim('hit', 'BF hit copyF');
-				setAtlasAnim('dodge', 'boyfriend dodgeF');
-				setAtlasAnim('scared', 'BF idle shakingF', true);
-
-				loadAtlas(Paths.getImageFunk("characters/bf/spritemap"), Paths.json("characters/bf/spritemap", "images"),
-					Paths.json("characters/bf/Animation", "images"));
+				frames = Paths.getSparrowAtlas("characters/bf2");
+			 	animation.addByPrefix('idle', 'BF idle dance', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP0');
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0');
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0');
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0');
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS');
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS');
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS');
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS');
+				animation.addByPrefix('singSPACE', 'BF NOTE SPACE');
+				animation.addByPrefix('singUPspam', 'BF NOTE UPSPAM');
+				animation.addByPrefix('singLEFTspam', 'BF NOTE LEFTSPAM');
+				animation.addByPrefix('singRIGHTspam', 'BF NOTE RIGHTSPAM');
+				animation.addByPrefix('singDOWNspam', 'BF NOTE DOWNSPAM');
+				animation.addByPrefix('hey', 'BF HEY!!');
+				animation.addByPrefix('attack', 'boyfriend attack');
+				animation.addByPrefix('hit', 'BF hit');
+				animation.addByPrefix('dodge', 'boyfriend dodge');
+				animation.addByPrefix('scared', 'BF idle shaking', true);
 
 				addOffset('idle', -5);
-				addOffset("singUP", -21, 66);
+				addOffset("singUP", -46, 27);
 				addOffset("singRIGHT", -51, 9);
-				addOffset("singLEFT", -7, 3);
-				addOffset("singDOWN", -26, -41);
+				addOffset("singLEFT", -5, 6);
+				addOffset("singDOWN", -20, -51);
 				addOffset("singUPmiss", -21, 65);
 				addOffset("singRIGHTmiss", -42, 18);
 				addOffset("singLEFTmiss", -9, 14);
 				addOffset("singDOWNmiss", -32, -22);
+				addOffset("singSPACE", -21, 66);
+				addOffset("singUPspam", -21, 66);
+				addOffset("singRIGHTspam", -51, 9);
+				addOffset("singLEFTspam", -5, 6);
+				addOffset("singDOWNspam", -20, -51);
+				addOffset("attack", 0, 0);
 				addOffset("hey", -8, 8);
 				addOffset('scared', -17, -5);
 				addOffset('dodge', -1, -12);
@@ -397,7 +484,115 @@ class Character extends FlxNestedSkewSprite
 
 				playAnim('idle');
 
+				camOffsets = [0, 0];
+				posOffsets = [0, 0];
+
 				initFacing = FlxObject.LEFT;
+
+			case 'bf-places':
+			frames = Paths.getSparrowAtlas('characters/bf-places');
+			animation.addByPrefix('idle', 'idle', 24, false);
+			animation.addByPrefix('singUP', 'up', 24, false);
+			animation.addByPrefix('singLEFT', 'left', 24, false);
+			animation.addByPrefix('singRIGHT', 'right', 24, false);
+			animation.addByPrefix('singDOWN', 'down', 24, false);
+			animation.addByPrefix('singUPmiss', 'up miss');
+			animation.addByPrefix('singLEFTmiss', 'left miss');
+			animation.addByPrefix('singRIGHTmiss', 'right miss');
+			animation.addByPrefix('singDOWNmiss', 'down miss');
+			animation.addByPrefix('singSPACE', 'space');
+			animation.addByPrefix('singUPspam', 'sup');
+			animation.addByPrefix('singLEFTspam', 'sleft');
+			animation.addByPrefix('singRIGHTspam', 'sright');
+			animation.addByPrefix('singDOWNspam', 'sdown');
+			animation.addByPrefix('hey', 'hey');
+			animation.addByPrefix('attack', 'attack');
+			animation.addByPrefix('hit', 'hit');
+			animation.addByPrefix('dodge', 'dodge');
+			animation.addByPrefix('scared', 'bf-places idle shaking', true);
+
+			addOffset('idle', -5);
+			addOffset("singUP", -46, 27);
+			addOffset("singRIGHT", -51, 9);
+			addOffset("singLEFT", -5, 6);
+			addOffset("singDOWN", -20, -51);
+			addOffset("singUPmiss", -21, 65);
+			addOffset("singRIGHTmiss", -42, 18);
+			addOffset("singLEFTmiss", -9, 14);
+			addOffset("singDOWNmiss", -32, -22);
+			addOffset("singSPACE", -21, 66);
+			addOffset("singUPspam", -21, 66);
+			addOffset("singRIGHTspam", -51, 9);
+			addOffset("singLEFTspam", -5, 6);
+			addOffset("singDOWNspam", -20, -51);
+			addOffset("attack", 0, 0);
+			addOffset("hey", -8, 8);
+			addOffset('scared', -17, -5);
+			addOffset('dodge', -1, -12);
+			addOffset('hit', 17, 41);
+
+			playAnim('idle');
+
+			camOffsets = [0, 0];
+			posOffsets = [0, 0];
+
+			initFacing = FlxObject.LEFT;
+			antialiasing = false;
+
+			setGraphicSize(Std.int(width * 1.4));
+			updateHitbox();
+
+			case 'bloxbi':
+			frames = Paths.getSparrowAtlas('characters/bloxbi');
+			animation.addByPrefix('idle', 'idle', 24, false);
+			animation.addByPrefix('singUP', 'up', 24, false);
+			animation.addByPrefix('singLEFT', 'left', 24, false);
+			animation.addByPrefix('singRIGHT', 'right', 24, false);
+			animation.addByPrefix('singDOWN', 'down', 24, false);
+			animation.addByPrefix('singUPmiss', 'up miss');
+			animation.addByPrefix('singLEFTmiss', 'left miss');
+			animation.addByPrefix('singRIGHTmiss', 'right miss');
+			animation.addByPrefix('singDOWNmiss', 'down miss');
+			animation.addByPrefix('singSPACE', 'space');
+			animation.addByPrefix('singUPspam', 'sup');
+			animation.addByPrefix('singLEFTspam', 'sleft');
+			animation.addByPrefix('singRIGHTspam', 'sright');
+			animation.addByPrefix('singDOWNspam', 'sdown');
+			animation.addByPrefix('hey', 'hey');
+			animation.addByPrefix('attack', 'attack');
+			animation.addByPrefix('hit', 'hit');
+			animation.addByPrefix('dodge', 'dodge');
+			animation.addByPrefix('scared', 'scared', true);
+
+			addOffset('idle', -5);
+			addOffset("singUP", -46, 27);
+			addOffset("singRIGHT", -51, 9);
+			addOffset("singLEFT", -5, 6);
+			addOffset("singDOWN", -20, -51);
+			addOffset("singUPmiss", -21, 65);
+			addOffset("singRIGHTmiss", -42, 18);
+			addOffset("singLEFTmiss", -9, 14);
+			addOffset("singDOWNmiss", -32, -22);
+			addOffset("singSPACE", -21, 66);
+			addOffset("singUPspam", -21, 66);
+			addOffset("singRIGHTspam", -51, 9);
+			addOffset("singLEFTspam", -5, 6);
+			addOffset("singDOWNspam", -20, -51);
+			addOffset("attack", 0, 0);
+			addOffset("hey", -8, 8);
+			addOffset('scared', -17, -5);
+			addOffset('dodge', -1, -12);
+			addOffset('hit', 17, 41);
+
+			playAnim('idle');
+
+			camOffsets = [0, 0];
+			posOffsets = [0, 0];
+
+			antialiasing = false;
+
+			setGraphicSize(Std.int(width * 1.4));
+			updateHitbox();
 
 			case 'senpai':
 				antialiasing = false;
@@ -438,6 +633,94 @@ class Character extends FlxNestedSkewSprite
 			case 'nothing':
 				antialiasing = false;
 				loadGraphic(FlxGraphic.fromRectangle(1, 1, FlxColor.TRANSPARENT));
+			case 'shaggy3d':
+				antialiasing = false;
+				healthColorArray = [0x33, 0x72, 0x4A];
+				frames = Paths.getSparrowAtlas("characters/shaggythreedee");
+				// animation.addByPrefix('idle', 'Senpai Idle', 24, false);
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUPspam', 'sup', 24, false);
+				animation.addByPrefix('singLEFTspam', 'sleft', 24, false);
+				animation.addByPrefix('singRIGHTspam', 'sright', 24, false);
+				animation.addByPrefix('singDOWNspam', 'sdown', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'aleft', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'aright', 24, false);
+				animation.addByPrefix('singSPACE', 'aup', 24, false);
+				animation.addByPrefix('intro-static', 'intro0000', 24, false);
+				animation.addByPrefix('intro', 'intro', 24, false);
+				animation.addByPrefix('snap', 'aidle', 24, false);
+
+				camOffsets = [0, 0];
+				posOffsets = [0, 0];
+
+				addOffset('idle', 5, -1);
+				addOffset("singUP", 5, -1);
+				addOffset("singRIGHT", 5, -1);
+				addOffset("singLEFT", 5, -1);
+				addOffset("singDOWN", 5, -1);
+				addOffset("singUPspam", 5, -1);
+				addOffset("singRIGHTspam", 5, -1);
+				addOffset("singLEFTspam", 5, -1);
+				addOffset("singDOWNspam", 5, -1);
+				addOffset("singLEFT-alt", 5, -1);
+				addOffset("singRIGHT-alt", 5, -1);
+				addOffset("intro-static", 5, -1);
+				addOffset("intro", 5, -1);
+				addOffset("singSPACE", 5, -1);
+				addOffset("snap", 5, -1);
+
+				playAnim('idle');
+				setGraphicSize(Std.int(width * 1.4));
+				updateHitbox();
+			case 'shaggy-3d':
+				antialiasing = false;
+				healthColorArray = [0x33, 0x72, 0x4A];
+				frames = Paths.getSparrowAtlas("characters/shaggythreedee");
+				// animation.addByPrefix('idle', 'Senpai Idle', 24, false);
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUPspam', 'sup', 24, false);
+				animation.addByPrefix('singLEFTspam', 'sleft', 24, false);
+				animation.addByPrefix('singRIGHTspam', 'sright', 24, false);
+				animation.addByPrefix('singDOWNspam', 'sdown', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'aleft', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'aright', 24, false);
+				animation.addByPrefix('singSPACE', 'aup', 24, false);
+				animation.addByPrefix('intro-static', 'intro0000', 24, false);
+				animation.addByPrefix('intro', 'intro', 24, false);
+				animation.addByPrefix('snap', 'aidle', 24, false);
+
+				camOffsets = [0, 0];
+				posOffsets = [0, 0];
+
+				addOffset('idle', 5, -1);
+				addOffset("singUP", 5, -1);
+				addOffset("singRIGHT", 5, -1);
+				addOffset("singLEFT", 5, -1);
+				addOffset("singDOWN", 5, -1);
+				addOffset("singUPspam", 5, -1);
+				addOffset("singRIGHTspam", 5, -1);
+				addOffset("singLEFTspam", 5, -1);
+				addOffset("singDOWNspam", 5, -1);
+				addOffset("singLEFT-alt", 5, -1);
+				addOffset("singRIGHT-alt", 5, -1);
+				addOffset("intro-static", 5, -1);
+				addOffset("intro", 5, -1);
+				addOffset("singSPACE", 5, -1);
+				addOffset("snap", 5, -1);
+
+				playAnim('idle');
+				setGraphicSize(Std.int(width * 1.4));
+				updateHitbox();
+			default:
+				loadShaggyCharacter();
 		}
 
 		initWidth = width;
@@ -532,6 +815,56 @@ class Character extends FlxNestedSkewSprite
 
 			animation.finishCallback = animationEnd;
 		}
+	}
+
+	private function loadShaggyCharacter():Void
+	{
+		var path = Paths.json('shaggy/characters/' + curCharacter);
+		if (!Assets.exists(path))
+		{
+			// Unknown characters still fall back to the built-in Boyfriend art.
+			curCharacter = 'bf';
+			return;
+		}
+
+		var json:Dynamic = EditorSaveData.loadCharacter(curCharacter);
+		if (json == null)
+			json = Json.parse(Assets.getText(path));
+		frames = Paths.getSparrowAtlas(json.image);
+		if (json.scale != null && json.scale != 1)
+		{
+			setGraphicSize(Std.int(width * json.scale));
+			updateHitbox();
+		}
+		if (json.position != null && json.position.length >= 2)
+			posOffsets = [json.position[0], json.position[1]];
+		if (json.camera_position != null && json.camera_position.length >= 2)
+			// Shaggy JSON camera X uses the opposite sign from this engine's camera-follow offsets.
+			camOffsets = [-json.camera_position[0], json.camera_position[1]];
+		if (json.flip_x != null)
+			flipX = json.flip_x;
+		if (json.no_antialiasing == true)
+			antialiasing = false;
+		if (json.healthbar_colors != null && json.healthbar_colors.length >= 3)
+			healthColorArray = [json.healthbar_colors[0], json.healthbar_colors[1], json.healthbar_colors[2]];
+
+		if (json.animations != null)
+		{
+			for (anim in (cast json.animations:Array<Dynamic>))
+			{
+				var animName:String = anim.anim;
+				var prefix:String = anim.name;
+				var fps:Int = anim.fps == null ? 24 : anim.fps;
+				var loop:Bool = anim.loop == true;
+				if (anim.indices != null && anim.indices.length > 0)
+					animation.addByIndices(animName, prefix, anim.indices, '', fps, loop);
+				else
+					animation.addByPrefix(animName, prefix, fps, loop);
+				if (anim.offsets != null && anim.offsets.length >= 2)
+					addOffset(animName, anim.offsets[0], anim.offsets[1]);
+			}
+		}
+		playAnim('idle');
 	}
 
 	function createAtlas()
@@ -682,8 +1015,10 @@ class Character extends FlxNestedSkewSprite
 	}
 
 	var curAtlasAnim:String;
+	var lastSpamNoteAnim:String = "";
+	var lastSpamNoteTime:Float = -1;
 
-	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
+	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0, AllowSpam:Bool = true):Void
 	{
 		if (curCharacter == 'nothing')
 			return;
@@ -691,6 +1026,41 @@ class Character extends FlxNestedSkewSprite
 		if (AnimName.endsWith('-alt') && !animExists(AnimName))
 		{
 			AnimName = AnimName.substring(0, AnimName.length - 4);
+		}
+
+		if (!isModel && !atlasActive && AnimName.startsWith("sing"))
+		{
+			if (!AllowSpam || AnimName.endsWith("miss") || AnimName.endsWith("-alt"))
+			{
+				lastSpamNoteAnim = "";
+				lastSpamNoteTime = -1;
+			}
+			else if (AnimName.endsWith("spam") && !animExists(AnimName))
+			{
+				var spamPrefix = spamAnimationPrefix(AnimName);
+				if (spamPrefix.length > 0 && animExists(spamPrefix))
+					AnimName = spamPrefix;
+			}
+			else if (!AnimName.endsWith("spam"))
+			{
+				var baseAnim = AnimName;
+				var spamAnim = AnimName + "spam";
+				var spamPrefix = spamAnimationPrefix(spamAnim);
+				var currentTime = Conductor.songPosition;
+				var spamWindow:Float = Math.max(1, Conductor.stepCrochet);
+				var isClumped = lastSpamNoteAnim == AnimName && lastSpamNoteTime >= 0
+					&& currentTime >= lastSpamNoteTime && currentTime - lastSpamNoteTime <= spamWindow;
+				if (isClumped)
+				{
+					if (animExists(spamAnim))
+						AnimName = spamAnim;
+					else if (spamPrefix.length > 0 && animExists(spamPrefix))
+						AnimName = spamPrefix;
+				}
+
+				lastSpamNoteAnim = baseAnim;
+				lastSpamNoteTime = currentTime;
+			}
 		}
 
 		if (isModel && model != null && model.fullyLoaded)
@@ -769,6 +1139,13 @@ class Character extends FlxNestedSkewSprite
 			else
 				color = 0xffffff;
 
+			if (animation.getByName(daAnim) == null)
+			{
+				if (animation.getByName('idle') != null)
+					daAnim = 'idle';
+				else
+					return;
+			}
 			animation.play(daAnim, Force, Reversed, Frame);
 
 			updateHitbox();
@@ -810,6 +1187,15 @@ class Character extends FlxNestedSkewSprite
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)
 	{
 		animOffsets[name] = [x, y];
+	}
+
+	function spamAnimationPrefix(animName:String):String
+	{
+		if (!animName.startsWith("sing") || !animName.endsWith("spam"))
+			return "";
+
+		var direction = animName.substring(4, animName.length - 4).toLowerCase();
+		return direction == "space" ? "sspace" : "s" + direction;
 	}
 
 	function animationEnd(name:String)
@@ -875,7 +1261,7 @@ class Character extends FlxNestedSkewSprite
 			return curAtlasAnim;
 		}
 		else
-			return animation.curAnim.name;
+			return (animation.curAnim != null ? animation.curAnim.name : "");
 	}
 
 	public function getFrameCount(name:String)

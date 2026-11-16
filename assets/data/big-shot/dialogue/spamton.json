@@ -1,0 +1,19 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Now [BIG SHOT] LET'S HAVE A RAP BATTLE!",
+      "speaker": "spamton",
+      "side": "left"
+    },
+    {
+      "line": "Like, I mean, [LIGHTNER] you stand no chance!",
+      "speaker": "spamton",
+      "side": "left"
+    },
+    {
+      "line": "[ADD] TO YOUR PLAYLIST NOW!",
+      "speaker": "spamton",
+      "side": "left"
+    }
+  ]
+}

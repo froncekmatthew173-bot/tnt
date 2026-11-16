@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "A tank?!",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "You're huge!",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "I'm not scared of you!",
+      "speaker": "bf",
+      "face": "mad",
+      "side": "right"
+    }
+  ]
+}

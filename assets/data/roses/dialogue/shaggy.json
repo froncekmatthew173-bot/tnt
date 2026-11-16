@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, you take rapping really seriously, huh?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "A dog thinks he can rap? How laughable.",
+      "face": "mad",
+      "speaker": "senpai",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Calm down, it's just a song.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Be silent, mutt. The stage is mine.",
+      "face": "mad",
+      "speaker": "senpai",
+      "side": "left"
+    },
+    {
+      "line": "Like, why are you so angry at a dog?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You are beneath my notice, canine.",
+      "face": "mad",
+      "speaker": "senpai",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Your hair is... something else.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I will crush you like I crush all challengers.",
+      "face": "mad",
+      "speaker": "senpai",
+      "side": "left"
+    }
+  ]
+}

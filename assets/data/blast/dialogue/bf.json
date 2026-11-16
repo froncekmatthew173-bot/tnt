@@ -1,0 +1,27 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, who is this guy? He looks familiar...",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "That's Shaggy! Like, the ultra instinct one!",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "He only uses like... 1 percent of his power?",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "Alright, let's show him what we got!",
+      "speaker": "bf",
+      "face": "determined",
+      "side": "right"
+    }
+  ]
+}

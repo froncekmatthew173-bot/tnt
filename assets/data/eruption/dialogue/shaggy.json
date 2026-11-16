@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, Mr. Dad, sir... you're really intense!",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Quiet, you mutt! I'm singing here.",
+      "face": "mad",
+      "speaker": "shaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Put down the microphone, like, please.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You don't belong on my stage, boy.",
+      "face": "mad",
+      "speaker": "shaggy",
+      "side": "left"
+    },
+    {
+      "line": "Like, why are you so grumpy all the time?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Dogs don't rap, they bark. Be silent.",
+      "face": "mad",
+      "speaker": "shaggy",
+      "side": "left"
+    },
+    {
+      "line": "I just want to rap and go home for Scooby Snacks.",
+      "face": "f_sh_normal",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I'll show you who's boss on this mic.",
+      "face": "mad",
+      "speaker": "shaggy",
+      "side": "left"
+    }
+  ]
+}

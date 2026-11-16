@@ -49,6 +49,8 @@ class Note extends FlxSprite
 	public var isLeafNote:Bool = false;
 
 	public var isMine:Bool = false;
+	public var isSpace:Bool = false;
+	public var isExtrakeySpace:Bool = false;
 	public var isAlert:Bool = false;
 	public var isHeal:Bool = false;
 	public var isFreeze:Bool = false;
@@ -70,6 +72,8 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
+	public var dType:Int = 0;
+
 	// var posTween:FlxTween;
 	var justMixedUp:Bool = false;
 
@@ -89,6 +93,8 @@ class Note extends FlxSprite
 		wasGoodHit = false;
 		spinAmount = 0;
 		isMine = false;
+		isSpace = false;
+		isExtrakeySpace = false;
 		isAlert = false;
 		isHeal = false;
 		isFreeze = false;
@@ -126,6 +132,11 @@ class Note extends FlxSprite
 		isLeafNote = _isLeafNote;
 		sustainLength = _sustainLength;
 
+		// Shaggy charts store lane/MIDI pitches in the note type field.
+		// Treat anything outside the supported special-note range as a normal note.
+		if (noteType < 0 || noteType > 7)
+			noteType = 0;
+
 		switch (noteType)
 		{
 			case 1:
@@ -149,6 +160,10 @@ class Note extends FlxSprite
 				ignoreMiss = true;
 			case 6:
 				isScribble = true;
+				specialNote = true;
+				ignoreMiss = true;
+			case 7:
+				isSpace = true;
 				specialNote = true;
 				ignoreMiss = true;
 		}
@@ -192,6 +207,7 @@ class Note extends FlxSprite
 
 						animation.add('greenScroll', [6]);
 						animation.add('redScroll', [7]);
+						animation.add('spaceScroll', [8]);
 						animation.add('blueScroll', [5]);
 						animation.add('purpleScroll', [4]);
 
@@ -199,6 +215,7 @@ class Note extends FlxSprite
 						{
 							animation.add('green glow', [22]);
 							animation.add('red glow', [23]);
+							animation.add('space glow', [24]);
 							animation.add('blue glow', [21]);
 							animation.add('purple glow', [20]);
 						}
@@ -209,11 +226,13 @@ class Note extends FlxSprite
 
 							animation.add('purpleholdend', [4]);
 							animation.add('greenholdend', [6]);
+							animation.add('spaceholdend', [8]);
 							animation.add('redholdend', [7]);
 							animation.add('blueholdend', [5]);
 
 							animation.add('purplehold', [0]);
 							animation.add('greenhold', [2]);
+							animation.add('spacehold', [4]);
 							animation.add('redhold', [3]);
 							animation.add('bluehold', [1]);
 						}
@@ -222,6 +241,7 @@ class Note extends FlxSprite
 						{
 							animation.addByPrefix('purple glow', 'Purple Active');
 							animation.addByPrefix('green glow', 'Green Active');
+							animation.addByPrefix('space glow', 'Space Active');
 							animation.addByPrefix('red glow', 'Red Active');
 							animation.addByPrefix('blue glow', 'Blue Active');
 						}
@@ -237,10 +257,20 @@ class Note extends FlxSprite
 						loadGraphic(Paths.getImagePNG("weeb/pixelUI/icenote"));
 					case 6:
 						loadGraphic(Paths.getImagePNG("weeb/pixelUI/scribblenote"));
+					case 7:
+						loadSpaceNote();
 				}
 
-				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-				updateHitbox();
+				if (isExtrakeySpace)
+				{
+					setGraphicSize(Std.int(PlayState.spaceNoteWidth));
+					updateHitbox();
+				}
+				else
+				{
+					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+					updateHitbox();
+				}
 
 			default:
 				switch (noteType)
@@ -269,9 +299,16 @@ class Note extends FlxSprite
 						loadGraphic(Paths.getImagePNG("notes/icenote"));
 					case 6:
 						loadGraphic(Paths.getImagePNG("notes/scribblenote"));
+					case 7:
+						loadSpaceNote();
 				}
 
-				setGraphicSize(Std.int(width * 0.7));
+				if (isExtrakeySpace)
+					setGraphicSize(Std.int(PlayState.spaceNoteWidth));
+				else if (PlayState.extraKeys())
+					setGraphicSize(Std.int(PlayState.spaceNoteWidth));
+				else
+					setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
 				antialiasing = true;
 		}
@@ -408,6 +445,14 @@ class Note extends FlxSprite
 					}
 					else
 						animation.play('redhold');
+				case 4:
+					if (useColorz)
+					{
+						animation.play('hold');
+						shader = getShader(4, mustPress);
+					}
+					else
+						animation.play('spacehold');
 				case 1:
 					if (useColorz)
 					{
@@ -436,6 +481,31 @@ class Note extends FlxSprite
 		}
 	}
 
+	function loadSpaceNote():Void
+	{
+		if (PlayState.extraKeys())
+		{
+			// Extra-key charts use the shaggy mod note atlas; center lanes are E..I.
+			var count:Int = PlayState.extraKeyCount();
+			var extra:Int = (noteData - PlayState.laneCount) % count;
+			if (extra < 0)
+				extra += count;
+			var letter:String = PlayState.extraKeyLetters[extra % PlayState.extraKeyLetters.length];
+			frames = Paths.getSparrowAtlasPNG("notes/extrakey");
+			animation.addByPrefix('space', letter + '0', 12, true);
+			animation.play('space');
+			// Center keys follow the same note color settings as the base arrows.
+			shader = getShader(noteData, mustPress);
+			isExtrakeySpace = true;
+		}
+		else
+		{
+			frames = Paths.getSparrowAtlasPNG("notes/notespace");
+			animation.addByPrefix('space', 'space0', 12, true);
+			animation.play('space');
+		}
+	}
+
 	public function updateAngle()
 	{
 		if (specialNote)
@@ -450,6 +520,8 @@ class Note extends FlxSprite
 						angle = 90;
 					case 1:
 						angle = 0;
+					case 4:
+					   	angle = 0;
 					case 2:
 						angle = 180;
 					case 3:
@@ -463,8 +535,23 @@ class Note extends FlxSprite
 
 	public static function getShader(index:Int, mustHit:Bool)
 	{
+		if (colorzShaders.length == 0)
+			return null;
 		var offset = (mustHit ? 0 : 4);
-		return colorzShaders[index + offset];
+		if (index < PlayState.laneCount)
+			return colorzShaders[(index % 4) + offset];
+
+		// Extra center keys: the first one has its own "space" palette, the rest
+		// reuse the four base arrow colors.
+		var extra:Int = (index - PlayState.laneCount) % 5;
+		if (extra == 0)
+		{
+			var spaceIndex:Int = 8 + (mustHit ? 0 : 1);
+			if (colorzShaders.length > spaceIndex)
+				return colorzShaders[spaceIndex];
+			return colorzShaders[offset];
+		}
+		return colorzShaders[((extra - 1) % 4) + offset];
 	}
 
 	public function updateScale()
@@ -478,7 +565,7 @@ class Note extends FlxSprite
 				case 'school' | 'schoolEvil':
 					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				default:
-					setGraphicSize(Std.int(width * 0.7));
+					setGraphicSize(Std.int(PlayState.extraKeys() ? PlayState.spaceNoteWidth : width * 0.7));
 			}
 			scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.effectiveScrollSpeed;
 			updateHitbox();
@@ -672,6 +759,8 @@ class Note extends FlxSprite
 							animation.play('green glow');
 						case 3:
 							animation.play('red glow');
+						case 4:
+							animation.play('space glow');
 						case 1:
 							animation.play('blue glow');
 						case 0:
@@ -694,6 +783,8 @@ class Note extends FlxSprite
 							animation.play('greenScroll');
 						case 3:
 							animation.play('redScroll');
+						case 4:
+							animation.play('spaceScroll');
 						case 1:
 							animation.play('blueScroll');
 						case 0:
@@ -711,11 +802,6 @@ class Note extends FlxSprite
 		if (!editor)
 		{
 			centerOffsets();
-			if (PlayState.xWiggle != null && PlayState.yWiggle != null)
-			{
-				offset.x += PlayState.xWiggle[noteData % 4];
-				offset.y += PlayState.yWiggle[noteData % 4];
-			}
 			// updateXPosition();
 		}
 	}
@@ -761,8 +847,6 @@ class Note extends FlxSprite
 	{
 		if (editor)
 			return 0.0;
-		else if (PlayState.useStreamPos)
-			return (song != null ? song.time : Conductor.songPosition);
 		else
 			return Conductor.songPosition;
 	}
@@ -774,44 +858,48 @@ class Note extends FlxSprite
 			palette1 = "default";
 		if (palette2 == null)
 			palette2 = "default";
+
+		var spacePalettes:Array<ColorzPalette> = [];
+
 		for (name in [palette1, palette2])
 		{
-			switch (name)
+			var colorJson:ColorzJSON = switch (name)
 			{
 				case 'user':
-					var colorJson:ColorzJSON = Config.arrowColors;
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.left.inner), Std.parseInt("0x" + colorJson.left.outer),
-						Std.parseInt("0x" + colorJson.left.base)));
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.down.inner), Std.parseInt("0x" + colorJson.down.outer),
-						Std.parseInt("0x" + colorJson.down.base)));
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.up.inner), Std.parseInt("0x" + colorJson.up.outer),
-						Std.parseInt("0x" + colorJson.up.base)));
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.right.inner), Std.parseInt("0x" + colorJson.right.outer),
-						Std.parseInt("0x" + colorJson.right.base)));
-					colorz.push(Std.parseInt("0x" + colorJson.left.inner));
-					colorz.push(Std.parseInt("0x" + colorJson.down.inner));
-					colorz.push(Std.parseInt("0x" + colorJson.up.inner));
-					colorz.push(Std.parseInt("0x" + colorJson.right.inner));
+					Config.arrowColors;
 				default:
 					var rawJson:String = "";
 					if (FileSystem.exists(Paths.json('_notecolors/' + name.toLowerCase())))
 						rawJson = File.getContent(Paths.json('_notecolors/' + name.toLowerCase())).trim();
 					else
 						rawJson = File.getContent(Paths.json('_notecolors/default')).trim();
-					var colorJson:ColorzJSON = Json.parse(rawJson);
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.left.inner), Std.parseInt("0x" + colorJson.left.outer),
-						Std.parseInt("0x" + colorJson.left.base)));
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.down.inner), Std.parseInt("0x" + colorJson.down.outer),
-						Std.parseInt("0x" + colorJson.down.base)));
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.up.inner), Std.parseInt("0x" + colorJson.up.outer),
-						Std.parseInt("0x" + colorJson.up.base)));
-					colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.right.inner), Std.parseInt("0x" + colorJson.right.outer),
-						Std.parseInt("0x" + colorJson.right.base)));
-					colorz.push(Std.parseInt("0x" + colorJson.left.inner));
-					colorz.push(Std.parseInt("0x" + colorJson.down.inner));
-					colorz.push(Std.parseInt("0x" + colorJson.up.inner));
-					colorz.push(Std.parseInt("0x" + colorJson.right.inner));
+					cast Json.parse(rawJson);
 			}
+			colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.left.inner), Std.parseInt("0x" + colorJson.left.outer),
+				Std.parseInt("0x" + colorJson.left.base)));
+			colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.down.inner), Std.parseInt("0x" + colorJson.down.outer),
+				Std.parseInt("0x" + colorJson.down.base)));
+			colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.up.inner), Std.parseInt("0x" + colorJson.up.outer),
+				Std.parseInt("0x" + colorJson.up.base)));
+			colorzShaders.push(new Colorz(Std.parseInt("0x" + colorJson.right.inner), Std.parseInt("0x" + colorJson.right.outer),
+				Std.parseInt("0x" + colorJson.right.base)));
+			colorz.push(Std.parseInt("0x" + colorJson.left.inner));
+			colorz.push(Std.parseInt("0x" + colorJson.down.inner));
+			colorz.push(Std.parseInt("0x" + colorJson.up.inner));
+			colorz.push(Std.parseInt("0x" + colorJson.right.inner));
+
+			var spacePal:ColorzPalette = colorJson.space;
+			if (spacePal == null)
+				spacePal = colorJson.left;
+			spacePalettes.push(spacePal);
+		}
+
+		// Center "space" key palettes: index 8 for the player, 9 for the opponent.
+		for (spacePal in spacePalettes)
+		{
+			colorzShaders.push(new Colorz(Std.parseInt("0x" + spacePal.inner), Std.parseInt("0x" + spacePal.outer),
+				Std.parseInt("0x" + spacePal.base)));
+			colorz.push(Std.parseInt("0x" + spacePal.inner));
 		}
 	}
 
@@ -828,6 +916,7 @@ typedef ColorzJSON =
 	var down:ColorzPalette;
 	var up:ColorzPalette;
 	var right:ColorzPalette;
+	@:optional var space:ColorzPalette;
 }
 
 typedef ColorzPalette =

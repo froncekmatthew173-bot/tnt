@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, why do you have a gun, Pico? That's not cool.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Shut up, mutt. I've got a song to finish.",
+      "face": "mad",
+      "speaker": "pico",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Put that away, man!",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You're lucky I'm not using you for target practice.",
+      "face": "mad",
+      "speaker": "pico",
+      "side": "left"
+    },
+    {
+      "line": "Like, can we rap without shooting things?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Dogs don't belong in rap battles.",
+      "face": "irate",
+      "speaker": "pico",
+      "side": "left"
+    },
+    {
+      "line": "You make me nervous, Pico.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Quit yapping and sing, or else.",
+      "face": "mad",
+      "speaker": "pico",
+      "side": "left"
+    }
+  ]
+}

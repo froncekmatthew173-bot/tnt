@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Red Shaggy? Like, that's a new look.",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "He looks angry... or is that just his hair?",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "I hope he's not too mad at me!",
+      "speaker": "bf",
+      "face": "worried",
+      "side": "right"
+    }
+  ]
+}

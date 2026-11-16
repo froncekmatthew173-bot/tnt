@@ -1,0 +1,276 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.haxelib
+          key: ${{ runner.os }}-haxelib
+
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Setup haxelib
+        run: |
+          mkdir -p ~/haxelib
+          haxelib setup ~/haxelib
+
+      - name: Install libs
+        run: |
+
+          haxelib install lime 8.1.2
+          haxelib install openfl 9.3.3
+          haxelib install flixel 5.6.1
+          haxelib install flixel-addons 3.2.2
+          haxelib install flixel-tools 1.5.1
+          haxelib install hscript-iris 1.1.0
+          haxelib install tjson 1.4.0
+          haxelib install hxdiscord_rpc 1.2.4
+          haxelib install hxvlc 1.9.2
+          haxelib install away3d
+          haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate 768740a56b26aa0c072720e0d1236b94afe68e3e
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit 1906c4a96f6bb6df66562b3f24c62f4c5bba14a7
+          haxelib git funkin.vis https://github.com/FunkinCrew/funkVis 22b1ce089dd924f15cdc4632397ef3504d464e90
+          haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git cbf91e2180fd2e374924fe74844086aab789166
+
+          haxelib run lime setup
+
+      - name: Build
+        run: lime build linux
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Linux
+          path: export/release/linux/**
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            C:\Users\runneradmin\haxelib
+          key: windows-haxelib
+
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Setup haxelib
+        shell: bash
+        run: |
+          mkdir -p ~/haxelib
+          haxelib setup ~/haxelib
+
+      - name: Install libs
+        shell: bash
+        run: |
+          haxelib install lime 8.1.2
+          haxelib install openfl 9.3.3
+          haxelib install flixel 5.6.1
+          haxelib install flixel-addons 3.2.2
+          haxelib install flixel-tools 1.5.1
+          haxelib install hscript-iris 1.1.0
+          haxelib install tjson 1.4.0
+          haxelib install hxdiscord_rpc 1.2.4
+          haxelib install hxvlc 1.9.2
+          haxelib install away3d
+          haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate 768740a56b26aa0c072720e0d1236b94afe68e3e
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit 1906c4a96f6bb6df66562b3f24c62f4c5bba14a7
+          haxelib git funkin.vis https://github.com/FunkinCrew/funkVis 22b1ce089dd924f15cdc4632397ef3504d464e90
+          haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git cbf91e2180fd2e374924fe74844086aab789166
+
+          haxelib run lime setup
+
+      - name: Build
+        shell: bash
+        run: haxelib run lime build windows
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows
+          path: export/release/windows/**
+
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Setup haxelib
+        run: |
+          mkdir -p ~/haxelib
+          haxelib setup ~/haxelib
+
+      - name: Install libs
+        run: |
+          haxelib install lime 8.1.2
+          haxelib install openfl 9.3.3
+          haxelib install flixel 5.6.1
+          haxelib install flixel-addons 3.2.2
+          haxelib install flixel-tools 1.5.1
+          haxelib install hscript-iris 1.1.0
+          haxelib install tjson 1.4.0
+          haxelib install hxdiscord_rpc 1.2.4
+          haxelib install hxvlc 1.9.2
+          haxelib install away3d
+          haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate 768740a56b26aa0c072720e0d1236b94afe68e3e
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit 1906c4a96f6bb6df66562b3f24c62f4c5bba14a7
+          haxelib git funkin.vis https://github.com/FunkinCrew/funkVis 22b1ce089dd924f15cdc4632397ef3504d464e90
+          haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git cbf91e2180fd2e374924fe74844086aab789166
+
+          haxelib run lime setup
+
+      - name: Build
+        run: lime build mac
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS
+          path: export/release/macos/**
+
+  build-html5:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Setup haxelib
+        run: |
+          mkdir -p ~/haxelib
+          haxelib setup ~/haxelib
+
+      - name: Install libs
+        run: |
+          haxelib install lime 8.1.2
+          haxelib install openfl 9.3.3
+          haxelib install flixel 5.6.1
+          haxelib install flixel-addons 3.2.2
+          haxelib install flixel-tools 1.5.1
+          haxelib install hscript-iris 1.1.0
+          haxelib install tjson 1.4.0
+          haxelib install hxdiscord_rpc 1.2.4
+          haxelib install hxvlc 1.9.2
+          haxelib install away3d
+          haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate 768740a56b26aa0c072720e0d1236b94afe68e3e
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit 1906c4a96f6bb6df66562b3f24c62f4c5bba14a7
+          haxelib git funkin.vis https://github.com/FunkinCrew/funkVis 22b1ce089dd924f15cdc4632397ef3504d464e90
+          haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git cbf91e2180fd2e374924fe74844086aab789166
+
+          haxelib run lime setup
+
+      - name: Build
+        run: lime build html5
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HTML5
+          path: export/release/html5/**
+
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Setup haxelib
+        run: |
+          mkdir -p ~/haxelib
+          haxelib setup ~/haxelib
+
+      - name: Install libs
+        run: |
+          haxelib install lime 8.1.2
+          haxelib install openfl 9.3.3
+          haxelib install flixel 5.6.1
+          haxelib install flixel-addons 3.2.2
+          haxelib install flixel-tools 1.5.1
+          haxelib install hscript-iris 1.1.0
+          haxelib install tjson 1.4.0
+          haxelib install hxdiscord_rpc 1.2.4
+          haxelib install hxvlc 1.9.2
+          haxelib install away3d
+          haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate 768740a56b26aa0c072720e0d1236b94afe68e3e
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit 1906c4a96f6bb6df66562b3f24c62f4c5bba14a7
+          haxelib git funkin.vis https://github.com/FunkinCrew/funkVis 22b1ce089dd924f15cdc4632397ef3504d464e90
+          haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git cbf91e2180fd2e374924fe74844086aab7891666
+
+          haxelib run lime setup android
+
+      - name: Build
+        run: lime build android
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android
+          path: export/release/android/bin/*.apk
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - build-linux
+      - build-windows
+      - build-macos
+      - build-html5
+      - build-android
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            Linux/**
+            Windows/**
+            macOS/**
+            HTML5/**
+            Android/**

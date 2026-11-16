@@ -1,0 +1,20 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Shaggy! What's new with you?",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "Like, still only using 1 percent?",
+      "speaker": "bf",
+      "face": "smirk",
+      "side": "right"
+    },
+    {
+      "line": "Let's see what you've got!",
+      "speaker": "bf",
+      "side": "right"
+    }
+  ]
+}

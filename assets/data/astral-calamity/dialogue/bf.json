@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "White and blue Shaggy? Like, space Shaggy?!",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "The stars are aligning... for a rap battle!",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "This is beyond 1 percent, like, way beyond.",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    }
+  ]
+}

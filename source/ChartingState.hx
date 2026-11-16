@@ -233,7 +233,8 @@ class ChartingState extends MusicBeatState
 		add(bfSound.sounds);
 		add(pluck.sounds);
 
-		musicStream = new AudioStreamThing(Paths.music(_song.song + "_Inst"));
+		var audioPrefix = _song.audioFolder != null ? _song.audioFolder.substring(_song.audioFolder.lastIndexOf("/") + 1) : _song.song;
+		musicStream = new AudioStreamThing(Paths.music(audioPrefix + "_Inst"));
 		add(musicStream);
 
 		FlxG.mouse.visible = true;
@@ -1017,7 +1018,8 @@ class ChartingState extends MusicBeatState
 		// FlxG.sound.playMusic(("assets/music/" + daSong + "_Inst.ogg"));
 
 		// WONT WORK FOR TUTORIAL OR TEST SONG!!! REDO LATER
-		vocals = new FlxSound().loadEmbedded("assets/music/" + daSong + "_Voices.ogg");
+		var audioPrefix = _song.audioFolder != null ? _song.audioFolder.substring(_song.audioFolder.lastIndexOf("/") + 1) : daSong;
+		vocals = new FlxSound().loadEmbedded(Paths.music(audioPrefix + "_Voices"));
 		FlxG.sound.list.add(vocals);
 
 		musicStream.pause();
@@ -2122,7 +2124,8 @@ class ChartingState extends MusicBeatState
 			mustHitSection: true,
 			sectionNotes: [],
 			typeOfSection: 0,
-			altAnim: false
+			altAnim: false,
+			dType: 0
 		};
 
 		_song.notes.push(sec);
@@ -2341,7 +2344,8 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + diffDropFinal, song.toLowerCase());
+		var chartFolder = _song.chartFolder != null ? _song.chartFolder : song.toLowerCase();
+		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + diffDropFinal, chartFolder);
 		FlxG.resetState();
 	}
 

@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Wait, is that Spamton AND Shaggy?",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    },
+    {
+      "line": "Like, what even is happening right now?",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "Now [big voice] LET'S SING!",
+      "speaker": "bf",
+      "face": "smirk",
+      "side": "right"
+    }
+  ]
+}

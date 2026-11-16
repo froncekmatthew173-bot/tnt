@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Red Shaggy is back?!",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "Like, what did he dissassemble this time?",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "I hope it's not my boombox...",
+      "speaker": "bf",
+      "face": "worried",
+      "side": "right"
+    }
+  ]
+}

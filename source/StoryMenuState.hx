@@ -148,6 +148,9 @@ class StoryMenuState extends MusicBeatState
 		{
 			if (!selectedWeek)
 			{
+				if (!controls.ACCEPT)
+					acceptReady = true;
+
 				if (controls.RIGHT_P)
 					changeChar(1);
 				if (controls.LEFT_P)
@@ -163,7 +166,7 @@ class StoryMenuState extends MusicBeatState
 					leftArrow.alpha = 1;
 			}
 
-			if (controls.ACCEPT)
+			if (controls.ACCEPT && acceptReady)
 			{
 				selectWeek();
 			}
@@ -224,7 +227,12 @@ class StoryMenuState extends MusicBeatState
 		if (dir != 0)
 			Cashew.destroyOne("vert/" + Main.characters[oldChar] + "/tile");
 
-		backdrop.newTile(Paths.getImagePNG("vert/" + Main.characters[selectedChar] + "/tile"));
+		// Fall back to the default tile when a character has no custom backdrop
+		// (e.g. shaggy has no vert/shaggy/tile asset).
+		var tileKey:String = "vert/" + Main.characters[selectedChar] + "/tile";
+		if (!FileSystem.exists(Paths.image(tileKey)))
+			tileKey = "tile";
+		backdrop.newTile(Paths.getImagePNG(tileKey));
 
 		intendedScore = Highscore.getWeekScore(selectedChar, 5);
 
@@ -248,6 +256,7 @@ class StoryMenuState extends MusicBeatState
 	var movedBack:Bool = false;
 	var selectedWeek:Bool = false;
 	var stopspamming:Bool = false;
+	var acceptReady:Bool = false;
 
 	function selectWeek()
 	{
@@ -289,11 +298,28 @@ class StoryMenuState extends MusicBeatState
 				PlayState.storyPlaylist = ["Tutorial"];
 				PlayState.storyDifficulties = [""];
 			}
-			PlayState.storyPlaylist.insert(0, Main.charToSong[Main.characters[selectedChar]]);
-			PlayState.storyDifficulties.insert(0, "-easy");
+			var introSong:String = Main.charToSong[Main.characters[selectedChar]];
+			var introSongId:String = introSong.toLowerCase();
+			var introChartFolder:String = introSongId;
+			if (Main.characters[selectedChar] == "shaggy")
+				introChartFolder = "shaggy-" + introSongId;
 
-			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + PlayState.storyDifficulties[0],
-				PlayState.storyPlaylist[0].toLowerCase());
+			var introDifficulty:String = null;
+			for (difficulty in ["-easy", "", "-hard"])
+			{
+				if (FileSystem.exists(Paths.json(introChartFolder + "/" + introSongId + difficulty)))
+				{
+					introDifficulty = difficulty;
+					break;
+				}
+			}
+			if (introDifficulty == null)
+				throw 'No story chart found for $introSongId in $introChartFolder';
+
+			PlayState.storyPlaylist.insert(0, introSong);
+			PlayState.storyDifficulties.insert(0, introDifficulty);
+
+			PlayState.SONG = Song.loadFromJson(introSongId + introDifficulty, introChartFolder);
 			PlayState.storyWeek = selectedChar;
 			PlayState.returnLocation = "main";
 			PlayState.campaignScore = 0;

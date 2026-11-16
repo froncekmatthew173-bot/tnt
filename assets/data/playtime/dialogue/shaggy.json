@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, your limo is really fancy, Miss Mom.",
+      "face": "f_sh_normal",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Oh, a little doggie wants to sing? How cute.",
+      "face": "smirk",
+      "speaker": "mom",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You sing really loud, like, really loud.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You're adorable, but you're out of your depth.",
+      "face": "smirk",
+      "speaker": "mom",
+      "side": "left"
+    },
+    {
+      "line": "Like, do you ever take that limo to get Scooby Snacks?",
+      "face": "f_sh_normal",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I'll let you sing one song, then it's limo time.",
+      "face": "smirk",
+      "speaker": "mom",
+      "side": "left"
+    },
+    {
+      "line": "You're kind of scary but I like your style.",
+      "face": "f_sh_happy",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Such a brave little puppy.",
+      "face": "think",
+      "speaker": "mom",
+      "side": "left"
+    }
+  ]
+}

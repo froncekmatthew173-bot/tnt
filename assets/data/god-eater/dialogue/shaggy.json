@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, phantom Shaggy... that sounds spooky.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... I feel your phantom pain, man.",
+      "face": "f_sh_normal",
+      "speaker": "pshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! I don't want to be consumed by souls.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! This is spooky even for me.",
+      "face": "f_sh_con",
+      "speaker": "pshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Like, are you a ghost or just really pale?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... we're both kind of spooky.",
+      "face": "f_sh_normal",
+      "speaker": "pshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You float, man. That's not normal.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! You're not a ghost, are you?",
+      "face": "f_sh_con",
+      "speaker": "pshaggy",
+      "side": "left"
+    }
+  ]
+}

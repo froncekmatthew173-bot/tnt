@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, are you a fish or a lady? I'm confused.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "You're not a fish, so you don't get a say.",
+      "face": "confused",
+      "speaker": "atlanta",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Your fish puns are giving me a headache.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Land-dwellers talk too much. Sing or leave.",
+      "face": "confused",
+      "speaker": "atlanta",
+      "side": "left"
+    },
+    {
+      "line": "Like, do you live underwater or on land?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "I don't trust land creatures with microphones.",
+      "face": "hmm",
+      "speaker": "atlanta",
+      "side": "left"
+    },
+    {
+      "line": "I don't get the seafood jokes, man.",
+      "face": "f_sh_normal",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Just sing, land-dweller. Quickly.",
+      "face": "pout",
+      "speaker": "atlanta",
+      "side": "left"
+    }
+  ]
+}

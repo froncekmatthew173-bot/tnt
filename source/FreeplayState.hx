@@ -107,8 +107,26 @@ class FreeplayState extends MusicBeatState
 		addSong("Bopeebo", 1, "dad", 0x010);
 		addSong("Roses", 1, "senpai", 0x010);
 		addSong("Ugh", 1, "tankman", 0x010);
+		addSong("Shaggy3d", 1, "shaggy-3d", 0x111, true, true, "shaggy/shaggy3d", "Shaggy3d", "shaggy-shaggy3d");
+		addSong("Shag", 1, "shaggy-3d", 0x111, true, true, "shaggy/shag", "Shag", "shaggy-shag");
+		addSong("Places", 1, "bloxbi", 0x111, true, true);
+		addSong('Where-are-you', 1, 'shaggy', 0x111);
+		addSong('Eruption', 1, 'shaggy', 0x111);
+		addSong('Kaio-ken', 1, 'sshaggy', 0x111);
+		addSong('Whats-new', 1, 'shaggy', 0x111);
+		addSong('Blast', 1, 'sshaggy', 0x111);
+		addSong('Super-saiyan', 1, 'pshaggy', 0x111);
+		addSong('GOD-EATER', 1, 'pshaggy', 0x111);
+		addSong('Power-Link', 1, 'rshaggy', 0x111);
+		addSong('Revenge', 1, 'matt', 0x111);
+        addSong('Final-destination', 1, 'shaggy-matt', 0x111);
+		addSong('Soothing-power', 1, 'rshaggy', 0x111);
+		addSong('Thunderstorm', 1, 'rshaggy', 0x111);
+		addSong('Dissasembler', 1, 'rshaggy', 0x111);
+		addSong('Astral-calamity', 1, 'wbshaggy', 0x111);
+		addSong('Talladega', 1, 'zshaggy', 0x111);
+		addSong('BIG-SHOT', 1, 'spamton', 0x111);
 
-		// LOAD CHARACTERS
 
 		// var backdrop = new FlxBackdrop(Paths.image('tile2'));
 		// backdrop.velocity.set(50, 50);
@@ -192,6 +210,10 @@ class FreeplayState extends MusicBeatState
 				diffText.text = "HARD";
 				if (songs[curSelected].uniqueDiffSongs)
 					diffMusicString = "_Hard";
+		case 3:
+			diffText.text = "GOD";
+			if (songs[curSelected].uniqueDiffSongs)
+				diffMusicString = "_God";
 		}
 		var textSize:Int = Std.int(Math.min(Math.floor(300 / diffText.text.length), 96));
 		diffText.setFormat(Paths.font("bungee"), textSize, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -217,9 +239,9 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
-	public function addSong(songName:String, weekNum:Int, songCharacter:String, hasDifficulties:Int = 0x111, canAdjustP2:Bool = true, uniqueDiffSongs:Bool = true)
+	public function addSong(songName:String, weekNum:Int, songCharacter:String, hasDifficulties:Int = 0x111, canAdjustP2:Bool = true, uniqueDiffSongs:Bool = true, ?songFolder:String = null, ?displayName:String = null, ?musicName:String = null)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter, hasDifficulties, canAdjustP2, uniqueDiffSongs));
+		songs.push(new SongMetadata(songName, weekNum, songCharacter, hasDifficulties, canAdjustP2, uniqueDiffSongs, songFolder, displayName, musicName));
 	}
 
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
@@ -319,7 +341,10 @@ class FreeplayState extends MusicBeatState
 			if (musicStream != null)
 				musicStream.destroy();
 			// AudioStreamThing.destroyEngine();
-			SoundFontThing.asyncSongGen();
+			if (PlayState.usesStreamedVocals(PlayState.SONG))
+				PlayState.p1WriteDone = PlayState.p2WriteDone = true;
+			else
+				SoundFontThing.asyncSongGen();
 		}
 	}
 
@@ -370,9 +395,10 @@ class FreeplayState extends MusicBeatState
 			case 3:
 				var hasHard = songs[curSelected].hasDifficulties & 0x100 == 0x100;
 				var hasEasy = songs[curSelected].hasDifficulties & 0x001 == 0x001;
+				var hasGod = songs[curSelected].hasDifficulties & 0x1000 == 0x1000;
 				var lowerRange:Int = hasEasy ? 0 : 1;
-				var upperRange:Int = hasHard ? 2 : 1;
-				if (hasHard || hasEasy)
+				var upperRange:Int = hasHard || hasGod ? 3 : 1;
+				if (hasHard || hasEasy || hasGod)
 				{
 					curDifficulty += change;
 					if (curDifficulty < lowerRange)
@@ -390,6 +416,8 @@ class FreeplayState extends MusicBeatState
 							diffStuff = "_Easy";
 						case 2:
 							diffStuff = "_Hard";
+						case 3:
+							diffStuff = "_God";
 					}
 					intendedScore = Highscore.getScore(songs[curSelected].songName + diffStuff, curDifficulty);
 				}
@@ -501,8 +529,11 @@ class SongMetadata
 	public var hasDifficulties:Int = 0x111;
 	public var canAdjustP2:Bool = true;
 	public var uniqueDiffSongs:Bool = true;
+	public var songFolder:String = null;
+	public var displayName:String = null;
+	public var musicName:String = null;
 
-	public function new(song:String, week:Int, songCharacter:String, hasDifficulties:Int, canAdjustP2:Bool, uniqueDiffSongs:Bool)
+	public function new(song:String, week:Int, songCharacter:String, hasDifficulties:Int, canAdjustP2:Bool, uniqueDiffSongs:Bool, ?songFolder:String = null, ?displayName:String = null, ?musicName:String = null)
 	{
 		this.songName = song;
 		this.week = week;
@@ -510,5 +541,8 @@ class SongMetadata
 		this.hasDifficulties = hasDifficulties;
 		this.canAdjustP2 = canAdjustP2;
 		this.uniqueDiffSongs = uniqueDiffSongs;
+		this.songFolder = songFolder;
+		this.displayName = displayName;
+		this.musicName = musicName;
 	}
 }

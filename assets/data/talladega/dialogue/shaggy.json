@@ -1,0 +1,52 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Like, Zombie Shaggy... do you want brains or snacks?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... do you want a Scooby Snack?",
+      "face": "f_zsh_normal",
+      "speaker": "zshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! You smell like old sandwiches.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! You smell terrible, other me.",
+      "face": "f_zsh_normal",
+      "speaker": "zshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Like, do zombies like Scooby Snacks too?",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Like... do zombies rap? Or just moan?",
+      "face": "f_zsh_normal",
+      "speaker": "zshaggy",
+      "side": "left"
+    },
+    {
+      "line": "Zoinks! Stop staring at me like that.",
+      "face": "f_sh_con",
+      "speaker": "shaggy",
+      "side": "right"
+    },
+    {
+      "line": "Zoinks! Stop staring at my snacks.",
+      "face": "f_zsh_normal",
+      "speaker": "zshaggy",
+      "side": "left"
+    }
+  ]
+}

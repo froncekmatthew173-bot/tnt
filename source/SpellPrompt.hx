@@ -66,6 +66,18 @@ class SpellPrompt extends FlxSprite
 		if (stopStuff)
 			return;
 
+		// Botplay completes the keyboard prompt the same way a player typing
+		// every required character would, so these song effects cannot time out.
+		if (PlayState.autoPlay)
+		{
+			for (sprite in wordSprite)
+				sprite.color = 0xffd828;
+			curChar = word.length;
+			this.kill();
+			stopStuff = true;
+			return;
+		}
+
 		if (curChar >= word.length - 1)
 		{
 			this.kill();

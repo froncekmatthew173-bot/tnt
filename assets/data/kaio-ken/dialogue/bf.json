@@ -1,0 +1,21 @@
+{
+  "dialogueLines": [
+    {
+      "line": "Kaio-ken?! That's not even from our universe!",
+      "speaker": "bf",
+      "face": "shocked",
+      "side": "right"
+    },
+    {
+      "line": "Shaggy, where did you learn that?!",
+      "speaker": "bf",
+      "side": "right"
+    },
+    {
+      "line": "Like, this is getting way out of hand...",
+      "speaker": "bf",
+      "face": "confused",
+      "side": "right"
+    }
+  ]
+}

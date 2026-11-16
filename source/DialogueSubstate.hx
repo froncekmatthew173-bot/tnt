@@ -181,14 +181,20 @@ class DialogueSubstate extends FlxSubState
 
 				for (face in speakers.get(speaker))
 				{
-					if (FileSystem.exists("assets/images/dialogue/portraits/" + speaker + "/" + face + ".funk"))
+					var faceKey:String = "dialogue/portraits/" + speaker + "/" + face;
+					// Prefer packed .funk atlases, fall back to individual .png
+					// portraits (e.g. shaggy characters ship as .png only), then
+					// the default portrait as a last resort.
+					if (FileSystem.exists("assets/images/" + faceKey + ".funk"))
 					{
-						// trace("GOOD STUFFZ OF " + face + " FOUND FOR " + speaker);
-						faces[speaker][face] = Paths.getImageFunk("dialogue/portraits/" + speaker + "/" + face);
+						faces[speaker][face] = Paths.getImageFunk(faceKey);
+					}
+					else if (FileSystem.exists("assets/images/" + faceKey + ".png"))
+					{
+						faces[speaker][face] = Paths.getImagePNG(faceKey);
 					}
 					else
 					{
-						// trace("NO PORTRAIT OF " + face + " FOUND FOR " + speaker);
 						faces[speaker][face] = Paths.getImageFunk("dialogue/portraits/default");
 					}
 				}
