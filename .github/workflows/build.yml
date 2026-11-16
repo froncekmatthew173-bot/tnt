@@ -36,6 +36,9 @@ jobs:
         with:
           haxe-version: ${{ env.HAXE_VERSION }}
 
+      - name: Install Lime
+        run: haxelib install lime --quiet
+
       - name: Install libVLC
         if: inputs.os == 'linux-latest'
         run: sudo apt install libvlc-dev libvlccore-dev
