@@ -39,6 +39,11 @@ jobs:
             buildArgs: android
             artifactName: androidBuild
             artifactPath: export/android/bin/*
+          - name: iOS
+            os: macos-latest
+            buildArgs: ios
+            artifactName: iosBuild
+            artifactPath: export/ios/bin/*
 
     steps:
       - name: Checkout
@@ -109,6 +114,7 @@ jobs:
             - **Linux**: Binary executable
             - **macOS**: Binary executable  
             - **Android**: APK/AAB file
+            - **iOS**: iOS IPA file
 
             ### Installation
 

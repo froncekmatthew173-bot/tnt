@@ -66,7 +66,7 @@ class PlayerSettings
 
 		#if mobile
 		Controls.initVirtualControls();
-		#endif
+		#end
 
 		/*if (numGamepads > 1)
 		{
