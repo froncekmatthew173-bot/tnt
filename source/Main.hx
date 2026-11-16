@@ -34,6 +34,8 @@ class Main extends Sprite
 
 	public static var lol:AudioStreamThing;
 
+	public static var god:Bool = false;
+
 	public static function addCharacter(who:String, name:String, quote:String, desc:String, song:String, color:FlxColor = FlxColor.WHITE, ?credit:String)
 	{
 		characters.push(who);

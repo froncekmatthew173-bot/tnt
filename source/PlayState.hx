@@ -453,6 +453,17 @@ class PlayState extends MusicBeatState
 
 	public static final useStreamPos:Bool = true;
 
+	public static var threedeeSongs:Array<String> = ["senpai", "roses", "thorns"];
+
+	public static function usesStreamedVocals(song:SwagSong):Bool
+	{
+		if (song.audioFolder != null && song.soundfont1 == null && song.soundfont2 == null)
+			return true;
+
+		var songId = song.song.toLowerCase();
+		return threedeeSongs.contains(songId) && FileSystem.exists(Paths.music(songId + "_Voices"));
+	}
+
 	override public function create()
 	{
 		// instance = this;
