@@ -54,23 +54,11 @@ jobs:
         with:
           haxe-version: 4.3.6
 
-      - name: Install Lime
-        run: haxelib install lime --quiet
-
-      - name: Install OpenFL
-        run: haxelib install openfl --quiet
-
       - name: Install Libraries
         run: |-
           haxelib install hmm --quiet
           haxelib run hmm setup
           haxelib run hmm install --quiet
-
-      - name: Install Flixel
-        run: haxelib install flixel --quiet
-
-      - name: Install Flixel Addons
-        run: haxelib install flixel-addons --quiet
 
       - name: Compile
         run: haxelib run lime build ${{ matrix.buildArgs }}
