@@ -87,6 +87,13 @@ import openfl.filters.ShaderFilter;
 
 using StringTools;
 
+enum BotplayType
+{
+	Off;
+	Perfect; // current behavior
+	Humanized; // small random timing window
+}
+
 class PlayState extends MusicBeatState
 {
 	// public static var instance:PlayState = null;
@@ -108,13 +115,6 @@ class PlayState extends MusicBeatState
 
 	public static var autoPlay:Bool = false;
 
-	enum BotplayType
-	{
-		Off;
-		Perfect; // current behavior
-		Humanized; // small random timing window
-	}
-
 	public static var botplayType:BotplayType = Perfect;
 
 
@@ -131,6 +131,9 @@ class PlayState extends MusicBeatState
 	public static final schoolScared = ["roses"];
 	public static final evilSchoolSongs = ["thorns"];
 	public static final pixelSongs = ["senpai", "roses", "thorns"];
+	public static final houseSongs = ["warmup","house","insanity","blitz"];
+	public static final redskySongs = ["polygonized"];
+	public static final farmSongs = ["blocked","corn-theft","maze","duper"];
 
 	private var camFocus:String = "";
 	private var camTween:FlxTween;
@@ -1287,27 +1290,34 @@ class PlayState extends MusicBeatState
 				skewGrid.antialiasing = true;
 				skewGrid.setPosition(FlxG.width / 2 - skewGrid.width / 2, 600);
 				add(skewGrid);
-			case '3d':
+			case 'house':
 				defaultCamZoom = 0.6;
-				curStage = '3d';
+                curStage = 'house';
 
-				var shaggyBg = new FlxSprite(-762, -531).loadGraphic(Paths.getImageFunk("shaggy3d/background"));
-				shaggyBg.antialiasing = false;
-				shaggyBg.setGraphicSize(Std.int(shaggyBg.width * 10));
-				shaggyBg.updateHitbox();
-				add(shaggyBg);
+				var bg:FlxSprite = new FlxSprite(-600, -300).loadGraphic(Paths.image('backgrounds/shared/sky'));
+				bg.scrollFactor.set(0.6, 0.6);
+				bg.antialiasing = true;
+				add(bg);
 
-				var pyramids = new FlxSprite(-409, -254).loadGraphic(Paths.getImageFunk("shaggy3d/pyramids"));
-				pyramids.antialiasing = false;
-				pyramids.setGraphicSize(Std.int(pyramids.width * 4));
-				pyramids.updateHitbox();
-				add(pyramids);
+                var stageHills:FlxSprite = new FlxSprite(-834, -159).loadGraphic(Paths.image('backgrounds/dave-house/hills'));
+                stageHills.scrollFactor.set(0.7, 0.7);
+                stageHills.antialiasing = true;
+                add(stageHills);
 
-				var hills = new FlxSprite(-1310, 561).loadGraphic(Paths.getImageFunk("shaggy3d/hills"));
-				hills.antialiasing = false;
-				hills.setGraphicSize(Std.int(hills.width * 2.5));
-				hills.updateHitbox();
-				add(hills);
+                var grassbg:FlxSprite = new FlxSprite(-1205, 580).loadGraphic(Paths.image('backgrounds/dave-house/grass bg'));
+                grassbg.scrollFactor.set(1, 1);
+                grassbg.antialiasing = true;
+                add(grassbg);
+
+				var gate:FlxSprite = new FlxSprite(-755, 250).loadGraphic(Paths.image('backgrounds/dave-house/gate'));
+				gate.scrollFactor.set(1, 1);
+				gate.antialiasing = true;
+				add(gate);
+
+                var stageFront:FlxSprite = new FlxSprite(-832, 505).loadGraphic(Paths.image('backgrounds/dave-house/grass'));
+                stageFront.scrollFactor.set(1, 1);
+                stageFront.antialiasing = true;
+                add(stageFront);
 			default:
 				defaultCamZoom = 0.9;
 				curStage = 'stage';
@@ -1512,8 +1522,6 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case '3d':
-				posChar(dad, -1660, -550);
 			case 'tankStage':
 				posChar(dad, 240, 850);
 			case 'prismaStage':
@@ -1524,10 +1532,6 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case '3d':
-				posChar(boyfriend, -100, -33.67);
-			case 'limo':
-				posChar(boyfriend, 1250, 630);
 			case 'tankStage':
 				posChar(boyfriend, 895, 850);
 			case 'prismaStage':
@@ -1538,8 +1542,6 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case '3d':
-				posChar(gf, -850, -165.66);
 			case 'tankStage':
 				posChar(gf, 568, 778);
 			case 'prismaStage':

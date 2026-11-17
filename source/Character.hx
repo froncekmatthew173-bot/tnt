@@ -73,6 +73,8 @@ class Character extends FlxNestedSkewSprite
 	public var atlasContainer:AtlasThing;
 	public var atlasActive:Bool = false;
 
+	public var barColor:FlxColor;
+
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -85,6 +87,34 @@ class Character extends FlxNestedSkewSprite
 
 		switch (curCharacter)
 		{
+
+			case 'dave':
+				// DAVE SHITE ANIMATION LOADING CODE
+				frames = Paths.getSparrowAtlas('dave/characters/dave_sheet');
+				animation.addByPrefix('idle', 'idle', 24, false);
+				for (anim in ['left', 'down', 'up', 'right'])
+				{
+					animation.addByPrefix('sing${anim.toUpperCase()}', '${anim}0', 24, false);
+					animation.addByPrefix('sing${anim.toUpperCase()}miss', '$anim miss', 24, false);
+				}
+				animation.addByPrefix('hey', 'hey', 24, false);
+	
+				posOffsets = [0, -170];
+
+				addOffset('singRIGHTmiss', -40, 1);
+				addOffset('singDOWN', -30, 18);
+				addOffset('singLEFTmiss', 5, 14);
+				addOffset('singUP', -15, 22);
+				addOffset('hey', 8, 11);
+				addOffset('idle', 0, 0);
+				addOffset('singRIGHT', -29, 3);
+				addOffset('singDOWNmiss', -26, 13);
+				addOffset('singLEFT', 2, 14);
+				addOffset('singUPmiss', -16, 23);
+
+				barColor = FlxColor.fromRGB(15, 95, 255);
+
+				playAnim('idle');
 			case 'spirit':
 				frames = Paths.getSparrowAtlasFunk('characters/spirit');
 				animation.addByPrefix('idle', "idle spirit", 24, false);
