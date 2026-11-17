@@ -62,9 +62,9 @@ jobs:
 
       - name: Install Libraries
         run: |-
-          haxelib install hmm --quiet 2>/dev/null || true
-          cd /home/runner/work/tnt/tnt && haxelib run hmm setup 2>/dev/null || true
-          haxelib run hmm install --quiet 2>/dev/null || true
+          haxelib install hmm --quiet
+          haxelib run hmm setup
+          haxelib run hmm install --quiet
 
       - name: Install Flixel
         run: haxelib install flixel --quiet

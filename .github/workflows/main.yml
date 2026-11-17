@@ -18,16 +18,6 @@ jobs:
             buildArgs: windows
             artifactName: windowsBuild
             artifactPath: export\release\windows\bin\*
-          - name: Linux
-            os: ubuntu-latest
-            buildArgs: linux
-            artifactName: linuxBuild
-            artifactPath: export/linux/bin/*
-          - name: macOS
-            os: macos-latest
-            buildArgs: osx
-            artifactName: macBuild
-            artifactPath: export/macos/bin/*
           - name: Android
             os: ubuntu-latest
             buildArgs: android
