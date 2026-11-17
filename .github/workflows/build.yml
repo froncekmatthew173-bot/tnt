@@ -1,0 +1,77 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      os:
+        required: true
+        type: string
+      buildArgs:
+        required: true
+        type: string
+      artifactName:
+        required: true
+        type: string
+      artifactPath:
+        required: true
+        type: string
+
+env:
+  HAXE_VERSION: 4.3.6
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ inputs.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: ${{ env.HAXE_VERSION }}
+
+      - name: Install Lime
+        run: haxelib install lime --quiet
+
+      - name: Install libVLC
+        if: inputs.os == 'linux-latest'
+        run: sudo apt install libvlc-dev libvlccore-dev
+
+      - name: Install Libraries
+        run: |-
+          haxelib install hmm 
+          haxelib run hmm setup 
+          haxelib run hmm install 
+
+      - name: Install Flixel
+        run: haxelib install flixel --quiet
+
+      - name: Install Flixel Addons
+        run: haxelib install flixel-addons --quiet
+
+      - name: Setup Android SDK
+        if: inputs.os == 'ubuntu-latest'
+        run: |
+          sdkmanager "platforms;android-33" "build-tools;33.0.2" 
+          echo "ANDROID_SDK_ROOT=${{ runner.temp }}/android" >> $GITHUB_ENV
+
+      - name: Compile
+        run: haxelib run lime build ${{ inputs.buildArgs }}
+
+      - name: Fix RC2104 FNF error (Windows only)
+        if: inputs.os == 'windows-2022'
+        run: |
+          echo "#define FNF" | cat - export/debug/windows/obj/ApplicationMain.rc > /tmp/rc_debug.tmp && mv /tmp/rc_debug.tmp export/debug/windows/obj/ApplicationMain.rc
+          echo "#define FNF" | cat - export/release/windows/obj/ApplicationMain.rc > /tmp/rc_release.tmp && mv /tmp/rc_release.tmp export/release/windows/obj/ApplicationMain.rc
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ inputs.artifactName }}
+          path: ${{ inputs.artifactPath }}
+          if-no-files-found: error
