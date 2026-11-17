@@ -18,11 +18,6 @@ jobs:
             buildArgs: windows
             artifactName: windowsBuild
             artifactPath: export\release\windows\bin\*
-          - name: Android
-            os: ubuntu-latest
-            buildArgs: android
-            artifactName: androidBuild
-            artifactPath: export/android/bin/*
     uses: ./.github/workflows/build.yml
     with:
         name: ${{ matrix.name }}
