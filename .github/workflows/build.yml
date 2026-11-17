@@ -44,9 +44,8 @@ jobs:
 
       - name: Install Libraries
         run: |-
-          haxelib install hmm 
-          haxelib run hmm setup 
-          haxelib run hmm install 
+          haxelib install hmm
+          haxelib run hmm install
 
       - name: Install Flixel
         run: haxelib install flixel --quiet
