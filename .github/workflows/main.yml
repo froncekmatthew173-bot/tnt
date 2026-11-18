@@ -65,9 +65,6 @@ jobs:
       - name: Install HMM
         run: haxelib install hmm --quiet
 
-      - name: Setup HMM
-        run: haxelib run hmm setup
-
       - name: Install Dependencies
         run: haxelib run hmm install
 
