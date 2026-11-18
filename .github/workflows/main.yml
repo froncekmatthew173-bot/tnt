@@ -60,37 +60,25 @@ jobs:
         with:
           haxe-version: 4.3.6
 
-      - name: Configure HAXEPATH
+      - name: Verify Haxe
         shell: bash
         run: |
-          HAXE_BIN=$(dirname "$(which haxe)")
-
-          echo "HAXEPATH=$HAXE_BIN" >> $GITHUB_ENV
-          echo "$HAXE_BIN" >> $GITHUB_PATH
-
-          echo "HAXEPATH=$HAXE_BIN"
-          which haxe
           haxe --version
+          haxelib version
 
       - name: Install HMM
-        shell: bash
-        run: |
-          haxelib install hmm --quiet
+        run: haxelib install hmm --quiet
 
       - name: Setup HMM
-        shell: bash
-        run: |
-          export HAXEPATH=$(dirname "$(which haxe)")
-
-          haxelib run hmm setup || true
-          haxelib run hmm help || true
+        run: haxelib run hmm setup
 
       - name: Install Dependencies
+        run: haxelib run hmm install
+
+      - name: Install Native Desktop
         shell: bash
         run: |
-          export HAXEPATH=$(dirname "$(which haxe)")
-
-          haxelib run hmm install
+          haxelib install native-desktop --quiet || true
 
       - name: Windows Native Opus Libraries
         if: matrix.os == 'windows-2022'
@@ -108,37 +96,43 @@ jobs:
           echo "===== HAXE VERSION ====="
           haxe --version
 
-          echo ""
-          echo "===== HAXELIB CONFIG ====="
-          haxelib config
-
-          echo ""
+          echo
           echo "===== HAXELIB LIST ====="
           haxelib list
 
-          echo ""
-          echo "===== HMM JSON ====="
+          echo
+          echo "===== HAXELIB CONFIG ====="
+          haxelib config
+
+          echo
+          echo "===== HMM.JSON ====="
           cat hmm.json || true
 
-          echo ""
+      - name: Dependency Diagnostics
+        shell: bash
+        run: |
           echo "===== GRIG AUDIO ====="
           haxelib path grig.audio || true
 
-          echo ""
+          echo
           echo "===== HXVLC ====="
           haxelib path hxvlc || true
+
+          echo
+          echo "===== NATIVE DESKTOP ====="
+          haxelib path native-desktop || true
 
       - name: Audio Diagnostics
         shell: bash
         run: |
-          echo "===== AUDIOSTREAMTHING REFERENCES ====="
+          echo "===== AUDIOSTREAMTHING ====="
           grep -R "AudioStreamThing" . 2>/dev/null || true
 
-          echo ""
+          echo
           echo "===== OPUS REFERENCES ====="
           grep -R "opus" . 2>/dev/null || true
 
-          echo ""
+          echo
           echo "===== GRIG.AUDIO REFERENCES ====="
           grep -R "grig.audio" . 2>/dev/null || true
 
@@ -146,7 +140,7 @@ jobs:
         if: matrix.os == 'windows-2022'
         shell: pwsh
         run: |
-          Write-Host "===== OPUS DLL/LIB FILES ====="
+          Write-Host "===== OPUS LIBRARIES ====="
 
           Get-ChildItem `
             -Path "C:\" `
