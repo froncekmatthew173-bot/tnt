@@ -163,12 +163,20 @@ class Main extends Sprite
 		addCharacter("atlanta", "Atlanta", "I'm pretty so-Fish-ticated myself!",
 			"A literal fish out of water, she's trying her best to fit in with the land-dwellers. All while cracking fish puns in every sentence, she can be pretty obnoxious at times.",
 			"Tune-A-Fish", 0x4c6b9b, "Ket Overkill");
+		addCharacter('shaggy', 'Shaggy', "Like, zoinks Scoob, this is a real mystery!",
+			"A laid-back stoner who loves to solve mysteries with his dog. He has a surprisingly deep voice and can get pretty serious when it comes to solving mysteries.",
+			"Zoinks", 0x33724a);
+		addCharacter('dave', 'Dave', "I'm the best at what I do!",
+			"A skilled marksman with a calm demeanor. He's always ready for action and doesn't hesitate to use his skills when needed.",
+			"Blitz", 0x0f5fff);
 
 		characterColors["gf"] = 0xa5004d;
 		characterColors["prisma"] = 0x9fd5ed;
 		characterColors["skid"] = 0xa2a2a2;
 		characterColors["pump"] = 0xd57e00;
 		characterColors["senpai"] = 0xfac146;
+		characterColors["dave"] = 0x0f5fff;
+		characterColors["shaggy"] = 0x33724a;
 		characterColors["tankman"] = 0x383838;
 		charToSong["prisma"] = "Fresnel";
 		charToSong["prisma2"] = "SiO2";

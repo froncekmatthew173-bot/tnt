@@ -24,6 +24,9 @@ class HealthIcon extends FlxSprite
 		super();
 		flipX = isPlayer;
 
+		if (this.char == "dave")
+			defualtIconScale = 2.5;
+
 		changeChar(char);
 
 		normal();

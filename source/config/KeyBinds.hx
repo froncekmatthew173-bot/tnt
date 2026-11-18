@@ -27,6 +27,9 @@ class KeyBinds
         FlxG.save.data.leftBindController = "X";
         FlxG.save.data.rightBindController = "B";
 
+        // Reset the per-lane note key binds (EK extra keys) to 4K defaults
+        KeyConfig.reset(4);
+
         PlayerSettings.player1.controls.loadKeyBinds();
 
 	}
@@ -71,6 +74,13 @@ class KeyBinds
         if(FlxG.save.data.rightBindController == null){
             FlxG.save.data.rightBindController = "B";
             trace("No Controller RIGHT");
+        }
+
+        // Extra keys: initialize per-lane note binds if missing
+        if(FlxG.save.data.noteKeyBinds == null)
+        {
+            KeyConfig.setup(4);
+            KeyConfig.save();
         }
     }
 

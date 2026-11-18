@@ -80,7 +80,9 @@ class ChartingState extends MusicBeatState
 	var amountSteps:Int = 0;
 	var bullshitUI:FlxGroup;
 
-	var strumColors:Array<FlxColor> = [0xFFC24B99, 0xFF00FFFF, 0xFF12FA05, 0xFFF9393F];
+	var strumColors:Array<FlxColor> = [0xFFC24B99, 0xFF00FFFF, 0xFF12FA05, 0xFFF9393F, 0xFFFF00FF, 0xFFFFFF00];
+
+	public var keyCount:Int = 4;
 
 	var highlight:FlxSprite;
 
@@ -153,14 +155,14 @@ class ChartingState extends MusicBeatState
 
 		var gridBG2Length = 4;
 
-		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, GRID_SIZE * 16, true, 0xFFE7E7E7, 0xFFC5C5C5);
+		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * keyCount, GRID_SIZE * 16, true, 0xFFE7E7E7, 0xFFC5C5C5);
 
 		// gridBGTriple = FlxGridOverlay.create(GRID_SIZE, Std.int(GRID_SIZE * 4/3), GRID_SIZE * 8, GRID_SIZE * 16, true, 0xFFE7E7E7, 0xFFC5C5C5);
 		// gridBGTriple.visible = false;
 
-		gridBG2 = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, GRID_SIZE * 16 * gridBG2Length, true, 0xFF515151, 0xFF3D3D3D);
+		gridBG2 = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * keyCount, GRID_SIZE * 16 * gridBG2Length, true, 0xFF515151, 0xFF3D3D3D);
 
-		gridBGOverlay = FlxGridOverlay.create(GRID_SIZE * 4, GRID_SIZE * 4, GRID_SIZE * 8, GRID_SIZE * 16 * gridBG2Length, true, 0xFFFFFFFF, 0xFFB5A5CE);
+		gridBGOverlay = FlxGridOverlay.create(GRID_SIZE * 4, GRID_SIZE * 4, GRID_SIZE * keyCount * 2, GRID_SIZE * 16 * gridBG2Length, true, 0xFFFFFFFF, 0xFFB5A5CE);
 		gridBGOverlay.blend = "multiply";
 
 		add(gridBG2);
@@ -177,8 +179,8 @@ class ChartingState extends MusicBeatState
 		leftIcon.iconScale = 0.5;
 		rightIcon.iconScale = 0.5;
 
-		leftIcon.setPosition((gridBG.width / 4) - (leftIcon.width / 4), -75);
-		rightIcon.setPosition((gridBG.width / 4) * 3 - (rightIcon.width / 4), -75);
+		leftIcon.setPosition((gridBG.width / keyCount) - (leftIcon.width / 4), -75);
+		rightIcon.setPosition((gridBG.width / keyCount) * (keyCount - 1) - (rightIcon.width / 4), -75);
 
 		leftIconBack = new FlxSprite(leftIcon.x - 2.5, leftIcon.y - 2.5).makeGraphic(75, 75, 0xFF00AAFF);
 		rightIconBack = new FlxSprite(rightIcon.x - 2.5, rightIcon.y - 2.5).makeGraphic(75, 75, 0xFF00AAFF);
@@ -188,8 +190,8 @@ class ChartingState extends MusicBeatState
 		add(leftIcon);
 		add(rightIcon);
 
-		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + GRID_SIZE * 4).makeGraphic(2, Std.int(gridBG2.height), FlxColor.BLACK);
-		add(gridBlackLine);
+		// var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + GRID_SIZE * 4).makeGraphic(2, Std.int(gridBG2.height), FlxColor.BLACK);
+		// add(gridBlackLine);
 
 		for (i in 1...gridBG2Length)
 		{
@@ -219,6 +221,9 @@ class ChartingState extends MusicBeatState
 				songVolume: 1
 			};
 		}
+
+		keyCount = _song.keyCount != null ? Std.int(_song.keyCount) : 4;
+		_song.keyCount = keyCount;
 
 		for (x in _song.notes)
 		{
@@ -429,6 +434,13 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(stepperVocalVolume);
 		tab_group_song.add(stepperSongVolumeText);
 		tab_group_song.add(stepperSongVolume);
+
+		var keyCountText:FlxText = new FlxText(10, 290, 0, "Key Count", 9);
+		var stepperKeyCount:FlxUINumericStepper = new FlxUINumericStepper(10, 305, 1, 4, 4, 8, 0);
+		stepperKeyCount.value = keyCount;
+		stepperKeyCount.name = 'song_keyCount';
+		tab_group_song.add(keyCountText);
+		tab_group_song.add(stepperKeyCount);
 
 		UI_box.addGroup(tab_group_song);
 		UI_box.scrollFactor.set();
@@ -782,9 +794,9 @@ class ChartingState extends MusicBeatState
 	{
 		if (curSelectedNote == null)
 			return;
-		var offset = 0;
-		if (curSelectedNote[1] != null && curSelectedNote[1] > 3)
-			offset = 4;
+		var offset:Int = 0;
+		if (curSelectedNote[1] != null && Std.int(curSelectedNote[1]) >= keyCount)
+			offset = keyCount;
 		curSelectedNote[1] = xvalue + offset;
 		updateGrid();
 		updateNoteUI();
@@ -879,28 +891,24 @@ class ChartingState extends MusicBeatState
 		stepperNoteType.name = 'note_type';
 
 		var noteDataText = new FlxText(10, 300, "Note Direction", 9);
-		noteDataButtons = [
-			new FlxUIButton(10, 320, "L", function()
-			{
-				noteDataButton(0);
-			}),
-			new FlxUIButton(40, 320, "D", function()
-			{
-				noteDataButton(1);
-			}),
-			new FlxUIButton(70, 320, "U", function()
-			{
-				noteDataButton(2);
-			}),
-			new FlxUIButton(100, 320, "R", function()
-			{
-				noteDataButton(3);
-			}),
+		noteDataButtons = [];
+		var noteDataLabels = ["L", "D", "U", "R", "5", "6", "7", "8", "9", "0"];
+		var noteDataColors = [
+			0xFFF8C7FF, 0xFFC4F5FF, 0xFFD3FFC2, 0xFFC2C2FF,
+			0xFFFF00FF, 0xFFFFFF00, 0xFF00FFFF, 0xFFFF0000,
+			0xFFAAAAAA, 0xFF555555
 		];
-		noteDataButtons[0].color = FlxColor.fromRGB(248, 199, 255);
-		noteDataButtons[1].color = FlxColor.fromRGB(196, 245, 255);
-		noteDataButtons[2].color = FlxColor.fromRGB(211, 255, 194);
-		noteDataButtons[3].color = FlxColor.fromRGB(255, 194, 194);
+		for (i in 0...keyCount)
+		{
+			var laneIndex = i;
+			noteDataButtons.push(
+				new FlxUIButton(10 + i * 30, 320, noteDataLabels[i % noteDataLabels.length], function()
+				{
+					noteDataButton(laneIndex);
+				})
+			);
+			noteDataButtons[i].color = FlxColor.fromRGB(noteDataColors[i % noteDataColors.length], 255, 255, 1);
+		}
 
 		tab_group_note.add(susText);
 		tab_group_note.add(stepperSusLength);
@@ -1267,7 +1275,10 @@ class ChartingState extends MusicBeatState
 					&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps))
 				{
 					// FlxG.log.add('added note');
-					addNote(getStrumTime(dummyArrow.y) + sectionStartTime(), Math.floor(FlxG.mouse.x / GRID_SIZE));
+					var lane:Int = Math.floor((FlxG.mouse.x - gridBG.x) / GRID_SIZE);
+					if (lane < 0) lane = 0;
+					if (lane >= keyCount) lane = keyCount - 1;
+					addNote(getStrumTime(dummyArrow.y) + sectionStartTime(), lane);
 				}
 			}
 		}
@@ -1307,7 +1318,7 @@ class ChartingState extends MusicBeatState
 			&& FlxG.mouse.y > gridBG.y
 			&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps))
 		{
-			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
+			dummyArrow.x = gridBG.x + Math.floor((FlxG.mouse.x - gridBG.x) / GRID_SIZE) * GRID_SIZE;
 
 			if (FlxG.keys.pressed.CONTROL && FlxG.keys.pressed.SHIFT)
 				dummyArrow.y = Math.floor(FlxG.mouse.y / (GRID_SIZE / 4)) * (GRID_SIZE / 4);
@@ -1667,11 +1678,11 @@ class ChartingState extends MusicBeatState
 				if (note.strumTime - Conductor.songPosition <= 0 && note.strumTime - Conductor.songPosition > -60 && !note.tooLate)
 				{
 					// DD: Play those vocal samples
-					if (!dadSampleMute && note.x <= GRID_SIZE * 3 && note.noteData != 8)
+					if (!dadSampleMute && note.x < GRID_SIZE * keyCount && note.noteData != 8)
 					{
 						dadSound.playNote(note, Conductor.vocalVolume);
 					}
-					else if (!bfSampleMute && note.x > GRID_SIZE * 3 && note.noteData != 8)
+					else if (!bfSampleMute && note.x >= GRID_SIZE * keyCount && note.noteData != 8)
 					{
 						bfSound.playNote(note, Conductor.vocalVolume);
 					}
@@ -1927,7 +1938,7 @@ class ChartingState extends MusicBeatState
 
 			for (i in 0...noteDataButtons.length)
 			{
-				if (i == Std.int(curSelectedNote[1]) % 4)
+				if (i == Std.int(curSelectedNote[1]) % keyCount)
 					noteDataButtons[i].setLabelFormat(null, 12, FlxColor.RED);
 				else
 					noteDataButtons[i].setLabelFormat(null, 12, FlxColor.BLACK);
@@ -1979,6 +1990,54 @@ class ChartingState extends MusicBeatState
 				widget.alpha = 0;
 			}
 		}
+	}
+
+	function rebuildKeyCountUI():Void
+	{
+		// Rebuild grid sprites with new width
+		remove(gridBG);
+		remove(gridBG2);
+		remove(gridBGOverlay);
+
+		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * keyCount, GRID_SIZE * 16, true, 0xFFE7E7E7, 0xFFC5C5C5);
+		gridBG2 = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * keyCount, GRID_SIZE * 16 * 4, true, 0xFF515151, 0xFF3D3D3D);
+		gridBGOverlay = FlxGridOverlay.create(GRID_SIZE * 4, GRID_SIZE * 4, GRID_SIZE * keyCount * 2, GRID_SIZE * 16 * 4, true, 0xFFFFFFFF, 0xFFB5A5CE);
+		gridBGOverlay.blend = "multiply";
+
+		add(gridBG2);
+		add(gridBG);
+		add(gridBGOverlay);
+
+		// Reposition icons
+		leftIcon.setPosition((gridBG.width / keyCount) - (leftIcon.width / 4), -75);
+		rightIcon.setPosition((gridBG.width / keyCount) * (keyCount - 1) - (rightIcon.width / 4), -75);
+
+		// Rebuild note data buttons
+		for (btn in noteDataButtons)
+			remove(btn);
+		noteDataButtons = [];
+		var noteDataLabels = ["L", "D", "U", "R", "5", "6", "7", "8", "9", "0"];
+		var noteDataColors = [
+			0xFFF8C7FF, 0xFFC4F5FF, 0xFFD3FFC2, 0xFFC2C2FF,
+			0xFFFF00FF, 0xFFFFFF00, 0xFF00FFFF, 0xFFFF0000,
+			0xFFAAAAAA, 0xFF555555
+		];
+		for (i in 0...keyCount)
+		{
+			var laneIndex = i;
+			var btn = new FlxUIButton(10 + i * 30, 320, noteDataLabels[i % noteDataLabels.length], function()
+			{
+				noteDataButton(laneIndex);
+			});
+			btn.color = FlxColor.fromRGB(noteDataColors[i % noteDataColors.length], 255, 255, 1);
+			btn.resize(28, 28);
+			btn.setLabelFormat(null, 12);
+			noteDataButtons.push(btn);
+			add(btn);
+		}
+
+		updateGrid();
+		updateNoteUI();
 	}
 
 	function updateGrid():Void
@@ -2034,11 +2093,15 @@ class ChartingState extends MusicBeatState
 	private function addNotesToRender(curSec:Int, ?secOffset:Int = 0)
 	{
 		var section:Array<Dynamic> = _song.notes[curSec + secOffset].sectionNotes;
-		var noteAdjust:Array<Int> = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+		var noteAdjust:Array<Int> = [];
+		for (i in 0...keyCount) noteAdjust.push(i);
+		noteAdjust.push(8);
 
 		if (_song.notes[curSec + secOffset].mustHitSection)
 		{
-			noteAdjust = [4, 5, 6, 7, 0, 1, 2, 3, 8];
+			noteAdjust = [];
+			for (i in 0...keyCount) noteAdjust.push(i + keyCount);
+			noteAdjust.push(8);
 		}
 
 		for (i in section)
@@ -2236,11 +2299,15 @@ class ChartingState extends MusicBeatState
 
 	private function addNote(_noteStrum:Float, _noteData:Int, ?skipSectionCheck:Bool = false):Void
 	{
-		var noteAdjust:Array<Int> = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+		var noteAdjust:Array<Int> = [];
+		for (i in 0...keyCount) noteAdjust.push(i);
+		noteAdjust.push(8); // FX note
 
 		if (_song.notes[curSection].mustHitSection)
 		{
-			noteAdjust = [4, 5, 6, 7, 0, 1, 2, 3, 8];
+			noteAdjust = [];
+			for (i in 0...keyCount) noteAdjust.push(i + keyCount);
+			noteAdjust.push(8);
 		}
 
 		var noteData = noteAdjust[_noteData];
@@ -2273,7 +2340,7 @@ class ChartingState extends MusicBeatState
 		{
 			_song.notes[curSection].sectionNotes.push([
 				noteStrum,
-				(noteData + 4) % 8,
+				(noteData + keyCount) % (keyCount * 2),
 				noteSus,
 				curSelectedPitch,
 				curSelectedPreset,

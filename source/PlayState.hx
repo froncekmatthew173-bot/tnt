@@ -116,7 +116,8 @@ class PlayState extends MusicBeatState
 	public static var autoPlay:Bool = false;
 
 	public static var botplayType:BotplayType = Perfect;
-
+	public static var botplayTxt:FlxText;
+	public static var botplaySine:Float = 0;
 
 	private var canHit:Bool = false;
 	private var noMissCount:Int = 0;
@@ -412,7 +413,11 @@ class PlayState extends MusicBeatState
 		{
 			case 5: ["A", "B", "E", "C", "D"];
 			case 6: is3D ? ["alt A", "C", "D", "F", "B", "I"] : ["A", "C", "D", "F", "B", "I"];
-			default: ["A", "B", "C", "D"];
+			default:
+				var base = ["A", "B", "C", "D"];
+				var arr:Array<String> = [];
+				for (i in 0...count) arr.push(base[i % 4]);
+				arr;
 		}
 	}
 
@@ -427,7 +432,11 @@ class PlayState extends MusicBeatState
 		{
 			case 5: ["LEFT", "DOWN", "SPACE", "UP", "RIGHT"];
 			case 6: ["LEFT", "UP", "RIGHT", "LEFT", "DOWN", "RIGHT"];
-			default: ["LEFT", "DOWN", "UP", "RIGHT"];
+			default:
+				var base = ["LEFT", "DOWN", "UP", "RIGHT"];
+				var arr:Array<String> = [];
+				for (i in 0...count) arr.push(base[i % 4]);
+				arr;
 		}
 	}
 
@@ -437,7 +446,11 @@ class PlayState extends MusicBeatState
 		{
 			case 5: ["singLEFT", "singDOWN", "singSPACE", "singUP", "singRIGHT"];
 			case 6: ["singLEFT-alt", "singUP", "singRIGHT", "singLEFT", "singDOWN", "singRIGHT-alt"];
-			default: ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
+			default:
+				var base = ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
+				var arr:Array<String> = [];
+				for (i in 0...count) arr.push(base[i % 4]);
+				arr;
 		}
 	}
 
@@ -461,6 +474,7 @@ class PlayState extends MusicBeatState
 		// instance = this;
 		FlxG.mouse.visible = false;
 		PlayerSettings.gameControls();
+		autoPlay = Config.botplay;
 
 		// resetChatData();
 
@@ -518,6 +532,7 @@ class PlayState extends MusicBeatState
 		noteSkin = (SONG.arrowSkin != null && FileSystem.exists(Paths.funk("notes/" + SONG.arrowSkin))) ? SONG.arrowSkin : "note";
 		loadKeyCountChanges();
 		keyCount = keyCountAt(0);
+		KeyConfig.setup(keyCount);
 		notePositions = [0, 1, 2, 3];
 
 		// blurEffect.setStrength(0, 0);
@@ -1291,7 +1306,7 @@ class PlayState extends MusicBeatState
 				skewGrid.setPosition(FlxG.width / 2 - skewGrid.width / 2, 600);
 				add(skewGrid);
 			case 'house':
-				defaultCamZoom = 0.6;
+				defaultCamZoom = 0.8;
                 curStage = 'house';
 
 				var bg:FlxSprite = new FlxSprite(-600, -300).loadGraphic(Paths.image('backgrounds/shared/sky'));
@@ -1751,6 +1766,12 @@ class PlayState extends MusicBeatState
 		scoreTxt.setFormat(Paths.font("vcr"), 21, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 
+		var botplayTxt = new FlxTextThing(400, healthBarBG.y - 90, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.25;
+		botplayTxt.visible = autoPlay;
+
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBarBG.y + healthBarBG.height / 2 - (iconP1.height / 2);
 
@@ -1763,6 +1784,7 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		add(iconP1);
 		add(scoreTxt);
+		add(botplayTxt);
 		add(bfVert);
 		add(dadVert);
 		if (Config.comboParticles)
@@ -2468,6 +2490,7 @@ class PlayState extends MusicBeatState
 			return;
 
 		keyCount = count;
+		KeyConfig.setup(count);
 		alreadyTapped.resize(count);
 		severInputs.resize(count);
 		for (i in 0...count)
@@ -2555,13 +2578,15 @@ class PlayState extends MusicBeatState
 						var letter = getLaneLetters(keyCount)[i];
 						var staticPrefix = switch (letter)
 						{
-							case "A" | "F": "arrowLEFT";
-							case "B": "arrowDOWN";
-							case "C": "arrowUP";
-							case "D": "arrowRIGHT";
-							case "E": "arrowSPACE";
-							case "I": "alt arrowright";
-							case "alt A": "alt arrowLEFT";
+							case "purple": "arrowLEFT";
+							case "blue": "arrowDOWN";
+							case "square": "arrowSQUARE";
+							case "green": "arrowUP";
+                            case "red": "arrowRIGHT";
+							case "yellow": "arrowLEFT";
+							case "violet": "arrowDOWN";
+							case "crimson": "arrowUP";
+							case "darkblue": "arrowRIGHT";
 							default: "arrowRIGHT";
 						};
 						babyArrow.animation.addByPrefix('static', staticPrefix);
@@ -3397,7 +3422,7 @@ class PlayState extends MusicBeatState
 				var dunceNote:Note = notes.recycle(Note);
 				// var dunceNote:Note = new Note();
 				dunceNote.setupNote(pending.strumTime, pending.noteData, false, prev, pending.isSustainNote, root, pending.noteType, musicStream,
-					pending.mustPress, pending.isLeafNote, pending.sustainLength, pending.keyCount);
+					pending.mustPress, pending.isLeafNote, pending.sustainLength);
 				notes.remove(dunceNote);
 				sustainNotes.remove(dunceNote);
 				arrowNotes.remove(dunceNote);
@@ -3453,7 +3478,7 @@ class PlayState extends MusicBeatState
 
 					if (dad.canAutoAnim && (!dad.isModel || !daNote.isSustainNote))
 					{
-						var animToPlay = getSingAnimations(daNote.keyCount)[daNote.noteData];
+						var animToPlay = getSingAnimations(keyCount)[daNote.noteData];
 						if (altAnim.length > 0 && !animToPlay.endsWith(altAnim))
 							animToPlay += altAnim;
 						if (!daNote.isSustainNote)
@@ -5160,28 +5185,28 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function noteSplasher(noteData)
+	function noteSplasher(noteData:Int)
 	{
 		if (!Config.noteSplash || keyCount != 4)
 			return;
 
-		var splash = noteSplash.members[noteData % 4];
-		if (splashTweens[noteData % 4] != null && splashTweens[noteData % 4].active)
+		var splash = noteSplash.members[noteData % keyCount];
+		if (splashTweens[noteData % keyCount] != null && splashTweens[noteData % keyCount].active)
 		{
-			splashTweens[noteData % 4].cancel();
-			splashTweens[noteData % 4] = FlxDestroyUtil.destroy(splashTweens[noteData % 4]);
+			splashTweens[noteData % keyCount].cancel();
+			splashTweens[noteData % keyCount] = FlxDestroyUtil.destroy(splashTweens[noteData % keyCount]);
 		}
-		if (splashTweens2[noteData % 4] != null && splashTweens2[noteData % 4].active)
+		if (splashTweens2[noteData % keyCount] != null && splashTweens2[noteData % keyCount].active)
 		{
-			splashTweens2[noteData % 4].cancel();
-			splashTweens2[noteData % 4] = FlxDestroyUtil.destroy(splashTweens2[noteData % 4]);
+			splashTweens2[noteData % keyCount].cancel();
+			splashTweens2[noteData % keyCount] = FlxDestroyUtil.destroy(splashTweens2[noteData % keyCount]);
 		}
 		splash.scale.set(0.33, 0.33);
 		splash.alpha = 1;
-		var strumNote = playerStrums.members[noteData % 4];
+		var strumNote = playerStrums.members[noteData % keyCount];
 		// splash.setPosition(strumNote.x + strumNote.width / 2 - splash.width / 2, strumNote.y + strumNote.height / 2 - splash.height / 2);
 
-		splashTweens[noteData % 4] = FlxTween.tween(splash, {"scale.x": 0.9, "scale.y": 0.9}, 0.25, {
+		splashTweens[noteData % keyCount] = FlxTween.tween(splash, {"scale.x": 0.9, "scale.y": 0.9}, 0.25, {
 			onComplete: function(twn)
 			{
 				twn.cancel();
@@ -5633,49 +5658,23 @@ class PlayState extends MusicBeatState
 
 	var alreadyTapped:Array<Bool> = [false, false, false, false, false, false];
 
-	function multikeyButtonIndex(button:String):Int
-	{
-		var buttons = keyCount == 5 ? ["D", "F", "SPACE", "J", "K"] : ["S", "D", "F", "J", "K", "L"];
-		return buttons.indexOf(button);
-	}
-
 	function multikeyLanePressed(index:Int):Bool
 	{
-		if (keyCount == 5)
-		{
-			return switch (index)
-			{
-				case 0: FlxG.keys.pressed.D;
-				case 1: FlxG.keys.pressed.F;
-				case 2: FlxG.keys.pressed.SPACE;
-				case 3: FlxG.keys.pressed.J;
-				case 4: FlxG.keys.pressed.K;
-				default: false;
-			}
-		}
-		return switch (index)
-		{
-			case 0: FlxG.keys.pressed.S;
-			case 1: FlxG.keys.pressed.D;
-			case 2: FlxG.keys.pressed.F;
-			case 3: FlxG.keys.pressed.J;
-			case 4: FlxG.keys.pressed.K;
-			case 5: FlxG.keys.pressed.L;
-			default: false;
-		}
+		return KeyConfig.lanePressed(index);
 	}
 
 	function multikeyHold():Void
 	{
 		notes.forEachAlive(function(note:Note)
 		{
-			if (note.mustPress && note.isSustainNote && note.keyCount == keyCount && note.canBeHit && multikeyLanePressed(note.noteData))
+			if (note.mustPress && note.isSustainNote && note.canBeHit && KeyConfig.lanePressed(note.noteData))
 				goodNoteHit(note);
 		});
 
 		playerStrums.forEach(function(strum:FlxSprite)
 		{
-			if (!multikeyLanePressed(strum.ID) && strum.animation.curAnim != null && strum.animation.curAnim.name != "static"
+			if (!KeyConfig.lanePressed(strum.ID) && strum.animation.curAnim != null
+				&& strum.animation.curAnim.name != "static"
 				&& strum.animation.curAnim.name != "confirm")
 				strum.animation.play("static");
 		});
@@ -5691,17 +5690,7 @@ class PlayState extends MusicBeatState
 		if (keyThing == null)
 			return;
 		var button = keyThing.ID.toString();
-		var index:Int = -1;
-		if (keyCount != 4)
-			index = multikeyButtonIndex(button);
-		else if (button == 'LEFT' || button == FlxG.save.data.leftBind)
-			index = 0;
-		else if (button == 'DOWN' || button == FlxG.save.data.downBind)
-			index = 1;
-		else if (button == 'UP' || button == FlxG.save.data.upBind)
-			index = 2;
-		else if (button == 'RIGHT' || button == FlxG.save.data.rightBind)
-			index = 3;
+		var index:Int = KeyConfig.findLane(button);
 
 		if (index == -1)
 			return;
@@ -5847,17 +5836,7 @@ class PlayState extends MusicBeatState
 		if (keyThing == null)
 			return;
 		var button = keyThing.ID.toString();
-		var index:Int = -1;
-		if (keyCount != 4)
-			index = multikeyButtonIndex(button);
-		else if (button == 'LEFT' || button == FlxG.save.data.leftBind)
-			index = 0;
-		else if (button == 'DOWN' || button == FlxG.save.data.downBind)
-			index = 1;
-		else if (button == 'UP' || button == FlxG.save.data.upBind)
-			index = 2;
-		else if (button == 'RIGHT' || button == FlxG.save.data.rightBind)
-			index = 3;
+		var index:Int = KeyConfig.findLane(button);
 
 		if (index == -1)
 			return;
@@ -6169,7 +6148,7 @@ class PlayState extends MusicBeatState
 						altAnim = '-alt';
 				}
 
-				var animToPlay = getSingAnimations(note.keyCount)[note.noteData];
+				var animToPlay = getSingAnimations(keyCount)[note.noteData];
 				if (altAnim.length > 0 && !animToPlay.endsWith(altAnim))
 					animToPlay += altAnim;
 				if (!note.isSustainNote)
@@ -6320,7 +6299,7 @@ class PlayState extends MusicBeatState
 					if (SONG.notes[Math.floor(curStep / 16)].altAnim)
 						altAnim = '-alt';
 				}
-				var animToPlay = getSingAnimations(note.keyCount)[note.noteData];
+				var animToPlay = getSingAnimations(keyCount)[note.noteData];
 				if (altAnim.length > 0 && !animToPlay.endsWith(altAnim))
 					animToPlay += altAnim;
 				boyfriend.playAnim(animToPlay, true);

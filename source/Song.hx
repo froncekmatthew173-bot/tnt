@@ -24,6 +24,7 @@ typedef SwagSong =
 	var songVolume:Null<Float>;
 	@:optional var arrowSkin:Null<String>;
 	@:optional var events:Array<Dynamic>;
+	@:optional var keyCount:Null<Int>;
 }
 
 class Song
@@ -39,6 +40,8 @@ class Song
 	public var stage:String = '';
 	public var gf:String = 'gf';
 	public var vocalVolume:Float = 1.0;
+	public var songVolume:Float = 1.0;
+	public var keyCount:Int = 4;
 
 	public function new(song, notes, bpm)
 	{

@@ -98,8 +98,6 @@ class Character extends FlxNestedSkewSprite
 					animation.addByPrefix('sing${anim.toUpperCase()}miss', '$anim miss', 24, false);
 				}
 				animation.addByPrefix('hey', 'hey', 24, false);
-	
-				posOffsets = [0, -170];
 
 				addOffset('singRIGHTmiss', -40, 1);
 				addOffset('singDOWN', -30, 18);
@@ -438,6 +436,46 @@ class Character extends FlxNestedSkewSprite
 				camOffsets = [500, 300];
 
 			case 'bf':
+				createAtlas();
+
+				setAtlasAnim('idle', 'BF idle danceF');
+				setAtlasAnim('singUP', 'BF NOTE UPF');
+				setAtlasAnim('singLEFT', 'BF NOTE LEFTF');
+				setAtlasAnim('singRIGHT', 'BF NOTE RIGHTF');
+				setAtlasAnim('singDOWN', 'BF NOTE DOWNF');
+				setAtlasAnim('singUPmiss', 'BF NOTE UP MISSF');
+				setAtlasAnim('singLEFTmiss', 'BF NOTE LEFT MISSF');
+				setAtlasAnim('singRIGHTmiss', 'BF NOTE RIGHT MISSF');
+				setAtlasAnim('singDOWNmiss', 'BF NOTE DOWN MISSF');
+				setAtlasAnim('hey', 'BF HEY!!F');
+				// setAtlasAnim('attack', 'boyfriend attack');
+				setAtlasAnim('hit', 'BF hit copyF');
+				setAtlasAnim('dodge', 'boyfriend dodgeF');
+				setAtlasAnim('scared', 'BF idle shakingF', true);
+
+				loadAtlas(Paths.getImageFunk("characters/bf/spritemap"), Paths.json("characters/bf/spritemap", "images"),
+					Paths.json("characters/bf/Animation", "images"));
+
+				addOffset('idle', -5);
+				addOffset("singUP", -21, 66);
+				addOffset("singRIGHT", -51, 9);
+				addOffset("singLEFT", -7, 3);
+				addOffset("singDOWN", -26, -41);
+				addOffset("singUPmiss", -21, 65);
+				addOffset("singRIGHTmiss", -42, 18);
+				addOffset("singLEFTmiss", -9, 14);
+				addOffset("singDOWNmiss", -32, -22);
+				addOffset("hey", -8, 8);
+				addOffset('scared', -17, -5);
+				addOffset('dodge', -1, -12);
+				addOffset('hit', 17, 41);
+
+				playAnim('idle');
+
+				initFacing = FlxObject.LEFT;
+
+
+			case 'bf2':
 				createAtlas();
 
 				setAtlasAnim('idle', 'BF idle danceF');

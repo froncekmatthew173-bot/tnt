@@ -23,6 +23,8 @@ class Config
 	public static var arrowColors:ColorzJSON;
 	public static var comboParticles:Bool = false;
 	public static var scrollSpeed:Float;
+	public static var botplay:Bool = false;
+	public static var botplayScore:Bool = false;
 
 	public static function resetSettings():Void
 	{
@@ -41,6 +43,8 @@ class Config
 		resetArrowColors();
 		FlxG.save.data.comboParticles = true;
 		FlxG.save.data.scrollSpeed = 0;
+		FlxG.save.data.botplay = false;
+		FlxG.save.data.botplayScore = false;
 		reload();
 	}
 
@@ -50,6 +54,11 @@ class Config
 			"left": {
 				"inner": "c24b99",
 				"outer": "3c1f56",
+				"base": "ffffff"
+			},
+			"square": {
+				"inner": "cccccc",
+				"outer": "3e3e3e",
 				"base": "ffffff"
 			},
 			"down": {
@@ -65,6 +74,26 @@ class Config
 			"right": {
 				"inner": "f9393f",
 				"outer": "651038",
+				"base": "ffffff"
+			},
+			"left2": {
+				"inner": "ffff00",
+				"outer": "993300",
+				"base": "ffffff"
+			},
+			"down2": {
+				"inner": "8b4aff",
+				"outer": "3b177d",
+				"base": "ffffff"
+			},
+			"up2": {
+				"inner": "ff0000",
+				"outer": "660000",
+				"base": "ffffff"
+			},
+			"right2": {
+				"inner": "0033ff",
+				"outer": "000066",
 				"base": "ffffff"
 			}
 		};
@@ -89,11 +118,13 @@ class Config
 		arrowColors = FlxG.save.data.arrowColors;
 		comboParticles = FlxG.save.data.comboParticles;
 		scrollSpeed = FlxG.save.data.scrollSpeed;
+		botplay = FlxG.save.data.botplay;
+		botplayScore = FlxG.save.data.botplayScore;
 	}
 
 	public static function write(offsetW:Float, accuracyW:String, healthMultiplierW:Float, healthDrainMultiplierW:Float, comboTypeW:Int, downscrollW:Bool,
 			noteGlowW:Bool, ghostTapTypeW:Int, noFpsCapW:Bool, controllerSchemeW:Int, bgDimW:Int, noteSplash:Bool, fpsDisplayValue:Int,
-			arrowColors:ColorzJSON, comboParticles:Bool, scrollSpeed:Float):Void
+			arrowColors:ColorzJSON, comboParticles:Bool, scrollSpeed:Float, botplayW:Bool, botplayScoreW:Bool):Void
 	{
 		FlxG.save.data.offset = offsetW;
 		FlxG.save.data.accuracy = accuracyW;
@@ -111,6 +142,8 @@ class Config
 		FlxG.save.data.arrowColors = arrowColors;
 		FlxG.save.data.comboParticles = comboParticles;
 		FlxG.save.data.scrollSpeed = scrollSpeed;
+		FlxG.save.data.botplay = botplayW;
+		FlxG.save.data.botplayScore = botplayScoreW;
 
 		FlxG.save.flush();
 
@@ -153,6 +186,10 @@ class Config
 			FlxG.save.data.comboParticles = true;
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 0;
+		if (FlxG.save.data.botplay == null)
+			FlxG.save.data.botplay = false;
+		if (FlxG.save.data.botplayScore == null)
+			FlxG.save.data.botplayScore = false;
 
 		if (FlxG.save.data.ee1 == null)
 			FlxG.save.data.ee1 = false;

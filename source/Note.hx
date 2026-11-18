@@ -24,7 +24,6 @@ class Note extends FlxSprite
 
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
-	public var keyCount:Int = 4;
 	public var trueNoteData:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
@@ -82,6 +81,8 @@ class Note extends FlxSprite
 
 	public static var colorzShaders:Array<Colorz> = [];
 	public static var colorz:Array<FlxColor> = [];
+	
+	public static var colArray:Array<String> = ['purple', 'blue', 'square', 'green', 'red', 'yellow', 'violet', 'crimson', 'darkblue'];
 
 	public function resetStuff()
 	{
@@ -116,7 +117,7 @@ class Note extends FlxSprite
 	}
 
 	public function setupNote(_strumTime:Float, _noteData:Int, ?_editor = false, ?_prevNote:Note, ?_sustainNote:Bool = false, ?_rootNote:Note,
-			noteType:Int = 0, _song = null, _mustHit:Bool = false, _isLeafNote:Bool = false, _sustainLength:Float = 0, _keyCount:Int = 4)
+			noteType:Int = 0, _song = null, _mustHit:Bool = false, _isLeafNote:Bool = false, _sustainLength:Float = 0)
 	{
 		resetStuff();
 
@@ -178,7 +179,6 @@ class Note extends FlxSprite
 
 		noteData = _noteData;
 		trueNoteData = _noteData;
-		keyCount = _keyCount;
 
 		mustPress = _mustHit;
 
@@ -249,26 +249,49 @@ class Note extends FlxSprite
 				{
 					case 0:
 						// frames = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
-						useColorz = !PlayState.usesLetterNotes(keyCount);
-						frames = Paths.getSparrowAtlasFunk('notes/' + PlayState.noteSkin);
-						if (!PlayState.usesLetterNotes(keyCount))
-						{
-							animation.addByPrefix('end', 'end', 0, false);
-							animation.addByPrefix('hold', 'hold', 0, false);
-							animation.addByPrefix('Scroll', 'scroll', 0, false);
-						}
-						else
-						{
-							var letter = PlayState.getLaneLetters(keyCount)[noteData];
-							animation.addByPrefix('Scroll', letter + '0', 0, false);
-							animation.addByPrefix('end', letter + ' tail', 0, false);
-							animation.addByPrefix('hold', letter + ' hold', 0, false);
-						}
+						useColorz = true;
+						frames = Paths.getSparrowAtlasFunk('notes/note');
+						animation.addByPrefix('end', colArray + 'hold end', 0, false);
+						animation.addByPrefix('hold', colArray + 'hold piece', 0, false);
+						animation.addByPrefix('Scroll', colArray + 'scroll', 0, false);
 						if (Config.noteGlow)
 						{
-							animation.addByPrefix('active', 'active', 0, false);
+							animation.addByPrefix('active', colArray + 'confirm', 0, false);
 						}
 
+						animation.addByPrefix('A confirm', 'purple confirm', 24, false);
+						animation.addByPrefix('B confirm', 'blue confirm', 24, false);
+						animation.addByPrefix('C confirm', 'green confirm', 24, false);
+						animation.addByPrefix('D confirm', 'red confirm', 24, false);
+						animation.addByPrefix('E confirm', 'square confirm', 24, false);
+						animation.addByPrefix('F confirm', 'yellow confirm', 24, false);
+						animation.addByPrefix('G confirm', 'violet confirm', 24, false);
+						animation.addByPrefix('H confirm', 'crimson confirm', 24, false);
+						animation.addByPrefix('A confirm', 'purple press', 24, false);
+						animation.addByPrefix('B press', 'blue press', 24, false);
+						animation.addByPrefix('C press', 'green press', 24, false);
+						animation.addByPrefix('D press', 'red press', 24, false);
+						animation.addByPrefix('E press', 'square press', 24, false);
+						animation.addByPrefix('F press', 'yellow press', 24, false);
+						animation.addByPrefix('G press', 'violet press', 24, false);
+						animation.addByPrefix('H press', 'crimson press', 24, false);
+						animation.addByPrefix('A hold piece', 'purple hold piece', 24, false);
+						animation.addByPrefix('B hold piece', 'blue press', 24, false);
+						animation.addByPrefix('C hold piece', 'green hold piece', 24, false);
+						animation.addByPrefix('D hold piece', 'red hold piece', 24, false);
+						animation.addByPrefix('E hold piece', 'square hold piece', 24, false);
+						animation.addByPrefix('F hold piece', 'yellow hold piece', 24, false);
+						animation.addByPrefix('G hold piece', 'violet hold piece', 24, false);
+						animation.addByPrefix('H hold piece', 'crimson hold piece', 24, false);
+						animation.addByPrefix('A hold end', 'purple hold end', 24, false);
+						animation.addByPrefix('B hold end', 'blue hold end', 24, false);
+						animation.addByPrefix('C hold end', 'green hold end', 24, false);
+						animation.addByPrefix('D hold end', 'red hold end', 24, false);
+						animation.addByPrefix('E hold end', 'square hold end', 24, false);
+						animation.addByPrefix('F hold end', 'yellow hold end', 24, false);
+						animation.addByPrefix('G hold end', 'violet hold end', 24, false);
+						animation.addByPrefix('H hold end', 'crimson hold end', 24, false);
+						animation.addByPrefix('H hold end', 'crimson hold end', 24, false);
 					case 1:
 						loadGraphic(Paths.getImagePNG("notes/minenote"));
 					case 2:
@@ -283,9 +306,9 @@ class Note extends FlxSprite
 						loadGraphic(Paths.getImagePNG("notes/scribblenote"));
 				}
 
-				setGraphicSize(Std.int(width * PlayState.getKeyScale(keyCount)));
+				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
-				antialiasing = !PlayState.noteSkin.toLowerCase().contains("3d");
+				antialiasing = true;
 		}
 
 		updateAngle();
@@ -295,11 +318,6 @@ class Note extends FlxSprite
 
 		if (!isSustainNote)
 		{
-			if (PlayState.usesLetterNotes(keyCount))
-			{
-				animation.play('Scroll');
-				return;
-			}
 			switch (noteData)
 			{
 				case 0:
@@ -338,6 +356,42 @@ class Note extends FlxSprite
 					}
 					else
 						animation.play('redScroll');
+				case 4:
+					// x += swagWidth * 4;
+					if (useColorz)
+					{
+						animation.play('E press');
+						shader = getShader(4, mustPress);
+					}
+					else
+						animation.play('E press');
+				case 5:
+					// x += swagWidth * 5;
+					if (useColorz)
+					{
+						animation.play('F press');
+						shader = getShader(5, mustPress);
+					}
+					else
+						animation.play('F press');
+				case 6:
+					// x += swagWidth * 6;
+					if (useColorz)
+					{
+						animation.play('G press');
+						shader = getShader(6, mustPress);
+					}
+					else
+						animation.play('G press');
+				case 7:
+					// x += swagWidth * 7;
+					if (useColorz)
+					{
+						animation.play('H press');
+						shader = getShader(7, mustPress);
+					}
+					else
+						animation.play('H press');
 				case 8:
 					loadGraphic('assets/images/FX.png');
 			}
@@ -355,9 +409,7 @@ class Note extends FlxSprite
 
 			updateFlip();
 
-			if (PlayState.usesLetterNotes(keyCount))
-				animation.play('end');
-			else switch (noteData)
+			switch (noteData)
 			{
 				case 2:
 					if (useColorz)
@@ -391,6 +443,38 @@ class Note extends FlxSprite
 					}
 					else
 						animation.play('purpleholdend');
+				case 4:
+					if (useColorz)
+					{
+						animation.play('E hold end');
+						shader = getShader(4, mustPress);
+					}
+					else
+						animation.play('E hold end');
+				case 5:
+					if (useColorz)
+					{
+						animation.play('F hold end');
+						shader = getShader(5, mustPress);
+					}
+					else
+						animation.play('F hold end');
+				case 6:
+					if (useColorz)
+					{
+						animation.play('G hold end');
+						shader = getShader(6, mustPress);
+					}
+					else
+						animation.play('G hold end');
+				case 7:
+					if (useColorz)
+					{
+						animation.play('H hold end');
+						shader = getShader(7, mustPress);
+					}
+					else
+						animation.play('H hold end');
 			}
 
 			updateHitbox();
@@ -409,9 +493,7 @@ class Note extends FlxSprite
 
 			updateFlip();
 
-			if (PlayState.usesLetterNotes(keyCount))
-				animation.play('hold');
-			else switch (noteData)
+			switch (noteData)
 			{
 				case 2:
 					if (useColorz)
@@ -445,6 +527,38 @@ class Note extends FlxSprite
 					}
 					else
 						animation.play('purplehold');
+				case 4:
+					if (useColorz)
+					{
+						animation.play('E hold piece');
+						shader = getShader(4, mustPress);
+					}
+					else
+						animation.play('E hold piece');
+				case 5:
+					if (useColorz)
+					{
+						animation.play('F hold piece');
+						shader = getShader(5, mustPress);
+					}
+					else
+						animation.play('F hold piece');
+				case 6:
+					if (useColorz)
+					{
+						animation.play('G hold piece');
+						shader = getShader(6, mustPress);
+					}
+					else
+						animation.play('G hold piece');
+				case 7:
+					if (useColorz)
+					{
+						animation.play('H hold piece');
+						shader = getShader(7, mustPress);
+					}
+					else
+						animation.play('H hold piece');
 			}
 
 			updateScale();
@@ -468,13 +582,21 @@ class Note extends FlxSprite
 				switch (noteData)
 				{
 					case 0:
-						angle = 90;
+						angle = 0;
 					case 1:
 						angle = 0;
 					case 2:
-						angle = 180;
+						angle = 0;
 					case 3:
-						angle = 270;
+						angle = 0;
+					case 4:
+						angle = 0;
+					case 5:
+						angle = 0;
+					case 6:
+						angle = 0;
+					case 7:
+						angle = 0;
 				}
 			}
 		}
@@ -485,7 +607,8 @@ class Note extends FlxSprite
 	public static function getShader(index:Int, mustHit:Bool)
 	{
 		var offset = (mustHit ? 0 : 4);
-		return colorzShaders[index + offset];
+		var shaderIndex = (index % 4) + offset;
+		return colorzShaders[shaderIndex];
 	}
 
 	public function updateScale()
@@ -679,7 +802,7 @@ class Note extends FlxSprite
 
 		if (!specialNote && noteData != 8)
 		{
-			if (!PlayState.usesLetterNotes(keyCount) && canBeHit && Config.noteGlow && !isSustainNote && animation.curAnim.name.contains("Scroll"))
+			if (canBeHit && Config.noteGlow && !isSustainNote && animation.curAnim.name.contains("Scroll"))
 			{
 				if (useColorz)
 				{
@@ -697,11 +820,19 @@ class Note extends FlxSprite
 							animation.play('blue glow');
 						case 0:
 							animation.play('purple glow');
+						case 4:
+							animation.play('E press');
+						case 5:
+							animation.play('F press');
+						case 6:
+							animation.play('G press');
+						case 7:
+							animation.play('H press');
 					}
 				}
 			}
 
-			if (!PlayState.usesLetterNotes(keyCount) && tooLate && !isSustainNote && !animation.curAnim.name.contains("Scroll"))
+			if (tooLate && !isSustainNote && !animation.curAnim.name.contains("Scroll"))
 			{
 				if (useColorz)
 				{
@@ -719,6 +850,14 @@ class Note extends FlxSprite
 							animation.play('blueScroll');
 						case 0:
 							animation.play('purpleScroll');
+						case 4:
+							animation.play('E press');
+						case 5:
+							animation.play('F press');
+						case 6:
+							animation.play('G press');
+						case 7:
+							animation.play('H press');
 					}
 				}
 			}
