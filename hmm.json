@@ -1,6 +1,11 @@
 {
   "dependencies": [
     {
+      "name": "native-desktop",
+      "type": "haxelib",      
+      "version": null
+    },
+    {
       "name": "crossbyte",
       "type": "haxelib",
       "version": null
