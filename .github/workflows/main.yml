@@ -7,14 +7,15 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag name to release (e.g., v1.0.0)'
+        description: 'Tag name to release (e.g. v1.0.0)'
         required: true
         default: 'v1.0.0'
 
 jobs:
   build:
-    name: Build for ${{ matrix.os }}
+    name: Build for ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
@@ -23,22 +24,26 @@ jobs:
             os: windows-2022
             buildArgs: windows
             artifactName: windowsBuild
-            artifactPath: export\release\windows\bin\*
+            artifactPath: export/release/windows/bin/*
+
           - name: Linux
             os: ubuntu-latest
             buildArgs: linux
             artifactName: linuxBuild
             artifactPath: export/linux/bin/*
+
           - name: macOS
             os: macos-latest
             buildArgs: osx
             artifactName: macBuild
             artifactPath: export/macos/bin/*
+
           - name: Android
             os: ubuntu-latest
             buildArgs: android
             artifactName: androidBuild
             artifactPath: export/android/bin/*
+
           - name: iOS
             os: macos-latest
             buildArgs: ios
@@ -54,59 +59,113 @@ jobs:
         with:
           haxe-version: 4.3.6
 
-      - name: Install Libraries
-        run: |-
+      - name: Install Dependencies
+        shell: bash
+        run: |
           haxelib install hmm --quiet
           haxelib run hmm setup
-          haxelib run hmm install --quiet
+          haxelib run hmm install
+
+      - name: Haxe Environment Diagnostics
+        shell: bash
+        run: |
+          echo "===== HAXE VERSION ====="
+          haxe --version
+
+          echo ""
+          echo "===== HAXELIB LIST ====="
+          haxelib list
+
+          echo ""
+          echo "===== HAXELIB CONFIG ====="
+          haxelib config
+
+          echo ""
+          echo "===== HMM JSON ====="
+          cat hmm.json || true
+
+      - name: Native Audio Diagnostics
+        shell: bash
+        run: |
+          echo "===== GRIG AUDIO ====="
+          haxelib path grig.audio || true
+
+          echo ""
+          echo "===== HXVLC ====="
+          haxelib path hxvlc || true
+
+          echo ""
+          echo "===== FIND AUDIOSTREAMTHING ====="
+          grep -R "AudioStreamThing" . 2>/dev/null || true
+
+          echo ""
+          echo "===== FIND OPUS REFERENCES ====="
+          grep -R "opus" . 2>/dev/null || true
+
+          echo ""
+          echo "===== FIND GRIG.AUDIO REFERENCES ====="
+          grep -R "grig.audio" . 2>/dev/null || true
+
+      - name: Windows Opus Diagnostics
+        if: matrix.os == 'windows-2022'
+        shell: pwsh
+        run: |
+          Write-Host "===== OPUS LIBRARIES ====="
+
+          Get-ChildItem -Recurse `
+            -Include *.lib,*.dll `
+            -ErrorAction SilentlyContinue |
+          Where-Object {
+            $_.Name -match "opus"
+          } |
+          Select-Object FullName
+
+          Write-Host ""
+
+          Write-Host "===== AUDIO FILES ====="
+
+          Get-ChildItem -Recurse `
+            -Include *AudioStreamThing* `
+            -ErrorAction SilentlyContinue |
+          Select-Object FullName
 
       - name: Compile
         run: haxelib run lime build ${{ matrix.buildArgs }}
 
-      - name: Fix RC2104 FNF error (Windows only)
+      - name: Fix RC2104 FNF Error
         if: matrix.os == 'windows-2022'
+        shell: bash
         run: |
-          echo "#define FNF" | cat - export/debug/windows/obj/ApplicationMain.rc > /tmp/rc_debug.tmp && mv /tmp/rc_debug.tmp export/debug/windows/obj/ApplicationMain.rc
-          echo "#define FNF" | cat - export/release/windows/obj/ApplicationMain.rc > /tmp/rc_release.tmp && mv /tmp/rc_release.tmp export/release/windows/obj/ApplicationMain.rc
+          if [ -f export/debug/windows/obj/ApplicationMain.rc ]; then
+            echo "#define FNF" | cat - export/debug/windows/obj/ApplicationMain.rc > tmp.rc
+            mv tmp.rc export/debug/windows/obj/ApplicationMain.rc
+          fi
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        if: startsWith(github.ref, 'refs/tags/')
+          if [ -f export/release/windows/obj/ApplicationMain.rc ]; then
+            echo "#define FNF" | cat - export/release/windows/obj/ApplicationMain.rc > tmp.rc
+            mv tmp.rc export/release/windows/obj/ApplicationMain.rc
+          fi
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          upload_url: ${{ github.server_url }}/repos/${{ github.repository }}/releases/${{ github.event.inputs.tag_name }}/assets?name=${{ matrix.artifactName }}
-          file: ${{ matrix.artifactPath }}
-          asset_name: ${{ matrix.artifactName }}
-          asset_content_type: application/zip
+          name: ${{ matrix.artifactName }}
+          path: ${{ matrix.artifactPath }}
 
   create-release:
     name: Create GitHub Release
     needs: build
     runs-on: ubuntu-latest
+
     if: startsWith(github.ref, 'refs/tags/')
+
     permissions:
       contents: write
+
     steps:
       - name: Create Release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.inputs.tag_name }}
-          release_name: ${{ github.event.inputs.tag_name }}
-          body: |
-            ## ThursdayNightThrowdown v${{ github.event.inputs.tag_name }}
-
-            Auto-generated build from main branch.
-
-            ### Available Builds
-
-            - **Windows**: Executable binary
-            - **Linux**: Binary executable
-            - **macOS**: Binary executable  
-            - **Android**: APK/AAB file
-            - **iOS**: iOS IPA file
-
-            ### Installation
-
-            Download the appropriate build for your platform and follow the setup instructions.
-
-            ---
-            *Generated by ThursdayNightThrowdown CI/CD*
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
